@@ -60,19 +60,34 @@ if ($ram -lt $MinimumRAM_GB) {
 # Cek RAM yang saat ini tersedia (available, bukan total)
 $osRam = Get-CimInstance Win32_OperatingSystem
 $availableRamGB = [math]::Round($osRam.FreePhysicalMemory / 1024 / 1024, 1)
-Write-Host "       RAM saat ini tersedia: $availableRamGB GB (idealnya ≥$RequiredAvailableRAM_GB GB untuk Hermes Q4_K_M tuned)" -ForegroundColor Gray
-if ($availableRamGB -lt $RequiredAvailableRAM_GB) {
-    Write-Warn "RAM available hanya $availableRamGB GB. Hermes butuh ~$RequiredAvailableRAM_GB GB."
-    Write-Host "       Solusi (urutan):" -ForegroundColor Yellow
-    Write-Host "         1. Tutup Microsoft Edge, Chrome, Firefox (browser paling boros)" -ForegroundColor Yellow
-    Write-Host "         2. Tutup WhatsApp, Discord, Telegram, Spotify (chat app boros)" -ForegroundColor Yellow
-    Write-Host "         3. Tutup VS Code, IntelliJ, Eclipse (IDE kalau ada)" -ForegroundColor Yellow
-    Write-Host "         4. Restart Windows kalau masih kurang (RAM fragment perlu clear)" -ForegroundColor Yellow
-    Write-Host "         5. Kalau Available < 5 GB setelah restart, fallback ke Q3_K_M:" -ForegroundColor Yellow
-    Write-Host "            Edit Modelfile, ganti 'FROM adrienbrault/nous-hermes2pro-llama3-8b'" -ForegroundColor Yellow
-    Write-Host "            jadi 'FROM adrienbrault/nous-hermes2pro-llama3-8b:Q3_K_M'" -ForegroundColor Yellow
-    $continue = Read-Host "Lanjutkan saja? (y/N)"
-    if ($continue -ne 'y') { exit 0 }
+
+# Cek apakah Hermes sudah loaded di Ollama (warm model dari setup sebelumnya)
+$ollamaPs = & ollama ps 2>&1 | Out-String
+$hermesWarm = $ollamaPs -match "hermes-erp-b2b-id|interstellarninja"
+
+if ($hermesWarm) {
+    # Model SUDAH di RAM (warm) - available 1GB cukup untuk inference
+    Write-Host "       RAM saat ini tersedia: $availableRamGB GB (model Hermes SUDAH loaded di RAM, threshold ≥1GB)" -ForegroundColor Gray
+    if ($availableRamGB -lt 1) {
+        Write-Err "Available RAM hanya $availableRamGB GB. Tutup browser/app lain dulu untuk buffer inference."
+        exit 1
+    }
+} else {
+    # Model BELUM loaded - butuh 6GB untuk cold-start load
+    Write-Host "       RAM saat ini tersedia: $availableRamGB GB (idealnya ≥$RequiredAvailableRAM_GB GB untuk Hermes Q4_K_M tuned)" -ForegroundColor Gray
+    if ($availableRamGB -lt $RequiredAvailableRAM_GB) {
+        Write-Warn "RAM available hanya $availableRamGB GB. Hermes butuh ~$RequiredAvailableRAM_GB GB untuk cold-start."
+        Write-Host "       Solusi (urutan):" -ForegroundColor Yellow
+        Write-Host "         1. Tutup Microsoft Edge, Chrome, Firefox (browser paling boros)" -ForegroundColor Yellow
+        Write-Host "         2. Tutup WhatsApp, Discord, Telegram, Spotify (chat app boros)" -ForegroundColor Yellow
+        Write-Host "         3. Tutup VS Code, IntelliJ, Eclipse (IDE kalau ada)" -ForegroundColor Yellow
+        Write-Host "         4. Restart Windows kalau masih kurang (RAM fragment perlu clear)" -ForegroundColor Yellow
+        Write-Host "         5. Kalau Available < 5 GB setelah restart, fallback ke Q3_K_M:" -ForegroundColor Yellow
+        Write-Host "            Edit Modelfile, ganti 'FROM adrienbrault/nous-hermes2pro-llama3-8b'" -ForegroundColor Yellow
+        Write-Host "            jadi 'FROM adrienbrault/nous-hermes2pro-llama3-8b:Q3_K_M'" -ForegroundColor Yellow
+        $continue = Read-Host "Lanjutkan saja? (y/N)"
+        if ($continue -ne 'y') { exit 0 }
+    }
 }
 
 # Cek physical cores (untuk tuning num_thread di Modelfile)

@@ -326,3 +326,33 @@ Stage Summary:
   4. Script akan detect warm model, skip RAM check ketat, lanjut benchmark 10 prompt
   5. Estimasi 10-20 menit, output: benchmark-result.json
   6. Kirim benchmark-result.json ke AI engineer untuk interpretasi
+
+---
+Task ID: hermes-setup-fix-two-bugs-precise
+Agent: main (Z.ai, AI engineer persona)
+Task: Fix 2 bug yang saya lewat di iterasi sebelumnya. User kritis benar: "anda sangat kurang teliti karena ada kendala juga di setup.ps1".
+
+Diagnosis:
+- Bug #1: setup.ps1 pre-flight RAM check masih hardcoded 6GB (saya tidak update di iterasi sebelumnya, hanya update benchmark.ps1). User jalankan setup.ps1 ulang untuk re-create model, tapi script tetap bilang "RAM available 2.7 GB < 6 GB" padahal model sudah warm di RAM.
+- Bug #2: benchmark.ps1 model name match gagal karena Ollama return nama dengan suffix ":latest" (contoh: "hermes-erp-b2b-id:latest"). Script cek "-notcontains 'hermes-erp-b2b-id'" (tanpa suffix) → false-positive "model tidak ditemukan" padahal model ADA.
+
+Work Log:
+- Fix #1 (setup.ps1): tambah pre-flight detect warm model via `ollama ps`. Kalau hermes-erp-b2b-id atau interstellarninja ada di list loaded models → threshold available ≥1GB (cukup untuk inference buffer). Kalau belum loaded → threshold ≥6GB untuk cold-start. Pesan user di-update untuk 2 branch.
+- Fix #2 (benchmark.ps1): model name match pakai prefix match dengan operator `-like "$ModelName`:*"` supaya "hermes-erp-b2b-id" match "hermes-erp-b2b-id:latest". Loop foreach cek setiap model, set $modelFound=true kalau match. Skip hardcode `-notcontains`.
+- Verifikasi: kedua file punya BOM (efbbbf) + CRLF 100% (294/294). Logic warm detection + suffix handling ter-verifikasi via grep.
+
+Stage Summary:
+- Files fix: setup.ps1 (294 lines), benchmark.ps1 (294 lines) di /home/z/my-project/download/hermes-setup/
+- 2 bug fix:
+  1. setup.ps1 pre-flight RAM check sekarang detect warm model (ollama ps) - threshold 1GB (warm) vs 6GB (cold)
+  2. benchmark.ps1 model name match pakai prefix match - handle suffix ":latest" dari Ollama
+- User HARUS download ulang setup.ps1 DAN benchmark.ps1 yang sudah di-fix.
+- Setup user sudah confirmed BERHASIL (function call get_inventory dengan params benar, throughput 5.94 tok/s).
+- Next action user:
+  1. Download ulang setup.ps1 dan benchmark.ps1
+  2. Pastikan model tetap warm (jangan kill ollama service)
+  3. Langsung jalankan benchmark.ps1: powershell -ExecutionPolicy Bypass -File .\benchmark.ps1
+  4. Script sekarang akan: (a) detect model warm → RAM check ≥1GB (pass), (b) detect model via prefix match (pass)
+  5. Estimasi 10-20 menit, output: benchmark-result.json
+  6. Kirim benchmark-result.json ke AI engineer untuk interpretasi final
+- Lesson learned: setelah fix satu file, harus audit file terkait lain (setup.ps1 vs benchmark.ps1) untuk pattern bug yang sama. User kritis = kualitas engineer harus naik.

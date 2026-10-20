@@ -67,9 +67,18 @@ if ($ram -le 12) {
 
 try {
     $tagsResponse = Invoke-RestMethod -Uri "$OllamaEndpoint/api/tags" -Method Get -TimeoutSec 5
+    # Ollama return nama dengan suffix :latest (default tag).
+    # Cek dengan prefix match supaya "hermes-erp-b2b-id" match "hermes-erp-b2b-id:latest"
     $existingModels = $tagsResponse.models | ForEach-Object { $_.name }
-    if ($existingModels -notcontains $ModelName) {
-        Write-Err "Model $ModelName tidak ditemukan. Jalankan setup.ps1 dulu."
+    $modelFound = $false
+    foreach ($m in $existingModels) {
+        if ($m -eq $ModelName -or $m -like "$ModelName`:*" -or $m -like "$ModelName*") {
+            $modelFound = $true
+            break
+        }
+    }
+    if (-not $modelFound) {
+        Write-Err "Model '$ModelName' tidak ditemukan. Jalankan setup.ps1 dulu."
         Write-Host "Available models: $($existingModels -join ', ')"
         exit 1
     }
