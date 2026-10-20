@@ -1,5 +1,5 @@
 ﻿{
-    "timestamp":  "2026-10-20T14:33:25.5143048+07:00",
+    "timestamp":  "2026-10-20T14:43:54.7661272+07:00",
     "model":  "hermes-erp-b2b-id",
     "hardware":  {
                      "ram_gb":  11.8,
@@ -10,11 +10,11 @@
                                 "temperature":  0.3
                             },
     "metrics":  {
-                    "function_call_accuracy_pct":  70,
-                    "avg_throughput_tps":  6.47,
-                    "total_duration_seconds":  72.4,
-                    "avg_latency_first_token_ms":  873,
-                    "correct_count":  7,
+                    "function_call_accuracy_pct":  100,
+                    "avg_throughput_tps":  6.14,
+                    "total_duration_seconds":  107.8,
+                    "avg_latency_first_token_ms":  4449,
+                    "correct_count":  10,
                     "total_count":  10
                 },
     "per_prompt_results":  [
@@ -30,12 +30,12 @@
                                    "validation_errors":  [
 
                                                          ],
-                                   "latency_first_token":  165,
-                                   "throughput_tps":  6.56,
-                                   "total_tokens":  495,
-                                   "prompt_tokens":  475,
+                                   "latency_first_token":  34407,
+                                   "throughput_tps":  6.26,
+                                   "total_tokens":  1059,
+                                   "prompt_tokens":  1039,
                                    "generation_tokens":  20,
-                                   "duration_seconds":  3.25
+                                   "duration_seconds":  46.77
                                },
                                {
                                    "prompt_id":  "E02",
@@ -49,12 +49,12 @@
                                    "validation_errors":  [
 
                                                          ],
-                                   "latency_first_token":  850,
-                                   "throughput_tps":  6.56,
-                                   "total_tokens":  504,
-                                   "prompt_tokens":  483,
+                                   "latency_first_token":  1005,
+                                   "throughput_tps":  6.24,
+                                   "total_tokens":  1068,
+                                   "prompt_tokens":  1047,
                                    "generation_tokens":  21,
-                                   "duration_seconds":  4.07
+                                   "duration_seconds":  4.39
                                },
                                {
                                    "prompt_id":  "E03",
@@ -68,12 +68,12 @@
                                    "validation_errors":  [
 
                                                          ],
-                                   "latency_first_token":  852,
-                                   "throughput_tps":  6.67,
-                                   "total_tokens":  501,
-                                   "prompt_tokens":  481,
+                                   "latency_first_token":  976,
+                                   "throughput_tps":  6.06,
+                                   "total_tokens":  1065,
+                                   "prompt_tokens":  1045,
                                    "generation_tokens":  20,
-                                   "duration_seconds":  3.86
+                                   "duration_seconds":  4.29
                                },
                                {
                                    "prompt_id":  "E04",
@@ -83,17 +83,17 @@
                                                            "query":  "bahan kimia",
                                                            "limit":  5
                                                        },
-                                   "response":  "Untuk mencari produk bahan kimia, silakan berikan kata kunci atau spesifikasi lebih rinci seperti jenis bahan kimia, merek, atau aplikasi yang diinginkan. Dengan informasi tersebut, saya dapat memberikan hasil pencarian yang lebih akurat.",
-                                   "is_correct":  false,
+                                   "response":  "{\"name\": \"search_product\", \"parameters\": {\"query\": \"bahan kimia\", \"limit\": 5}}",
+                                   "is_correct":  true,
                                    "validation_errors":  [
-                                                             "Tool name \u0027search_product\u0027 not found in response"
+
                                                          ],
-                                   "latency_first_token":  990,
-                                   "throughput_tps":  6.35,
-                                   "total_tokens":  547,
-                                   "prompt_tokens":  485,
-                                   "generation_tokens":  62,
-                                   "duration_seconds":  10.77
+                                   "latency_first_token":  1232,
+                                   "throughput_tps":  6.18,
+                                   "total_tokens":  1075,
+                                   "prompt_tokens":  1049,
+                                   "generation_tokens":  26,
+                                   "duration_seconds":  5.46
                                },
                                {
                                    "prompt_id":  "E05",
@@ -103,17 +103,17 @@
                                                            "customer_id":  "CUST-001",
                                                            "payment_terms":  "net_30"
                                                        },
-                                   "response":  "Untuk membuat penawaran untuk customer CUST-001 dengan 10 unit SKU-001 dan termin pembayaran net 30, silakan berikan informasi tambahan apakah Anda ingin menambahkan produk lain dalam pesanan ini. Jika tidak ada produk lain, Anda dapat memberi tahu saya nama produk dan kuantitas yang diinginkan untuk memproses permintaan penawaran lebih lanjut.",
-                                   "is_correct":  false,
+                                   "response":  "{\"name\": \"create_quote\", \"parameters\": {\"customer_id\": \"CUST-001\", \"items\": [{\"product_sku\": \"SKU-001\", \"quantity\": 10}], \"payment_terms\": \"net_30\", \"_confidence\": 0.95}}",
+                                   "is_correct":  true,
                                    "validation_errors":  [
-                                                             "Tool name \u0027create_quote\u0027 not found in response"
+
                                                          ],
-                                   "latency_first_token":  1218,
-                                   "throughput_tps":  6.2,
-                                   "total_tokens":  584,
-                                   "prompt_tokens":  494,
-                                   "generation_tokens":  90,
-                                   "duration_seconds":  15.76
+                                   "latency_first_token":  1431,
+                                   "throughput_tps":  5.95,
+                                   "total_tokens":  1114,
+                                   "prompt_tokens":  1058,
+                                   "generation_tokens":  56,
+                                   "duration_seconds":  10.86
                                },
                                {
                                    "prompt_id":  "E06",
@@ -123,17 +123,17 @@
                                                            "customer_id":  "CUST-045",
                                                            "payment_terms":  "cod"
                                                        },
-                                   "response":  "{\"name\": \"create_quote\", \"parameters\": {\"customer_id\": \"CUST-045\", \"items\": [{\"product_sku\": \"SKU-COFFEE-001\", \"quantity\": 25}, {\"product_sku\": \"SKU-COFFEE-002\", \"quantity\": 15}], \"payment_terms\": \"cod\", \"_confidence\": 0.95}}",
+                                   "response":  "Anda: {\"name\": \"create_quote\", \"parameters\": {\"customer_id\": \"CUST-045\", \"items\": [{\"product_sku\": \"SKU-COFFEE-001\", \"quantity\": 25}, {\"product_sku\": \"SKU-COFFEE-002\", \"quantity\": 15}], \"payment_terms\": \"cod\", \"_confidence\": 0.95}}",
                                    "is_correct":  true,
                                    "validation_errors":  [
 
                                                          ],
-                                   "latency_first_token":  1642,
-                                   "throughput_tps":  6.17,
-                                   "total_tokens":  579,
-                                   "prompt_tokens":  504,
-                                   "generation_tokens":  75,
-                                   "duration_seconds":  13.82
+                                   "latency_first_token":  2002,
+                                   "throughput_tps":  6,
+                                   "total_tokens":  1146,
+                                   "prompt_tokens":  1068,
+                                   "generation_tokens":  78,
+                                   "duration_seconds":  15.03
                                },
                                {
                                    "prompt_id":  "E07",
@@ -147,12 +147,12 @@
                                    "validation_errors":  [
 
                                                          ],
-                                   "latency_first_token":  648,
-                                   "throughput_tps":  6.59,
-                                   "total_tokens":  499,
-                                   "prompt_tokens":  476,
+                                   "latency_first_token":  729,
+                                   "throughput_tps":  6.21,
+                                   "total_tokens":  1063,
+                                   "prompt_tokens":  1040,
                                    "generation_tokens":  23,
-                                   "duration_seconds":  4.15
+                                   "duration_seconds":  4.45
                                },
                                {
                                    "prompt_id":  "E08",
@@ -166,12 +166,12 @@
                                    "validation_errors":  [
 
                                                          ],
-                                   "latency_first_token":  949,
-                                   "throughput_tps":  6.58,
-                                   "total_tokens":  507,
-                                   "prompt_tokens":  484,
+                                   "latency_first_token":  1111,
+                                   "throughput_tps":  6.21,
+                                   "total_tokens":  1071,
+                                   "prompt_tokens":  1048,
                                    "generation_tokens":  23,
-                                   "duration_seconds":  4.46
+                                   "duration_seconds":  4.84
                                },
                                {
                                    "prompt_id":  "E09",
@@ -183,17 +183,17 @@
                                                                           "active_only":  true
                                                                       }
                                                        },
-                                   "response":  "{\"name\": \"list_customers\", \"parameters\": {\"filter\": \"industry:manufacturing;status:active\"}}",
+                                   "response":  "{\"name\": \"list_customers\", \"parameters\": {\"filter\": {\"industry\": \"manufacturing\", \"active_only\": true}}}",
                                    "is_correct":  true,
                                    "validation_errors":  [
 
                                                          ],
-                                   "latency_first_token":  703,
-                                   "throughput_tps":  6.56,
-                                   "total_tokens":  501,
-                                   "prompt_tokens":  476,
-                                   "generation_tokens":  25,
-                                   "duration_seconds":  4.53
+                                   "latency_first_token":  800,
+                                   "throughput_tps":  6.15,
+                                   "total_tokens":  1068,
+                                   "prompt_tokens":  1040,
+                                   "generation_tokens":  28,
+                                   "duration_seconds":  5.37
                                },
                                {
                                    "prompt_id":  "E10",
@@ -202,17 +202,17 @@
                                    "expected_params":  {
 
                                                        },
-                                   "response":  "Maaf, saya butuh informasi lebih spesifik tentang produk yang Anda maksudkan. Harap sebutkan SKU atau nama produk untuk mengambil data stok dengan akurat. Terima kasih!",
-                                   "is_correct":  false,
+                                   "response":  "Maaf, saya butuh SKU produk spesifik untuk cek stok. Boleh sebutkan SKU atau nama produk yang ingin Anda cek?",
+                                   "is_correct":  true,
                                    "validation_errors":  [
-                                                             "Tool name \u0027\u0027 not found in response"
+
                                                          ],
-                                   "latency_first_token":  717,
-                                   "throughput_tps":  6.42,
-                                   "total_tokens":  521,
-                                   "prompt_tokens":  476,
-                                   "generation_tokens":  45,
-                                   "duration_seconds":  7.74
+                                   "latency_first_token":  797,
+                                   "throughput_tps":  6.12,
+                                   "total_tokens":  1074,
+                                   "prompt_tokens":  1040,
+                                   "generation_tokens":  34,
+                                   "duration_seconds":  6.37
                                }
                            ]
 }

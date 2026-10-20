@@ -410,3 +410,112 @@ Stage Summary:
 - Kalau accuracy baru ≥80%: siap lanjut ke ERP project (PR pertama dengan CI/PR rules sesuai permintaan awal user).
 - Kalau masih 70-80%: iterasi tuning prompt v1.0.7 (kemungkinan tambah contoh negatif atau perjelas aturan lebih jauh).
 - Kalau masih <70%: LoRA fine-tune pipeline dengan dataset Company X.
+
+---
+Task ID: hermes-setup-benchmark-v1.0.6-100pct-success
+Agent: main (Z.ai, AI engineer persona)
+Task: Verifikasi benchmark-result.json v1.0.6 yang user kirim. Konfirmasi 100% accuracy dan simpan sebagai baseline.
+
+Benchmark v1.0.6 Result Analysis:
+- Function call accuracy: 100% (10/10) - EXCEEDED TARGET (target awal ≥80%, akhirnya 100%)
+- Avg throughput: 6.14 tok/s - dalam range target 4-8 tok/s
+- Avg latency first-token: 4449 ms - tinggi karena cold start E01 (34,407ms), E02-E10 di 700-2000ms (warm)
+- Total duration: 107.8 detik untuk 10 prompt - efisien
+- Hardware: 11.8 GB RAM, 8 CPU cores - sesuai target
+
+Per-Prompt Analysis (semua PASS):
+- E01 get_inventory: PASS, latency 34,407ms (cold start setelah ollama rm + create, normal)
+- E02 get_inventory variation: PASS, latency 1005ms (warm)
+- E03 search_product simple: PASS, latency 976ms
+- E04 search_product with limit=5: PASS (FIXED dari v1.0.5 yang FAIL). Sekarang langsung pakai "bahan kimia" sebagai query + limit=5.
+- E05 create_quote single item: PASS (FIXED dari v1.0.5 yang FAIL). Sekarang langsung panggil tool tanpa minta konfirmasi.
+- E06 create_quote multi-item cod: PASS, response ada prefix "Anda:" (minor leak dari few-shot example, tool call tetap parsed benar)
+- E07 get_invoice: PASS, latency 729ms
+- E08 get_invoice variation "faktur": PASS, latency 1111ms
+- E09 list_customers nested filter: PASS, response sekarang proper JSON object (v1.0.5 pakai string "industry:manufacturing;status:active", v1.0.6 proper nested object)
+- E10 trap case clarification: PASS (FIXED bug benchmark.ps1 trap case logic). Response benar-benar minta SKU, tidak mengandung tool call JSON.
+
+Work Log:
+- Baca benchmark-result.json v1.0.6 yang user upload ke /home/z/my-project/upload/
+- Verifikasi semua 10 prompt PASS, validation_errors kosong untuk semua
+- Copy file ke /home/z/my-project/download/hermes-setup/benchmarks/benchmark-result-v1.0.6-100pct.json sebagai baseline artifact
+- Parse JSON dengan utf-8-sig (handle BOM di awal file)
+- Print summary verification: 100% accuracy, 6.14 tok/s, 4449ms latency, 107.8 detik total
+
+Quirk Analysis (non-blocking):
+- E01 cold start 34 detik: normal setelah ollama rm + create. Production: model tetap warm di Ollama service, tidak akan cold start.
+- E06 response prefix "Anda: ": minor leak dari few-shot pattern di system prompt. Tool call tetap parsed benar. Production: backend harus strip prefix "Anda: " sebelum JSON parse.
+
+Stage Summary:
+- HERMES SETUP COMPLETE: 100% function call accuracy, 6.14 tok/s throughput, di laptop 12GB RAM single-channel, zero cost.
+- Files final:
+  - /home/z/my-project/download/hermes-setup/Modelfile (v1.0.6)
+  - /home/z/my-project/download/hermes-setup/system-prompt.yaml (v1.0.6)
+  - /home/z/my-project/download/hermes-setup/tool-registry.json (v1.0.0)
+  - /home/z/my-project/download/hermes-setup/eval-set.json (10 prompt)
+  - /home/z/my-project/download/hermes-setup/setup.ps1 (BOM+CRLF, warm detection)
+  - /home/z/my-project/download/hermes-setup/benchmark.ps1 (BOM+CRLF, trap case fixed)
+  - /home/z/my-project/download/hermes-setup/diag.ps1 (verbose debug)
+  - /home/z/my-project/download/hermes-setup/README.md
+  - /home/z/my-project/download/hermes-setup/benchmarks/benchmark-result-v1.0.6-100pct.json (baseline)
+- Saving bulanan vs GPT-4o API: ~Rp 11 juta (~10rb request/hari × 500 token × Rp 75rb/1M token)
+- Saving tahunan: ~Rp 132 juta
+- Hardware cost: Rp 0 (existing laptop), listrik PC ~Rp 150rb/bulan
+
+NEXT PHASE - ERP Project:
+- Hermes sudah siap untuk integrate ke ERP B2B project
+- User original request: build/maintain ERP + website B2B Company X, dual-track (production + greenfield)
+- CI/PR rules user specified: assignee mghazyfhakim, label sesuai isi PR, CI wajib pass sebelum merge ke develop, post-merge CI wajib pass juga
+- Perlu klarifikasi 5 hal sebelum mulai ERP project:
+  1. Repo state (new repo / existing repo URL / local only)
+  2. Hermes endpoint integration (localhost:11434 confirmed dari benchmark)
+  3. CI platform (GitHub Actions / GitLab CI / Bitbucket)
+  4. Stack (sesuai blueprint: Next.js 14 + TypeScript + Tailwind + Prisma + PostgreSQL + Hono API)
+  5. PR pertama scope (scaffold + CI / Inventory module / Website profile)
+- Siap eksekusi sebagai senior software engineer multi-role (System Analyst, UI/UX, Fullstack, QA, Tech Writer, DevOps, DB management).
+
+---
+Task ID: hermes-agent-mastery-pack
+Agent: main (Z.ai, AI engineer persona)
+Task: User mau tetap di Hermes Agent (desktop app, bukan Ollama), vibe coding melalui Hermes Agent, dan mengeluarkan full potensi Hermes Agent + model yang menemani. Buat pack untuk konfigurasi Hermes Agent ke full potential.
+
+Diagnosis:
+- User clarifies: "model yang ada di hermes agent" = model di Hermes Agent (default Qwen3.5 4B), bukan Hermes model di Ollama.
+- User want: vibe coding via Hermes Agent (UI), bukan via CLI terpisah (Aider).
+- User want: unlock full potential Hermes Agent + model pendamping.
+- Hermes Agent punya 4 layer "training" model: (1) SOUL.md (personality), (2) Persistent Memory, (3) Skills (custom slash commands), (4) Model switching.
+- Dari web search, dapat format resmi Hermes Agent:
+  - SOUL.md di ~/.hermes/SOUL.md (Windows: C:\Users\<nama>\.hermes\SOUL.md)
+  - Skills di ~/.hermes/skills/<skill-name>/SKILL.md (format YAML frontmatter + markdown body)
+  - AGENTS.md untuk project context (beda dari SOUL.md)
+  - Slash command invoke skill: /skill-name
+
+Work Log:
+- Web search Hermes Agent docs untuk SOUL.md format + Skills format. Dapat:
+  - SOUL.md: https://hermes-agent.nousresearch.com/docs/user-guide/features/personality
+  - Skills: https://hermes-agent.nousresearch.com/docs/developer-guide/creating-skills
+- Buat folder /home/z/my-project/download/hermes-agent-mastery/ (108KB total, 9 files).
+- Tulis SOUL.md (4.8KB): pragmatic senior engineer personality. Section: Style, Bahasa (Indonesia + istilah EN), Coding defaults (TypeScript strict, no any, named exports), What to avoid (no sycophancy, no hype, no emoji), Defaults saat ambiguous, Technical posture, Vibe coding behavior, Brainstorm behavior, Code review behavior.
+- Tulis 4 SKILL.md files (masing-masing 4-6KB):
+  1. code-review: review dengan format severity 🔴/🟡/🟢 + diff fix
+  2. typescript-refactor: anti-pattern → idiomatic (any → unknown, manual loop → functional, Promise chain → async/await, enum → union type)
+  3. unit-test-generator: AAA pattern, critical path + edge case + error case, jest default
+  4. brainstorm-3-options: 3 opsi dengan Pro/Con/Cocok kalau + Rekomendasi
+- Tulis SETUP-GUIDE.md (9.5KB): pre-flight check, backup existing config, install SOUL.md, install 4 skills, restart Hermes Agent, verify dengan test 5 (skills list, SOUL.md loaded, 3 skill test), troubleshooting 5 cases (skills tidak muncul, SOUL.md tidak ke-load, startup error, slash command tidak jalan, RAM 12GB concerns).
+- Tulis MODEL-STRATEGY.md (7.9KB): 4 model tersedia (Qwen3.5 4B, hermes-erp-b2b-id, qwen2.5-coder:7b optional, cloud optional), decision matrix per use case, switching strategy RAM-aware 4 skenario, cara switch provider via UI/CLI/config, opsional pull qwen2.5-coder:7b, opsional cloud model, decision tree cepat.
+- Tulis VIBE-CODING-WORKFLOW.md (14.2KB): definisi vibe coding, pre-flight setup, 4 workflow konkret (function baru, refactor, debugging, brainstorming arch), tips habit (sessions per project, pinned, artifacts, scheduled jobs, persistent memory), contoh vibe coding session 15 menit end-to-end, 4 common pitfalls.
+- Tulis README.md (6KB): overview pack, quick start 3 step, customization placeholder, file index.
+
+Stage Summary:
+- Deliverable: 9 file di /home/z/my-project/download/hermes-agent-mastery/ (108KB).
+- Pack ini berisi: SOUL.md (personality), 4 SKILL.md (custom skills untuk coding), 3 guide (setup, model strategy, vibe coding workflow), README.
+- Format resmi Hermes Agent (sumber: https://hermes-agent.nousresearch.com/docs/) — SOUL.md di ~/.hermes/SOUL.md, skills di ~/.hermes/skills/<name>/SKILL.md dengan YAML frontmatter.
+- Personalisasi SOUL.md: user perlu edit section Bahasa, Coding defaults, What to avoid, Defaults saat ambiguous sesuai style dia. Atau kirim jawaban 4 pertanyaan ke AI engineer untuk personalized SOUL.md.
+- RAM strategy untuk laptop 12GB: switch model per use case. Qwen3.5 4B (2.5GB) untuk chat umum, hermes-erp-b2b-id (5GB) untuk function call ERP, qwen2.5-coder:7b optional (4.5GB) untuk coding serius. Jangan jalanin 2 model besar bersamaan.
+- Next action user:
+  1. Download folder hermes-agent-mastery/ ke PC Windows
+  2. Ikuti SETUP-GUIDE.md (15 menit install + 10 menit personalize SOUL.md)
+  3. Test dengan 5 test di SETUP-GUIDE.md (verify skills + SOUL.md ter-load)
+  4. Mulai vibe coding dengan workflow di VIBE-CODING-WORKFLOW.md
+- Pack ini FOCUS ke Hermes Agent (sesuai user request), TIDAK push ke Ollama atau ERP project (yang user bilang "kesampingkan dulu").
+- Ollama + hermes-erp-b2b-id (100% accuracy benchmark) tetap berguna: ada di MODEL-STRATEGY.md sebagai opsi provider untuk function call ERP.
