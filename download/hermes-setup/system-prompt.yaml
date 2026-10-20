@@ -10,13 +10,13 @@
 # Format: Ollama menerima ini sebagai SYSTEM parameter di /api/chat
 # ============================================================================
 
-version: "1.0.2"
+version: "1.0.3"
 last_updated: "2026-10-20"
 author: "AI Engineering Team - Z.ai"
 target_model: "hermes-2-pro-llama-3-8b"
 use_case: "function_call_erp_b2b"
 language: "id-ID"
-hardware_target: "Laptop 12GB RAM DDR5 4800 SODIMM single-channel, CPU-only, Windows 11"
+hardware_target: "Laptop 12GB RAM DDR5 4800 SODIMM single-channel, CPU 8 physical cores, Windows 11, Ollama 0.40.6"
 
 # ----------------------------------------------------------------------------
 # System Prompt (raw text - akan di-inject ke Modelfile & API call)
@@ -68,7 +68,7 @@ parameters:
   top_k: 40
   repeat_penalty: 1.1
   num_ctx: 2048         # diturunkan dari 4096 ke 2048 untuk 12GB RAM single-channel
-  num_thread: 6
+  num_thread: 8         # match dengan 8 physical cores user (sebelumnya 6)
   num_batch: 128        # diturunkan dari 256 ke 128 untuk hemat RAM saat prompt pre-processing
   num_gpu: 0
   low_vram: true
@@ -93,6 +93,12 @@ ab_test:
 # Changelog
 # ----------------------------------------------------------------------------
 changelog:
+  - version: "1.0.3"
+    date: "2026-10-20"
+    changes:
+      - Fix model name: noussphere/hermes-2-pro-llama-3-8b (tidak ada di registry) -> interstellarninja/hermes-2-pro-llama-3-8b
+      - Update num_thread 6 -> 8 (match 8 physical cores user)
+      - Fallback Q3_K_M: adrienbrault/nous-hermes2pro-llama3-8b:Q3_K_M (sebelumnya noussphere yang tidak tersedia)
   - version: "1.0.2"
     date: "2026-10-20"
     changes:

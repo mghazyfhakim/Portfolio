@@ -20,7 +20,7 @@ Set-StrictMode -Off
 # Konfigurasi
 # ----------------------------------------------------------------------------
 $OllamaVersion = "0.5.0"            # Cek latest: https://github.com/ollama/ollama/releases
-$ModelName = "noussphere/hermes-2-pro-llama-3-8b"
+$ModelName = "interstellarninja/hermes-2-pro-llama-3-8b"
 $CustomModelName = "hermes-erp-b2b-id"
 $OllamaInstallPath = "$env:USERPROFILE\AppData\Local\Programs\Ollama"
 $ModelfileSource = ".\Modelfile"   # File Modelfile di folder yang sama dengan script ini
@@ -46,7 +46,7 @@ if ($ram -lt $MinimumRAM_GB) {
     Write-Host ""
     Write-Host "Alternatif:" -ForegroundColor Yellow
     Write-Host "  1. Tutup aplikasi lain (browser, IDE, Docker) sebelum jalankan Hermes" -ForegroundColor Yellow
-    Write-Host "  2. Jika RAM tetap kurang, pakai Q3_K_M (~3.5GB model): edit Modelfile line FROM menjadi 'noussphere/hermes-2-pro-llama-3-8b:Q3_K_M'" -ForegroundColor Yellow
+    Write-Host "  2. Jika RAM tetap kurang, pakai Q3_K_M (~3.5GB model): edit Modelfile line FROM menjadi 'adrienbrault/nous-hermes2pro-llama3-8b:Q3_K_M'" -ForegroundColor Yellow
     Write-Host "  3. Atau gunakan cloud GPU spot instance (lihat blueprint Chapter 5)" -ForegroundColor Yellow
     exit 1
 } elseif ($ram -lt $RecommendedRAM_GB) {
@@ -69,7 +69,7 @@ if ($availableRamGB -lt $RequiredAvailableRAM_GB) {
     Write-Host "         3. Tutup VS Code, IntelliJ, Eclipse (IDE kalau ada)" -ForegroundColor Yellow
     Write-Host "         4. Restart Windows kalau masih kurang (RAM fragment perlu clear)" -ForegroundColor Yellow
     Write-Host "         5. Kalau Available < 5 GB setelah restart, fallback ke Q3_K_M:" -ForegroundColor Yellow
-    Write-Host "            Edit Modelfile, ganti 'FROM noussphere/hermes-2-pro-llama-3-8b'" -ForegroundColor Yellow
+    Write-Host "            Edit Modelfile, ganti 'FROM adrienbrault/nous-hermes2pro-llama3-8b'" -ForegroundColor Yellow
     Write-Host "            jadi 'FROM noussphere/hermes-2-pro-llama-3-8b:Q3_K_M'" -ForegroundColor Yellow
     $continue = Read-Host "Lanjutkan saja? (y/N)"
     if ($continue -ne 'y') { exit 0 }

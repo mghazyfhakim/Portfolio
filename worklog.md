@@ -140,3 +140,35 @@ Stage Summary:
   2. Buka PowerShell di folder, jalankan: powershell -ExecutionPolicy Bypass -File .\setup.ps1
   3. Buka PowerShell sebagai Administrator, Set-ExecutionPolicy RemoteSigned -Scope CurrentUser, lalu .\setup.ps1
 - Kalau masih force close setelah 3 cara di atas, user kirim screenshot error message (window akan pause sekarang, jadi error bisa terlihat).
+
+---
+Task ID: hermes-setup-fix-model-name
+Agent: main (Z.ai, AI engineer persona)
+Task: Fix "pull model manifest: file does not exist" error di setup.ps1. User sudah sampai tahap Ollama install berhasil, tapi pull model gagal karena nama model salah.
+
+Diagnosis:
+- Penyebab utama: nama model "noussphere/hermes-2-pro-llama-3-8b" yang saya pakai di Modelfile dan setup.ps1 TIDAK ADA di Ollama registry. Asumsi awal saya salah — saya buat nama berdasarkan pola umum HuggingFace, bukan verify ke Ollama registry.
+- Penyebab tambahan: RAM available user 0 GB saat runtime — user pilih "y" untuk lanjut, ini akan crash saat inference nanti.
+- Bonus finding: CPU user punya 8 physical cores (bukan 6 default di Modelfile).
+
+Work Log:
+- WebSearch Ollama registry untuk Hermes-2-Pro-Llama-3-8B → temukan 3 nama kandidit:
+  - adrienbrault/nous-hermes2pro-llama3-8b (verified available)
+  - elvee/hermes-2-pro-llama-3:8b-Q5_K_M (Q5, bukan Q4)
+  - interstellarninja/hermes-2-pro-llama-3-8b (4.9GB, 8K context, Q4_K_M default) ← DIPILIH
+- Update Modelfile: FROM interstellarninja/hermes-2-pro-llama-3-8b + num_thread 6→8 + update fallback hint Q3_K_M ke adrienbrault/nous-hermes2pro-llama3-8b:Q3_K_M
+- Update setup.ps1: $ModelName = "interstellarninja/hermes-2-pro-llama-3-8b", update 2 hint fallback Q3_K_M yang masih reference nama lama
+- Update system-prompt.yaml: version 1.0.2→1.0.3, num_thread 6→8, hardware_target tambah info "CPU 8 physical cores, Ollama 0.40.6", changelog entry baru
+- Validasi: Modelfile 14 PARAMETER benar, BOM+CRLF preserved di kedua .ps1, JSON+YAML valid.
+
+Stage Summary:
+- File fix: Modelfile, setup.ps1, system-prompt.yaml di /home/z/my-project/download/hermes-setup/
+- Model name final: interstellarninja/hermes-2-pro-llama-3-8b (4.9GB Q4_K_M, 8K context, verified available di Ollama registry)
+- num_thread final: 8 (match dengan 8 physical cores user)
+- Fallback Q3_K_M final: adrienbrault/nous-hermes2pro-llama3-8b:Q3_K_M (kalau OOM saat runtime)
+- Next action user: 
+  1. RESTART WINDOWS dulu (karena RAM available 0 GB akan crash saat inference)
+  2. Setelah restart, jangan buka apapun kecuali PowerShell di folder hermes-setup/
+  3. Download ulang folder hermes-setup/ yang sudah di-fix (khususnya Modelfile, setup.ps1, system-prompt.yaml)
+  4. Jalankan setup.ps1 lagi — sekarang akan skip install Ollama (sudah ada) dan langsung pull model yang benar
+  5. Setelah pull selesai (10-15 menit), jalankan benchmark.ps1

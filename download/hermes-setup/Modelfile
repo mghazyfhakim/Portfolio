@@ -23,13 +23,15 @@
 #
 # Jika masih OOM:
 #   1. Restart Windows, jangan buka apapun selain PowerShell
-#   2. Ganti FROM ke noussphere/hermes-2-pro-llama-3-8b:Q3_K_M (turun ~1.5GB)
+#   2. Ganti FROM ke adrienbrault/nous-hermes2pro-llama3-8b:Q3_K_M (turun ~1.5GB)
 #   3. Tambah stick RAM 8GB DDR5 4800 di slot kosong (~Rp 250-400rb)
 # ============================================================================
 
 # --- Model source ---
 # Q4_K_M (default Ollama) — ~5GB disk, ~5GB RAM loaded
-FROM noussphere/hermes-2-pro-llama-3-8b
+# Verifikasi: https://ollama.com/interstellarninja/hermes-2-pro-llama-3-8b
+# Alternatif kalau gagal: adrienbrault/nous-hermes2pro-llama3-8b
+FROM interstellarninja/hermes-2-pro-llama-3-8b
 
 # --- Sampling parameters (function call optimization) ---
 PARAMETER temperature 0.3
@@ -50,16 +52,14 @@ PARAMETER stop "<|im_end|>"
 PARAMETER stop ""
 
 # --- Threading (CPU optimization) ---
-# num_thread = physical cores. Laptop Anda kemungkinan 6-8 cores (cek di PowerShell:
-# (Get-CimInstance Win32_Processor).NumberOfCores)
-# Default 6 — sesuaikan kalau CPU Anda punya P+E cores (Intel 12th+ gen):
-#   - i5-12400 (6P)         : 6
-#   - i5-12500H (4P+4E)     : 4 (pakai P-cores saja)
-#   - i7-12700H (6P+4E)     : 6 (pakai P-cores saja)
-#   - i7-1360P (4P+8E)      : 4 (pakai P-cores saja)
-#   - AMD Ryzen 5 5600H (6) : 6
-#   - AMD Ryzen 7 5800H (8) : 8
-PARAMETER num_thread 6
+# num_thread = physical cores (dari output: 8 cores di laptop Anda)
+# Untuk laptop Anda: 8 cores → num_thread 8
+# Catatan: kalau CPU Anda punya P+E cores (Intel 12th+ gen hybrid), set ke jumlah P-cores saja:
+#   - i5-12500H (4P+4E) : 4 (P-cores only)
+#   - i7-12700H (6P+4E) : 6 (P-cores only)
+#   - AMD Ryzen 7 5800H (8 cores unified) : 8
+# Untuk laptop Anda (terdeteksi 8 physical cores, kemungkinan AMD Ryzen 7 atau Intel 13th gen P-only), 8 adalah optimal
+PARAMETER num_thread 8
 
 # --- Batch (TUNED untuk 12GB RAM) ---
 # num_batch 128 — lebih kecil dari standar 512 untuk hemat RAM saat prompt pre-processing.
