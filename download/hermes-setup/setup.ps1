@@ -1,4 +1,4 @@
-# ============================================================================
+﻿# ============================================================================
 # Hermes-2-Pro-Llama-3-8B Setup Script untuk Windows
 # ============================================================================
 # Script: setup.ps1
@@ -9,9 +9,12 @@
 # Durasi eksekusi: ~10-20 menit (tergantung kecepatan internet untuk pull 5GB model)
 # ============================================================================
 
-# Strict mode - tangkap error lebih awal
-$ErrorActionPreference = "Stop"
-Set-StrictMode -Version 3.0
+# Strict mode - relax untuk kompatibilitas PowerShell 5.1
+# Catatan: StrictMode 3.0 + ErrorActionPreference Stop sering force close
+# pada PowerShell 5.1 kalau ada uninitialized variable. Pakai Continue supaya
+# error ditampilkan tapi script tidak langsung exit.
+$ErrorActionPreference = "Continue"
+Set-StrictMode -Off
 
 # ----------------------------------------------------------------------------
 # Konfigurasi

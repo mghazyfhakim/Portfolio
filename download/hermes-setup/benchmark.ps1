@@ -1,4 +1,4 @@
-# ============================================================================
+﻿# ============================================================================
 # Hermes Benchmark Script untuk Windows
 # ============================================================================
 # Script: benchmark.ps1
@@ -11,8 +11,8 @@
 # Durasi: ~10-20 menit (10 prompt x ~60-90 detik per prompt di CPU 16GB)
 # ============================================================================
 
-$ErrorActionPreference = "Stop"
-Set-StrictMode -Version 3.0
+$ErrorActionPreference = "Continue"
+Set-StrictMode -Off
 
 # ----------------------------------------------------------------------------
 # Konfigurasi
@@ -258,3 +258,10 @@ Write-Host "      1. Tune system prompt di system-prompt.yaml (lalu ollama creat
 Write-Host "      2. LoRA fine-tune dengan dataset Company X (lihat blueprint)"
 Write-Host "      3. Kurangi num_ctx kalau latency terlalu tinggi"
 Write-Host ""
+# ----------------------------------------------------------------------------
+# Pause supaya window tidak langsung close
+# ----------------------------------------------------------------------------
+Write-Host "================================================================" -ForegroundColor Cyan
+Write-Host " Benchmark selesai. Tekan Enter untuk menutup window ini." -ForegroundColor Cyan
+Write-Host "================================================================" -ForegroundColor Cyan
+Read-Host "Tekan Enter untuk keluar"
