@@ -172,3 +172,30 @@ Stage Summary:
   3. Download ulang folder hermes-setup/ yang sudah di-fix (khususnya Modelfile, setup.ps1, system-prompt.yaml)
   4. Jalankan setup.ps1 lagi — sekarang akan skip install Ollama (sudah ada) dan langsung pull model yang benar
   5. Setelah pull selesai (10-15 menit), jalankan benchmark.ps1
+
+---
+Task ID: hermes-setup-fix-pull-false-error
+Agent: main (Z.ai, AI engineer persona)
+Task: Debug "[ERROR] Gagal pull model. Exit code:" di setup.ps1 user, padahal output pull bilang "success".
+
+Diagnosis:
+- User kirim output: "pulling 10c52a482013: 100% ... 4.9 GB ... verifying sha256 digest ... writing manifest ... success" lalu "[ERROR] Gagal pull model. Exit code:"
+- Model SUDAH BERHASIL di-download (4.9GB complete + sha256 verified + manifest written).
+- Bug di setup.ps1: pakai Start-Process -NoNewWindow -PassThru + WaitForExit() + ExitCode untuk capture exit code ollama pull. Di PowerShell 5.1, pattern ini sering tidak capture exit code native CLI dengan benar, $pullProcess.ExitCode return $null atau string kosong → kondisi -ne 0 terpenuhi → false error.
+- Bug kedua: fallback hint di script masih tukar nama model — "jadi 'FROM noussphere/hermes-2-pro-llama-3-8b:Q3_K_M'" padahal seharusnya hint ke adrienbrault.
+
+Work Log:
+- Verifikasi model sudah ter-download: ollama list harus show interstellarninja/hermes-2-pro-llama-3-8b 4.9GB.
+- Fix setup.ps1 pull block: ganti Start-Process pattern dengan direct call "& ollama pull $ModelName" + "$LASTEXITCODE -ne 0" check. Pattern ini lebih reliable di PowerShell 5.1 untuk native CLI.
+- Fix fallback hint bug: 1 occurrence "noussphere/hermes-2-pro-llama-3-8b:Q3_K_M" → "adrienbrault/nous-hermes2pro-llama3-8b:Q3_K_M".
+- Verifikasi setup.ps1: pull block sudah pakai "& ollama pull" + "$LASTEXITCODE" check.
+
+Stage Summary:
+- Model status: SUDAH BERHASIL di-download (4.9GB Q4_K_M), verified via output "success".
+- User TIDAK PERLU restart Windows (karena sebenarnya pull tidak butuh RAM banyak, hanya disk).
+- User TIDAK PERLU download ulang folder untuk lanjut — bisa jalankan 3 command manual:
+  1. ollama create hermes-erp-b2b-id -f .\Modelfile
+  2. Test baseline function call via Invoke-RestMethod
+  3. .\benchmark.ps1
+- Untuk run future, download ulang setup.ps1 yang sudah di-fix (bug pull-false-error tidak akan terulang).
+- Note: RAM available 0 GB saat runtime masih concern untuk inference Hermes (butuh 5-6 GB). Test baseline function call bisa crash dengan OOM. User harus tutup browser/app lain sebelum jalankan benchmark.

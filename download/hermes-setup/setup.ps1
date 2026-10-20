@@ -70,7 +70,7 @@ if ($availableRamGB -lt $RequiredAvailableRAM_GB) {
     Write-Host "         4. Restart Windows kalau masih kurang (RAM fragment perlu clear)" -ForegroundColor Yellow
     Write-Host "         5. Kalau Available < 5 GB setelah restart, fallback ke Q3_K_M:" -ForegroundColor Yellow
     Write-Host "            Edit Modelfile, ganti 'FROM adrienbrault/nous-hermes2pro-llama3-8b'" -ForegroundColor Yellow
-    Write-Host "            jadi 'FROM noussphere/hermes-2-pro-llama-3-8b:Q3_K_M'" -ForegroundColor Yellow
+    Write-Host "            jadi 'FROM adrienbrault/nous-hermes2pro-llama3-8b:Q3_K_M'" -ForegroundColor Yellow
     $continue = Read-Host "Lanjutkan saja? (y/N)"
     if ($continue -ne 'y') { exit 0 }
 }
@@ -184,11 +184,11 @@ $existingModels = $response.models | ForEach-Object { $_.name }
 if ($existingModels -contains $ModelName) {
     Write-OK "Model $ModelName sudah ada. Skip pull."
 } else {
-    Write-Step "Step 3a: Download model (silent, progress via log)..."
-    $pullProcess = Start-Process -FilePath "ollama" -ArgumentList "pull", $ModelName -NoNewWindow -PassThru
-    $pullProcess.WaitForExit()
-    if ($pullProcess.ExitCode -ne 0) {
-        Write-Err "Gagal pull model. Exit code: $($pullProcess.ExitCode)"
+    Write-Step "Step 3a: Download model (progress akan tampil langsung)..."
+    # Pakai direct call (bukan Start-Process) supaya exit code reliable di PowerShell 5.1
+    & ollama pull $ModelName
+    if ($LASTEXITCODE -ne 0) {
+        Write-Err "Gagal pull model. Exit code: $LASTEXITCODE"
         Write-Host "Coba manual: ollama pull $ModelName"
         exit 1
     }
