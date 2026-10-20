@@ -588,3 +588,38 @@ Stage Summary:
 - ZIP file: /home/z/my-project/download/hermes-agent-mastery.zip (33.7KB)
 - User download 1 file saja, extract di Windows, langsung dapat struktur folder lengkap.
 - Instruksi download + extract + install via SETUP-GUIDE.md.
+
+---
+Task ID: hermes-agent-mastery-fix-skills-not-showing
+Agent: main (Z.ai, AI engineer persona)
+Task: User install pack sukses (SOUL.md + 4 SKILL.md verified di ~/.hermes/), tapi skills tidak muncul di command palette Hermes Agent saat user ketik /. Hanya muncul /refine, /export, /help, /bundles (built-in commands).
+
+Diagnosis:
+- Dari screenshot user, command palette hanya show built-in slash commands Hermes Agent (/refine, /export, /help, /bundles), BUKAN skill list.
+- 4 custom skills (code-review, typescript-refactor, unit-test-generator, brainstorm-3-options) tidak muncul.
+- Penyebab potensial:
+  1. Hermes Agent belum re-scan folder skills setelah kita tambah file → perlu force refresh via CLI
+  2. Format SKILL.md tidak valid → frontmatter `platforms: []` (empty array) mungkin ditolak parser Hermes Agent v0.21.5
+  3. Command palette hanya show built-in, skills accessible via direct slash command `/skill-name` (tidak harus muncul di palette)
+
+Work Log:
+- Fix 4 SKILL.md: omit `platforms: []` field (Hermes Agent docs bilang "Omit to load on all platforms (default)", empty array mungkin di-tolak parser).
+- Verify frontmatter masih valid: name, description, version, author, license, metadata.hermes.tags (optional: related_skills).
+- Re-zip pack: hermes-agent-mastery.zip (33.6KB) dengan SKILL.md yang sudah di-fix.
+
+Stage Summary:
+- File fix: 4 SKILL.md di /home/z/my-project/download/hermes-agent-mastery/skills/ — omit `platforms: []`.
+- ZIP baru: /home/z/my-project/download/hermes-agent-mastery.zip (33.6KB).
+- Diagnosis terhadap command palette: built-in slash commands (/refine, /export, /help, /bundles) memang hanya show di palette. Custom skills harus diakses via direct slash command `/skill-name` di input box, atau via Skills Hub UI Hermes Agent.
+- Verify SOUL.md loaded: user harus test ketik "Halo, kenalan dulu. Apa style jawabanmu?" — harus respons Indonesia + tone pragmatic engineer + no emoji + no "Sebagai model AI".
+- Verify skill loaded via CLI: user jalankan `hermes skills list` di PowerShell — harus muncul 4 custom skills + bundled skills Hermes Agent.
+- Force refresh skills (kalau masih tidak muncul): `hermes skills opt-out` lalu `hermes skills opt-in --sync`.
+- Test direct slash: user ketik `/code-review` (bukan pilih dari palette) di input box Hermes Agent — harus trigger skill code-review.
+- Next action user:
+  1. Download ulang ZIP baru hermes-agent-mastery.zip
+  2. Extract, overwrite file lama
+  3. Re-copy SKILL.md files ke ~/.hermes/skills/ (khususnya yang code-review dengan frontmatter fix)
+  4. Test: jalankan `hermes skills list` di PowerShell untuk verify CLI side
+  5. Test: ketik `/code-review` langsung di input box Hermes Agent (bukan pilih dari palette)
+  6. Test SOUL.md: ketik "Halo, kenalan dulu" untuk verify personality
+  7. Kalau skills tetap tidak muncul: jalankan `hermes skills opt-out` lalu `hermes skills opt-in --sync` untuk force refresh
