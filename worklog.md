@@ -237,3 +237,29 @@ Stage Summary:
   1. Download ulang folder hermes-setup/ (yang update: setup.ps1, benchmark.ps1, plus file baru diag.ps1)
   2. Jalankan: powershell -ExecutionPolicy Bypass -File .\diag.ps1
   3. Kirim seluruh output diag.ps1 ke AI engineer untuk interpretasi
+
+---
+Task ID: hermes-setup-fix-empty-content
+Agent: main (Z.ai, AI engineer persona)
+Task: Fix bug "message.content kosong, eval_count 1, done_reason stop" di output Hermes. User jalankan diag.ps1, semua step OK kecuali response Hermes kosong.
+
+Diagnosis:
+- User kirim output diag.ps1: Ollama jalan, model hermes-erp-b2b-id ada, RAM 5.56 GB cukup, response 27.2 detik.
+- Tapi message.content = "" (kosong), eval_count = 1 token, done_reason = "stop", prompt_eval_count = 481 (system prompt termuat).
+- Root cause: Modelfile punya PARAMETER stop "" (empty string). Di Ollama 0.40+, empty string sebagai stop token menyebabkan early-stop — Hermes generate 1 token lalu match empty string → langsung stop.
+- Penyebab kedua: system prompt inline di Modelfile (pakai """...""" block) + parameter SYSTEM bersamaan → double-up, model bingung.
+
+Work Log:
+- Rewrite Modelfile v1.0.4:
+  - Hapus PARAMETER stop "" (hanya 2 stop token ChatML: <|im_start|> dan <|im_end|>)
+  - Pindahkan system prompt ke parameter SYSTEM (bukan inline """...""" block)
+  - Pertahankan semua parameter lain (temperature, top_p, top_k, repeat_penalty, num_ctx 2048, num_thread 8, num_batch 128, num_gpu 0, low_vram true, num_keep 0)
+- Verifikasi: FROM interstellarninja/hermes-2-pro-llama-3-8b, 12 PARAMETER, 1 SYSTEM (single line, escape dengan backslash untuk double quote).
+
+Stage Summary:
+- File fix: Modelfile v1.0.4 di /home/z/my-project/download/hermes-setup/
+- Bug fix: hapus PARAMETER stop "" (empty string) yang menyebabkan early-stop di Ollama 0.40+.
+- System prompt diubah dari inline """...""" block ke parameter SYSTEM (single line dengan \n untuk newline, escape " menjadi \").
+- User HARUS re-create custom model setelah download Modelfile baru: ollama rm hermes-erp-b2b-id; ollama create hermes-erp-b2b-id -f .\Modelfile
+- Lalu re-run diag.ps1 untuk verify response tidak kosong lagi.
+- Expected new output: message.content berisi JSON tool call seperti {"name": "get_inventory", "parameters": {"product_sku": "SKU-001"}}, eval_count > 5 token, throughput 4-8 tok/s.

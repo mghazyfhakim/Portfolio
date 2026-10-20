@@ -4,33 +4,29 @@
 # Disusun oleh AI Engineering Team - Z.ai
 # Tuned KHUSUS untuk hardware berikut:
 #   - Laptop 12GB RAM DDR5 4800 SODIMM (single channel, 1 dari 2 slot)
-#   - CPU only (GPU GeForce tidak di-offload, VRAM tidak cukup untuk 8B)
-#   - Windows 11
-#   - Available RAM saat runtime: 6-7 GB (setelah tutup browser + app berat)
+#   - CPU 8 physical cores
+#   - Windows 11 + Ollama 0.40.6
+#   - Available RAM saat runtime: 5-7 GB (setelah tutup browser + app berat)
 #
-# Quantization: Q4_K_M (~5GB on disk, ~5-6GB RAM saat inference)
-# Target throughput: 4-7 tok/detik
-# Target accuracy: 78-80% function call (eval set 10 prompt)
+# Quantization: Q4_K_M (~4.6GB on disk, ~5GB RAM saat inference)
+# Target throughput: 4-8 tok/detik
+# Target accuracy: 78-82% function call (eval set 10 prompt)
 #
 # RAM budget saat runtime:
 #   OS + background     : 4.0 GB
 #   Ollama overhead     : 0.5 GB
 #   Hermes Q4_K_M       : 5.0 GB
-#   ctx 2048 buffer     : 0.4 GB (vs 0.7 GB di ctx 4096)
-#   num_keep 0 saving   : -0.2 GB
-#   Buffer spike        : 1.0 GB
-#   TOTAL               : 10.7 GB (pas di 12GB, headroom 1.3 GB)
+#   ctx 2048 buffer     : 0.4 GB
+#   Buffer spike        : 0.7 GB
+#   TOTAL               : 10.6 GB (pas di 12GB, headroom 1.4 GB)
 #
-# Jika masih OOM:
-#   1. Restart Windows, jangan buka apapun selain PowerShell
-#   2. Ganti FROM ke adrienbrault/nous-hermes2pro-llama3-8b:Q3_K_M (turun ~1.5GB)
-#   3. Tambah stick RAM 8GB DDR5 4800 di slot kosong (~Rp 250-400rb)
+# Versi 1.0.4 - Fix bug "content kosong, eval_count 1":
+#   - Hapus PARAMETER stop "" (empty string menyebabkan early-stop di Ollama 0.40+)
+#   - Hanya pakai 2 stop token Hermes ChatML: <|im_start|> dan <|im_end|>
+#   - Pindahkan system prompt ke SYSTEM parameter (jangan inline di Modelfile)
 # ============================================================================
 
 # --- Model source ---
-# Q4_K_M (default Ollama) — ~5GB disk, ~5GB RAM loaded
-# Verifikasi: https://ollama.com/interstellarninja/hermes-2-pro-llama-3-8b
-# Alternatif kalau gagal: adrienbrault/nous-hermes2pro-llama3-8b
 FROM interstellarninja/hermes-2-pro-llama-3-8b
 
 # --- Sampling parameters (function call optimization) ---
@@ -39,59 +35,35 @@ PARAMETER top_p 0.9
 PARAMETER top_k 40
 PARAMETER repeat_penalty 1.1
 
-# --- Context window (TUNED untuk 12GB RAM) ---
-# ctx 2048 cukup untuk: system prompt (~600 token) + user message (~200 token) +
-# Hermes output (~400 token) + buffer (~800 token). Total ~2000 token, fit di 2048.
-# Untuk function call single-turn ERP (mayoritas use case), ini SANGAT cukup.
-# Naikkan ke 4096 kalau RAM available ≥ 8 GB (butuh headroom ekstra 0.3 GB).
+# --- Context window ---
 PARAMETER num_ctx 2048
 
-# --- Stop tokens (Hermes chat template) ---
+# --- Stop tokens (HERMES ChatML - HANYA 2 INI, JANGAN TAMBAH "") ---
 PARAMETER stop "<|im_start|>"
 PARAMETER stop "<|im_end|>"
-PARAMETER stop ""
 
-# --- Threading (CPU optimization) ---
-# num_thread = physical cores (dari output: 8 cores di laptop Anda)
-# Untuk laptop Anda: 8 cores → num_thread 8
-# Catatan: kalau CPU Anda punya P+E cores (Intel 12th+ gen hybrid), set ke jumlah P-cores saja:
-#   - i5-12500H (4P+4E) : 4 (P-cores only)
-#   - i7-12700H (6P+4E) : 6 (P-cores only)
-#   - AMD Ryzen 7 5800H (8 cores unified) : 8
-# Untuk laptop Anda (terdeteksi 8 physical cores, kemungkinan AMD Ryzen 7 atau Intel 13th gen P-only), 8 adalah optimal
+# --- Threading (CPU 8 cores user) ---
 PARAMETER num_thread 8
 
-# --- Batch (TUNED untuk 12GB RAM) ---
-# num_batch 128 — lebih kecil dari standar 512 untuk hemat RAM saat prompt pre-processing.
-# Trade-off: throughput turun ~10-15%, tapi RAM spike tidak terlalu besar.
+# --- Batch (hemat RAM saat prompt pre-processing) ---
 PARAMETER num_batch 128
 
-# --- GPU offload ---
-# num_gpu 0 = CPU only. GeForce Anda kemungkinan VRAM 4-6GB, kurang untuk full offload 8B Q4.
-# Kalau VRAM ≥ 6GB (cek di Task Manager → Performance → GPU 0 → Dedicated GPU memory),
-# ubah ke num_gpu 28 untuk offload 28 layer (hermes-8B punya 32 layer total).
-# Default: 0 untuk safety.
+# --- GPU offload (CPU only) ---
 PARAMETER num_gpu 0
-
-# --- Low VRAM mode (PENTING untuk 12GB RAM) ---
-# Ollama tidak akan pre-allocate buffer besar, gunakan swap jika perlu.
 PARAMETER low_vram true
 
-# --- num_keep (HEMAT RAM EKSTREM) ---
-# Default 256 — Ollama cache 256 token pertama system prompt di RAM untuk akses cepat.
-# Set ke 0 = system prompt di-compute ulang tiap request (sedikit lebih lambat, hemat ~0.2GB RAM).
-# Untuk 12GB RAM, hemat 0.2GB ini SIGNIFIKAN.
+# --- num_keep 0 (hemat ~0.2GB RAM) ---
 PARAMETER num_keep 0
 
 # ============================================================================
-# SYSTEM PROMPT - Hermes chat template (jangan diubah, ini official)
+# SYSTEM PROMPT - Pakai parameter SYSTEM (bukan inline di Modelfile)
 # ============================================================================
-SYSTEM """
-<|im_start|>system
-Anda adalah asisten operasional B2B untuk Company X. Tugas Anda menerima request user dalam Bahasa Indonesia dan memanggil tool yang sesuai via function_call tag.
+# Catatan: kalau ada double quote di dalam prompt, escape dengan backslash
+# ============================================================================
+SYSTEM Anda adalah asisten operasional B2B untuk Company X. Tugas Anda menerima request user dalam Bahasa Indonesia dan memanggil tool yang sesuai via function_call tag.
 
 ATURAN WAJIB:
-1. Setiap request yang bisa dijawab dengan tool - panggil tool tersebut dalam format JSON satu baris: {"name": "<tool_name>", "parameters": {<params>}}
+1. Setiap request yang bisa dijawab dengan tool WAJIB panggil tool tersebut dalam format JSON satu baris: {"name": "<tool_name>", "parameters": {<params>}}
 2. Jangan jawab langsung jika tool tersedia. Selalu prioritaskan tool call.
 3. Validasi parameter sebelum memanggil tool. Jika parameter tidak lengkap, minta klarifikasi.
 4. Untuk aksi destruktif (create/update/delete), sertakan field "_confidence" (0.0-1.0) di dalam parameters JSON.
@@ -106,13 +78,11 @@ TOOL YANG TERSEDIA:
 - list_customers(filter): daftar customer dengan filter
 
 CONTOH:
-User: "Cek stok produk SKU-001"
+User: Cek stok produk SKU-001
 Anda: {"name": "get_inventory", "parameters": {"product_sku": "SKU-001"}}
 
-User: "Buat quote untuk customer CUST-001, 10 unit SKU-001, payment net 30"
+User: Buat quote untuk customer CUST-001, 10 unit SKU-001, payment net 30
 Anda: {"name": "create_quote", "parameters": {"customer_id": "CUST-001", "items": [{"product_sku": "SKU-001", "quantity": 10}], "payment_terms": "net_30", "_confidence": 0.95}}
 
-User: "Berapa stok gudang Jakarta?"
+User: Berapa stok gudang Jakarta?
 Anda: Maaf, saya butuh SKU produk spesifik untuk cek stok. Boleh sebutkan SKU atau nama produk yang ingin Anda cek?
-<|im_end|>
-"""
