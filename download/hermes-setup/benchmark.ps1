@@ -32,18 +32,36 @@ function Write-Err($msg)  { Write-Host "[ERROR] $msg" -ForegroundColor Red }
 # ----------------------------------------------------------------------------
 Write-Step "Pre-flight check"
 
-# Hint untuk 12GB RAM: tutup aplikasi berat
+# # Hint untuk 12GB RAM: cek apakah Hermes sudah loaded di RAM
 $ram = (Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB
 if ($ram -le 12) {
     Write-Warn "RAM $([math]::Round($ram,1))GB terdeteksi. Untuk hasil benchmark akurat:"
     Write-Host "       TUTUP browser, IDE, Docker Desktop, dan app berat lain sebelum lanjut." -ForegroundColor Gray
+
     $osRam = Get-CimInstance Win32_OperatingSystem
     $availableRamGB = [math]::Round($osRam.FreePhysicalMemory / 1024 / 1024, 1)
-    Write-Host "       RAM available saat ini: $availableRamGB GB (idealnya ≥ 6GB untuk Q4_K_M tuned)" -ForegroundColor Gray
-    if ($availableRamGB -lt 6) {
-        Write-Err "RAM available hanya $availableRamGB GB. Hermes butuh ~6GB. Tutup dulu app berat (browser, WhatsApp, IDE) lalu re-run benchmark."
-        Write-Host "       Kalau setelah tutup app masih < 6 GB, restart Windows dulu." -ForegroundColor Yellow
-        exit 1
+    Write-Host "       RAM available saat ini: $availableRamGB GB" -ForegroundColor Gray
+
+    # Cek apakah Hermes sudah loaded di Ollama (warm model)
+    $ollamaPs = & ollama ps 2>&1 | Out-String
+    $hermesLoaded = $ollamaPs -match "hermes-erp-b2b-id"
+    if ($hermesLoaded) {
+        Write-OK "Hermes model SUDAH loaded di RAM (warm). Benchmark tidak perlu load ulang."
+        Write-Host "       Available RAM ≥ 1 GB sudah cukup untuk inference (model sudah di RAM)." -ForegroundColor Gray
+        if ($availableRamGB -lt 1) {
+            Write-Err "Available RAM hanya $availableRamGB GB. Tutup browser/app lain dulu untuk buffer inference."
+            exit 1
+        }
+    } else {
+        Write-Warn "Hermes BELUM loaded di RAM. Benchmark akan cold-start (butuh ~6GB untuk load)."
+        Write-Host "       Tip: jalankan 'ollama run hermes-erp-b2b-id' di window lain dulu, lalu re-run benchmark." -ForegroundColor Gray
+        if ($availableRamGB -lt 6) {
+            Write-Err "Available RAM hanya $availableRamGB GB. Cold-start butuh ~6GB. Alternatif:"
+            Write-Host "  1. Tutup browser/IDE/WhatsApp untuk free up RAM" -ForegroundColor Yellow
+            Write-Host "  2. Atau jalankan 'ollama run hermes-erp-b2b-id' di PowerShell lain (akan load model), lalu re-run benchmark" -ForegroundColor Yellow
+            Write-Host "  3. Atau jalankan benchmark dengan RAM rendah (mungkin lambat tapi tetap jalan): edit benchmark.ps1 line ini, ganti 'exit 1' jadi '# exit 1'" -ForegroundColor Yellow
+            exit 1
+        }
     }
 }
 

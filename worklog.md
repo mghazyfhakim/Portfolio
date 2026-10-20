@@ -294,3 +294,35 @@ Stage Summary:
   4. Re-run: powershell -ExecutionPolicy Bypass -File .\diag.ps1
   5. Verify message.content tidak kosong, eval_count > 5, function call JSON terdeteksi
 - Expected new output: {"name": "get_inventory", "parameters": {"product_sku": "SKU-001"}}
+
+---
+Task ID: hermes-setup-fix-benchmark-warm-check
+Agent: main (Z.ai, AI engineer persona)
+Task: Fix benchmark.ps1 yang stop dengan error "RAM available hanya 2.7 GB" padahal Hermes sudah loaded di RAM 5GB.
+
+Diagnosis:
+- User berhasil setup Hermes: model di-pull 4.9GB, custom model dibuat, baseline function call sukses ("get_inventory" dengan params benar).
+- Saat user jalankan benchmark.ps1, script stop di pre-flight check: "RAM available 2.7 GB < 6 GB required".
+- Root cause: script saya salah asumsi. Asumsi awal: "available RAM butuh 6GB untuk LOAD Hermes". Realita: setelah setup.ps1 selesai, Ollama service TETAP memegang model di RAM (warm cache) — itu yang pakai 5GB. Saat benchmark.ps1 start, model SUDAH di RAM, jadi available 1GB saja cukup untuk inference (tidak perlu load ulang).
+- Benchmark.ps1 pre-flight check terlalu ketat: hardcoded 6GB requirement, tidak bedakan warm vs cold start.
+
+Work Log:
+- Update pre-flight RAM check di benchmark.ps1:
+  - Jalankan `ollama ps` untuk cek apakah model hermes-erp-b2b-id ada di list loaded models
+  - Kalau LOADED (warm): threshold available ≥1GB (cukup untuk inference buffer)
+  - Kalau NOT LOADED (cold): threshold available ≥6GB (untuk load model dari disk ke RAM)
+  - Pesan error diperbaiki: kasih 3 alternatif konkret (tutup app / warm model dulu / uncomment exit)
+- Verifikasi block baru: 35 lines logic, 2 branch (warm vs cold), pesan user-friendly dengan tips spesifik.
+
+Stage Summary:
+- File fix: benchmark.ps1 di /home/z/my-project/download/hermes-setup/
+- Bug fix: pre-flight RAM check sekarang detect warm model via `ollama ps` command.
+- Logic baru: warm model = available ≥1GB, cold model = available ≥6GB.
+- Setup user sudah confirmed BERHASIL: baseline function call menghasilkan {"name": "get_inventory", "parameters": {"product_sku": "SKU-001"}} (perfect JSON tool call, eval_count 20 token, throughput 5.94 tok/s).
+- Next action user:
+  1. Download ulang benchmark.ps1 yang sudah di-fix
+  2. Pastikan model tetap warm (jangan tutup PowerShell window, jangan restart ollama service)
+  3. Jalankan: powershell -ExecutionPolicy Bypass -File .\benchmark.ps1
+  4. Script akan detect warm model, skip RAM check ketat, lanjut benchmark 10 prompt
+  5. Estimasi 10-20 menit, output: benchmark-result.json
+  6. Kirim benchmark-result.json ke AI engineer untuk interpretasi
