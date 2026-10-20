@@ -59,7 +59,7 @@ if ($ram -lt $MinimumRAM_GB) {
 
 # Cek RAM yang saat ini tersedia (available, bukan total)
 $osRam = Get-CimInstance Win32_OperatingSystem
-$availableRamGB = [math]::Round($osRam.FreePhysicalMemory / 1MB / 1024, 1)
+$availableRamGB = [math]::Round($osRam.FreePhysicalMemory / 1024 / 1024, 1)
 Write-Host "       RAM saat ini tersedia: $availableRamGB GB (idealnya ≥$RequiredAvailableRAM_GB GB untuk Hermes Q4_K_M tuned)" -ForegroundColor Gray
 if ($availableRamGB -lt $RequiredAvailableRAM_GB) {
     Write-Warn "RAM available hanya $availableRamGB GB. Hermes butuh ~$RequiredAvailableRAM_GB GB."

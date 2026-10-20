@@ -38,7 +38,7 @@ if ($ram -le 12) {
     Write-Warn "RAM $([math]::Round($ram,1))GB terdeteksi. Untuk hasil benchmark akurat:"
     Write-Host "       TUTUP browser, IDE, Docker Desktop, dan app berat lain sebelum lanjut." -ForegroundColor Gray
     $osRam = Get-CimInstance Win32_OperatingSystem
-    $availableRamGB = [math]::Round($osRam.FreePhysicalMemory / 1MB / 1024, 1)
+    $availableRamGB = [math]::Round($osRam.FreePhysicalMemory / 1024 / 1024, 1)
     Write-Host "       RAM available saat ini: $availableRamGB GB (idealnya ≥ 6GB untuk Q4_K_M tuned)" -ForegroundColor Gray
     if ($availableRamGB -lt 6) {
         Write-Err "RAM available hanya $availableRamGB GB. Hermes butuh ~6GB. Tutup dulu app berat (browser, WhatsApp, IDE) lalu re-run benchmark."

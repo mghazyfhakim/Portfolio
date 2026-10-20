@@ -199,3 +199,41 @@ Stage Summary:
   3. .\benchmark.ps1
 - Untuk run future, download ulang setup.ps1 yang sudah di-fix (bug pull-false-error tidak akan terulang).
 - Note: RAM available 0 GB saat runtime masih concern untuk inference Hermes (butuh 5-6 GB). Test baseline function call bisa crash dengan OOM. User harus tutup browser/app lain sebelum jalankan benchmark.
+
+---
+Task ID: hermes-setup-fix-ram-formula
+Agent: main (Z.ai, AI engineer persona)
+Task: Fix bug RAM detection di setup.ps1 dan benchmark.ps1 yang detect "0 GB" padahal aktual 7.4 GB. User juga report Invoke-RestMethod return kosong.
+
+Diagnosis:
+- User kirim screenshot Task Manager: Available 7.4 GB (OK), total RAM 11.8 GB.
+- Tapi setup.ps1 dan benchmark.ps1 print "RAM saat ini tersedia: 0 GB".
+- Root cause: rumus konversi salah. FreePhysicalMemory di WMI Win32_OperatingSystem return dalam KILOBYTES (KB). Saya pakai "/ 1MB / 1024" yang di PowerShell 5.1 = KB / 1,048,576 / 1024 = hasil dibagi 1 miliar ≈ 0.
+- Rumus benar: "/ 1024 / 1024" (KB → MB → GB).
+- Invoke-RestMethod return kosong: bisa karena OOM (kalau RAM available <5GB saat inference) atau model belum dibuat. Saya buat diag.ps1 untuk debug step-by-step dengan verbose output.
+
+Work Log:
+- Fix setup.ps1: rumus RAM 1MB/1024 → 1024/1024 (1 replacement)
+- Fix benchmark.ps1: rumus RAM 1MB/1024 → 1024/1024 (1 replacement)
+- Buat diag.ps1 baru (6KB, 128 lines) dengan BOM+CRLF untuk debug comprehensive:
+  - DIAG 1: Cek Ollama service jalan (Invoke-RestMethod /api/tags)
+  - DIAG 2: Cek custom model hermes-erp-b2b-id ada (validasi dengan list)
+  - DIAG 3: Cek RAM available pakai rumus benar (1024/1024)
+  - DIAG 4: Test function call dengan FULL VERBOSE OUTPUT - print entire response object, message.content, dan metrics (prompt tokens, generation tokens, latency, throughput)
+  - Error handling dengan 3 kemungkinan penyebab yang jelas (OOM, timeout, model corrupt)
+- Validasi: BOM+CRLF OK di semua 3 file, rumus RAM benar di setup.ps1/benchmark.ps1/diag.ps1.
+
+Stage Summary:
+- Files fix: setup.ps1, benchmark.ps1 (rumus RAM), diag.ps1 baru (verbose debug).
+- Bug RAM detection terselesaikan: sekarang akan kasih angka benar (7.4 GB di user, bukan 0 GB).
+- Invoke-RestMethod kosong: user harus jalankan diag.ps1 untuk dapat verbose output. Output lengkap akan tunjukkan:
+  - Apakah model ditemukan
+  - Apakah RAM cukup
+  - Full response object (ConvertTo-Json -Depth 10)
+  - message.content (text Hermes)
+  - Metrics (token count, latency, throughput)
+  - Error message spesifik kalau gagal (OOM / timeout / model corrupt)
+- Next action user:
+  1. Download ulang folder hermes-setup/ (yang update: setup.ps1, benchmark.ps1, plus file baru diag.ps1)
+  2. Jalankan: powershell -ExecutionPolicy Bypass -File .\diag.ps1
+  3. Kirim seluruh output diag.ps1 ke AI engineer untuk interpretasi
