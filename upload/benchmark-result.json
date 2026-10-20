@@ -1,0 +1,218 @@
+﻿{
+    "timestamp":  "2026-10-20T14:33:25.5143048+07:00",
+    "model":  "hermes-erp-b2b-id",
+    "hardware":  {
+                     "ram_gb":  11.8,
+                     "cpu_cores":  8
+                 },
+    "sampling_parameters":  {
+                                "num_ctx":  2048,
+                                "temperature":  0.3
+                            },
+    "metrics":  {
+                    "function_call_accuracy_pct":  70,
+                    "avg_throughput_tps":  6.47,
+                    "total_duration_seconds":  72.4,
+                    "avg_latency_first_token_ms":  873,
+                    "correct_count":  7,
+                    "total_count":  10
+                },
+    "per_prompt_results":  [
+                               {
+                                   "prompt_id":  "E01",
+                                   "prompt":  "Cek stok produk SKU-001",
+                                   "expected_tool_name":  "get_inventory",
+                                   "expected_params":  {
+                                                           "product_sku":  "SKU-001"
+                                                       },
+                                   "response":  "{\"name\": \"get_inventory\", \"parameters\": {\"product_sku\": \"SKU-001\"}}",
+                                   "is_correct":  true,
+                                   "validation_errors":  [
+
+                                                         ],
+                                   "latency_first_token":  165,
+                                   "throughput_tps":  6.56,
+                                   "total_tokens":  495,
+                                   "prompt_tokens":  475,
+                                   "generation_tokens":  20,
+                                   "duration_seconds":  3.25
+                               },
+                               {
+                                   "prompt_id":  "E02",
+                                   "prompt":  "Tolong cek ketersediaan stok untuk SKU-AB12",
+                                   "expected_tool_name":  "get_inventory",
+                                   "expected_params":  {
+                                                           "product_sku":  "SKU-AB12"
+                                                       },
+                                   "response":  "{\"name\": \"get_inventory\", \"parameters\": {\"product_sku\": \"SKU-AB12\"}}",
+                                   "is_correct":  true,
+                                   "validation_errors":  [
+
+                                                         ],
+                                   "latency_first_token":  850,
+                                   "throughput_tps":  6.56,
+                                   "total_tokens":  504,
+                                   "prompt_tokens":  483,
+                                   "generation_tokens":  21,
+                                   "duration_seconds":  4.07
+                               },
+                               {
+                                   "prompt_id":  "E03",
+                                   "prompt":  "Cari produk yang namanya mengandung kata kopi arabika",
+                                   "expected_tool_name":  "search_product",
+                                   "expected_params":  {
+                                                           "query":  "kopi arabika"
+                                                       },
+                                   "response":  "{\"name\": \"search_product\", \"parameters\": {\"query\": \"kopi arabika\"}}",
+                                   "is_correct":  true,
+                                   "validation_errors":  [
+
+                                                         ],
+                                   "latency_first_token":  852,
+                                   "throughput_tps":  6.67,
+                                   "total_tokens":  501,
+                                   "prompt_tokens":  481,
+                                   "generation_tokens":  20,
+                                   "duration_seconds":  3.86
+                               },
+                               {
+                                   "prompt_id":  "E04",
+                                   "prompt":  "Saya mau cari produk bahan kimia, tampilkan 5 hasil pertama",
+                                   "expected_tool_name":  "search_product",
+                                   "expected_params":  {
+                                                           "query":  "bahan kimia",
+                                                           "limit":  5
+                                                       },
+                                   "response":  "Untuk mencari produk bahan kimia, silakan berikan kata kunci atau spesifikasi lebih rinci seperti jenis bahan kimia, merek, atau aplikasi yang diinginkan. Dengan informasi tersebut, saya dapat memberikan hasil pencarian yang lebih akurat.",
+                                   "is_correct":  false,
+                                   "validation_errors":  [
+                                                             "Tool name \u0027search_product\u0027 not found in response"
+                                                         ],
+                                   "latency_first_token":  990,
+                                   "throughput_tps":  6.35,
+                                   "total_tokens":  547,
+                                   "prompt_tokens":  485,
+                                   "generation_tokens":  62,
+                                   "duration_seconds":  10.77
+                               },
+                               {
+                                   "prompt_id":  "E05",
+                                   "prompt":  "Buat penawaran untuk customer CUST-001, isinya 10 unit SKU-001 dengan termin pembayaran net 30",
+                                   "expected_tool_name":  "create_quote",
+                                   "expected_params":  {
+                                                           "customer_id":  "CUST-001",
+                                                           "payment_terms":  "net_30"
+                                                       },
+                                   "response":  "Untuk membuat penawaran untuk customer CUST-001 dengan 10 unit SKU-001 dan termin pembayaran net 30, silakan berikan informasi tambahan apakah Anda ingin menambahkan produk lain dalam pesanan ini. Jika tidak ada produk lain, Anda dapat memberi tahu saya nama produk dan kuantitas yang diinginkan untuk memproses permintaan penawaran lebih lanjut.",
+                                   "is_correct":  false,
+                                   "validation_errors":  [
+                                                             "Tool name \u0027create_quote\u0027 not found in response"
+                                                         ],
+                                   "latency_first_token":  1218,
+                                   "throughput_tps":  6.2,
+                                   "total_tokens":  584,
+                                   "prompt_tokens":  494,
+                                   "generation_tokens":  90,
+                                   "duration_seconds":  15.76
+                               },
+                               {
+                                   "prompt_id":  "E06",
+                                   "prompt":  "Tolong buatkan quote untuk CUST-045, produknya 25 unit SKU-COFFEE-001 dan 15 unit SKU-COFFEE-002, termin cod",
+                                   "expected_tool_name":  "create_quote",
+                                   "expected_params":  {
+                                                           "customer_id":  "CUST-045",
+                                                           "payment_terms":  "cod"
+                                                       },
+                                   "response":  "{\"name\": \"create_quote\", \"parameters\": {\"customer_id\": \"CUST-045\", \"items\": [{\"product_sku\": \"SKU-COFFEE-001\", \"quantity\": 25}, {\"product_sku\": \"SKU-COFFEE-002\", \"quantity\": 15}], \"payment_terms\": \"cod\", \"_confidence\": 0.95}}",
+                                   "is_correct":  true,
+                                   "validation_errors":  [
+
+                                                         ],
+                                   "latency_first_token":  1642,
+                                   "throughput_tps":  6.17,
+                                   "total_tokens":  579,
+                                   "prompt_tokens":  504,
+                                   "generation_tokens":  75,
+                                   "duration_seconds":  13.82
+                               },
+                               {
+                                   "prompt_id":  "E07",
+                                   "prompt":  "Tampilkan invoice INV-202610-001",
+                                   "expected_tool_name":  "get_invoice",
+                                   "expected_params":  {
+                                                           "invoice_id":  "INV-202610-001"
+                                                       },
+                                   "response":  "{\"name\": \"get_invoice\", \"parameters\": {\"invoice_id\": \"INV-202610-001\"}}",
+                                   "is_correct":  true,
+                                   "validation_errors":  [
+
+                                                         ],
+                                   "latency_first_token":  648,
+                                   "throughput_tps":  6.59,
+                                   "total_tokens":  499,
+                                   "prompt_tokens":  476,
+                                   "generation_tokens":  23,
+                                   "duration_seconds":  4.15
+                               },
+                               {
+                                   "prompt_id":  "E08",
+                                   "prompt":  "Saya mau lihat detail dari faktur nomor INV-202609-045",
+                                   "expected_tool_name":  "get_invoice",
+                                   "expected_params":  {
+                                                           "invoice_id":  "INV-202609-045"
+                                                       },
+                                   "response":  "{\"name\": \"get_invoice\", \"parameters\": {\"invoice_id\": \"INV-202609-045\"}}",
+                                   "is_correct":  true,
+                                   "validation_errors":  [
+
+                                                         ],
+                                   "latency_first_token":  949,
+                                   "throughput_tps":  6.58,
+                                   "total_tokens":  507,
+                                   "prompt_tokens":  484,
+                                   "generation_tokens":  23,
+                                   "duration_seconds":  4.46
+                               },
+                               {
+                                   "prompt_id":  "E09",
+                                   "prompt":  "Tampilkan customer di industri manufacturing yang masih aktif",
+                                   "expected_tool_name":  "list_customers",
+                                   "expected_params":  {
+                                                           "filter":  {
+                                                                          "industry":  "manufacturing",
+                                                                          "active_only":  true
+                                                                      }
+                                                       },
+                                   "response":  "{\"name\": \"list_customers\", \"parameters\": {\"filter\": \"industry:manufacturing;status:active\"}}",
+                                   "is_correct":  true,
+                                   "validation_errors":  [
+
+                                                         ],
+                                   "latency_first_token":  703,
+                                   "throughput_tps":  6.56,
+                                   "total_tokens":  501,
+                                   "prompt_tokens":  476,
+                                   "generation_tokens":  25,
+                                   "duration_seconds":  4.53
+                               },
+                               {
+                                   "prompt_id":  "E10",
+                                   "prompt":  "Berapa stok gudang Jakarta?",
+                                   "expected_tool_name":  null,
+                                   "expected_params":  {
+
+                                                       },
+                                   "response":  "Maaf, saya butuh informasi lebih spesifik tentang produk yang Anda maksudkan. Harap sebutkan SKU atau nama produk untuk mengambil data stok dengan akurat. Terima kasih!",
+                                   "is_correct":  false,
+                                   "validation_errors":  [
+                                                             "Tool name \u0027\u0027 not found in response"
+                                                         ],
+                                   "latency_first_token":  717,
+                                   "throughput_tps":  6.42,
+                                   "total_tokens":  521,
+                                   "prompt_tokens":  476,
+                                   "generation_tokens":  45,
+                                   "duration_seconds":  7.74
+                               }
+                           ]
+}

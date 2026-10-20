@@ -150,10 +150,22 @@ foreach ($prompt in $evalSet.prompts) {
         $throughput = if ($response.eval_duration -gt 0) { [math]::Round($evalCount / ($response.eval_duration / 1e9), 2) } else { 0 }
 
         # Validasi function call: cek apakah expected_tool_name muncul di response
+        # Handle 3 case:
+        #   1. expected_tool_name = null (trap case E10): PASS jika response TIDAK mengandung tool call
+        #   2. expected_tool_name ada: cek tool name + parameter match
         $isCorrect = $false
         $validationErrors = @()
 
-        if ($responseText -match ('"name"\s*:\s*"' + [regex]::Escape($prompt.expected_tool_name) + '"')) {
+        if ($null -eq $prompt.expected_tool_name -or $prompt.expected_tool_name -eq "") {
+            # TRAP CASE: response seharusnya TIDAK mengandung tool call (klarifikasi)
+            if ($responseText -notmatch '"name"\s*:\s*"\w+"') {
+                $isCorrect = $true
+                $totalCorrect++
+                Write-Host "  [trap case] Response tidak mengandung tool call (BENAR - klarifikasi)" -ForegroundColor DarkGray
+            } else {
+                $validationErrors += "Expected NO tool call (trap case), but response contains tool call JSON"
+            }
+        } elseif ($responseText -match ('"name"\s*:\s*"' + [regex]::Escape($prompt.expected_tool_name) + '"')) {
             # Tool name benar - sekarang cek parameter
             $allParamsMatch = $true
             foreach ($param in $prompt.expected_params.PSObject.Properties) {

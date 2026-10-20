@@ -10,13 +10,13 @@
 # Format: Ollama menerima ini sebagai SYSTEM parameter di /api/chat
 # ============================================================================
 
-version: "1.0.3"
+version: "1.0.6"
 last_updated: "2026-10-20"
 author: "AI Engineering Team - Z.ai"
 target_model: "hermes-2-pro-llama-3-8b"
 use_case: "function_call_erp_b2b"
 language: "id-ID"
-hardware_target: "Laptop 12GB RAM DDR5 4800 SODIMM single-channel, CPU 8 physical cores, Windows 11, Ollama 0.40.6"
+hardware_target: "Laptop 12GB RAM DDR5 4800 SODIMM single-channel, CPU 8 physical cores, Windows 11, Ollama 0.40.6 (warm model cache aktif)"
 
 # ----------------------------------------------------------------------------
 # System Prompt (raw text - akan di-inject ke Modelfile & API call)
@@ -73,6 +73,8 @@ parameters:
   num_gpu: 0
   low_vram: true
   num_keep: 0           # set ke 0 untuk hemat ~0.2GB (system prompt re-compute tiap request)
+  # Benchmark v1.0.5 result: 70% accuracy (7/10), 6.47 tok/s, 873ms first-token
+  # Target v1.0.6: 78-82% accuracy dengan tune system prompt
 
 # ----------------------------------------------------------------------------
 # Stop tokens (Hermes chat template)
@@ -93,6 +95,18 @@ ab_test:
 # Changelog
 # ----------------------------------------------------------------------------
 changelog:
+  - version: "1.0.6"
+    date: "2026-10-20"
+    changes:
+      - Tune system prompt untuk fix 2 failure (E04, E05) dari benchmark result 70%
+      - Tambah aturan #3 (versi baru): langsung panggil tool kalau semua parameter required sudah ada, jangan minta konfirmasi
+      - Tambah aturan #7: minta klarifikasi HANYA jika parameter required tidak ada sama sekali
+      - Tambah aturan #8: jangan minta klarifikasi untuk parameter opsional (limit di search_product)
+      - Tambah aturan #9: gunakan inferensi dari konteks (misal "5 hasil" = limit:5)
+      - Tambah 2 contoh baru: search_product dengan limit, create_quote single item
+      - Aturan #5 diperjelas: parameter bisa di-infer dari konteks = pakai, bukan minta klarifikasi
+      - Setiap tool di TOOL YANG TERSEDIA diberi annotation parameter WAJIB vs OPSIONAL
+      - Fix bug benchmark.ps1 trap case E10: expected_tool_name=null sekarang PASS jika response tidak mengandung tool call
   - version: "1.0.3"
     date: "2026-10-20"
     changes:
