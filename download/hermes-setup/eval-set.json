@@ -7,7 +7,7 @@
   "target_model": "hermes-erp-b2b-id",
   "sampling": {
     "temperature": 0.3,
-    "num_ctx": 4096
+    "num_ctx": 2048
   },
   "prompts": [
     {

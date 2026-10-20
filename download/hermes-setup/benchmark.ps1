@@ -39,9 +39,10 @@ if ($ram -le 12) {
     Write-Host "       TUTUP browser, IDE, Docker Desktop, dan app berat lain sebelum lanjut." -ForegroundColor Gray
     $osRam = Get-CimInstance Win32_OperatingSystem
     $availableRamGB = [math]::Round($osRam.FreePhysicalMemory / 1MB / 1024, 1)
-    Write-Host "       RAM available saat ini: $availableRamGB GB (idealnya ≥ 7GB)" -ForegroundColor Gray
-    if ($availableRamGB -lt 7) {
-        Write-Err "RAM available hanya $availableRamGB GB. Hermes butuh ~7GB. Tutup dulu app berat lalu re-run benchmark."
+    Write-Host "       RAM available saat ini: $availableRamGB GB (idealnya ≥ 6GB untuk Q4_K_M tuned)" -ForegroundColor Gray
+    if ($availableRamGB -lt 6) {
+        Write-Err "RAM available hanya $availableRamGB GB. Hermes butuh ~6GB. Tutup dulu app berat (browser, WhatsApp, IDE) lalu re-run benchmark."
+        Write-Host "       Kalau setelah tutup app masih < 6 GB, restart Windows dulu." -ForegroundColor Yellow
         exit 1
     }
 }
@@ -100,7 +101,7 @@ foreach ($prompt in $evalSet.prompts) {
         stream   = $false
         options  = @{
             temperature = 0.3
-            num_ctx     = 4096
+            num_ctx     = 2048
         }
     } | ConvertTo-Json -Depth 10
 
@@ -234,7 +235,7 @@ $resultSummary = [PSCustomObject]@{
     }
     sampling_parameters   = @{
         temperature = 0.3
-        num_ctx     = 4096
+        num_ctx     = 2048
     }
     metrics               = @{
         function_call_accuracy_pct = $accuracy

@@ -2,64 +2,89 @@
 # Ollama Modelfile - Hermes-2-Pro-Llama-3-8B (ERP B2B Function Calling)
 # ============================================================================
 # Disusun oleh AI Engineering Team - Z.ai
-# Optimized untuk: CPU 12GB RAM (budget ketat), Windows, function call ERP B2B
-# Quantization: Q4_K_M (~5GB on disk, ~5-6GB RAM saat inference dengan ctx 4096)
-# Target throughput: 4-8 tok/detik pada Intel i5/i7 12th gen
-# RAM budget: OS 4GB + Hermes 6-7GB + buffer 1GB = 11-12GB (pas di 12GB)
-# Jika masih OOM, fallback ke Q3_K_M (edit FROM line, lihat README FAQ)
+# Tuned KHUSUS untuk hardware berikut:
+#   - Laptop 12GB RAM DDR5 4800 SODIMM (single channel, 1 dari 2 slot)
+#   - CPU only (GPU GeForce tidak di-offload, VRAM tidak cukup untuk 8B)
+#   - Windows 11
+#   - Available RAM saat runtime: 6-7 GB (setelah tutup browser + app berat)
+#
+# Quantization: Q4_K_M (~5GB on disk, ~5-6GB RAM saat inference)
+# Target throughput: 4-7 tok/detik
+# Target accuracy: 78-80% function call (eval set 10 prompt)
+#
+# RAM budget saat runtime:
+#   OS + background     : 4.0 GB
+#   Ollama overhead     : 0.5 GB
+#   Hermes Q4_K_M       : 5.0 GB
+#   ctx 2048 buffer     : 0.4 GB (vs 0.7 GB di ctx 4096)
+#   num_keep 0 saving   : -0.2 GB
+#   Buffer spike        : 1.0 GB
+#   TOTAL               : 10.7 GB (pas di 12GB, headroom 1.3 GB)
+#
+# Jika masih OOM:
+#   1. Restart Windows, jangan buka apapun selain PowerShell
+#   2. Ganti FROM ke noussphere/hermes-2-pro-llama-3-8b:Q3_K_M (turun ~1.5GB)
+#   3. Tambah stick RAM 8GB DDR5 4800 di slot kosong (~Rp 250-400rb)
 # ============================================================================
 
 # --- Model source ---
-# Ollama sudah punya noussphere/hermes-2-pro-llama-3-8b (Q4_K_M built-in)
-# Alternatif jika RAM kurang: noussphere/hermes-2-pro-llama-3-8b:Q3_K_M (~3.5GB)
+# Q4_K_M (default Ollama) — ~5GB disk, ~5GB RAM loaded
 FROM noussphere/hermes-2-pro-llama-3-8b
 
 # --- Sampling parameters (function call optimization) ---
-# Temperature rendah untuk deterministic tool call, tetap ada ruang kreatif untuk fallback chat
 PARAMETER temperature 0.3
-# Top-p moderate: tidak terlalu narrow (0.1) supaya tidak rigid, tidak terlalu lebar (0.9) supaya tidak hallucinate
 PARAMETER top_p 0.9
-# Top-k 40 (default Hermes) - batasi vocabulary sampling
 PARAMETER top_k 40
-# Repeat penalty 1.1 - mencegah loop tanpa over-penalize JSON yang repetitif
 PARAMETER repeat_penalty 1.1
 
-# --- Context window ---
-# num_ctx 4096 = sweet spot untuk 12GB RAM. Tool schema 5 tool + system prompt ~1500 token,
-# sisa ~2500 token untuk conversation history + user input + Hermes output. Cukup untuk function call ERP.
-# Jika RAM ≥16GB, naikkan ke 8192 untuk conversation history lebih panjang.
-PARAMETER num_ctx 4096
+# --- Context window (TUNED untuk 12GB RAM) ---
+# ctx 2048 cukup untuk: system prompt (~600 token) + user message (~200 token) +
+# Hermes output (~400 token) + buffer (~800 token). Total ~2000 token, fit di 2048.
+# Untuk function call single-turn ERP (mayoritas use case), ini SANGAT cukup.
+# Naikkan ke 4096 kalau RAM available ≥ 8 GB (butuh headroom ekstra 0.3 GB).
+PARAMETER num_ctx 2048
 
 # --- Stop tokens (Hermes chat template) ---
 PARAMETER stop "<|im_start|>"
 PARAMETER stop "<|im_end|>"
-PARAMETER stop "<|endoftext|>"
+PARAMETER stop ""
 
 # --- Threading (CPU optimization) ---
-# num_thread = jumlah physical cores (BUKAN logical/hyperthreading)
-# Cek via PowerShell: (Get-CimInstance Win32_Processor).NumberOfCores
-# Default: 6 (cocok untuk i5 12th gen dengan 6 P-cores)
-# Untuk i7 12th gen (8P+4E cores), set ke 8 (gunakan P-cores saja, E-cores menurunkan throughput)
-# Penting untuk 12GB RAM: num_thread terlalu tinggi akan bikin RAM naik (thread-local buffer). Jangan overshoot.
+# num_thread = physical cores. Laptop Anda kemungkinan 6-8 cores (cek di PowerShell:
+# (Get-CimInstance Win32_Processor).NumberOfCores)
+# Default 6 — sesuaikan kalau CPU Anda punya P+E cores (Intel 12th+ gen):
+#   - i5-12400 (6P)         : 6
+#   - i5-12500H (4P+4E)     : 4 (pakai P-cores saja)
+#   - i7-12700H (6P+4E)     : 6 (pakai P-cores saja)
+#   - i7-1360P (4P+8E)      : 4 (pakai P-cores saja)
+#   - AMD Ryzen 5 5600H (6) : 6
+#   - AMD Ryzen 7 5800H (8) : 8
 PARAMETER num_thread 6
 
-# --- Batch & GPU offload ---
-# num_batch: jumlah token di-process per batch. Lebih besar = throughput naik tapi RAM naik.
-# Untuk 12GB RAM, 256 adalah safe. Naikkan ke 512 jika RAM ≥16GB.
-PARAMETER num_batch 256
-# num_gpu 0 = CPU only (sesuai hardware target: CPU 12GB tanpa GPU)
+# --- Batch (TUNED untuk 12GB RAM) ---
+# num_batch 128 — lebih kecil dari standar 512 untuk hemat RAM saat prompt pre-processing.
+# Trade-off: throughput turun ~10-15%, tapi RAM spike tidak terlalu besar.
+PARAMETER num_batch 128
+
+# --- GPU offload ---
+# num_gpu 0 = CPU only. GeForce Anda kemungkinan VRAM 4-6GB, kurang untuk full offload 8B Q4.
+# Kalau VRAM ≥ 6GB (cek di Task Manager → Performance → GPU 0 → Dedicated GPU memory),
+# ubah ke num_gpu 28 untuk offload 28 layer (hermes-8B punya 32 layer total).
+# Default: 0 untuk safety.
 PARAMETER num_gpu 0
-# low_vram true = Ollama tidak akan pre-allocate besar-besaran (PENTING untuk 12GB)
+
+# --- Low VRAM mode (PENTING untuk 12GB RAM) ---
+# Ollama tidak akan pre-allocate buffer besar, gunakan swap jika perlu.
 PARAMETER low_vram true
-# num_keep = jumlah token system prompt yang selalu di-keep di cache. Default 256.
-# Set ke 0 untuk hemat RAM maksimal (system prompt akan re-compute setiap request - sedikit lebih lambat)
-# Hanya uncomment jika OOM masih terjadi setelah semua optimasi di atas:
-# PARAMETER num_keep 0
+
+# --- num_keep (HEMAT RAM EKSTREM) ---
+# Default 256 — Ollama cache 256 token pertama system prompt di RAM untuk akses cepat.
+# Set ke 0 = system prompt di-compute ulang tiap request (sedikit lebih lambat, hemat ~0.2GB RAM).
+# Untuk 12GB RAM, hemat 0.2GB ini SIGNIFIKAN.
+PARAMETER num_keep 0
 
 # ============================================================================
-# SYSTEM PROMPT
-# Hermes menggunakan <|im_start|> dan <|im_end|> sebagai chat boundary.
-# Jangan diubah - ini official chat template dari NousResearch.
+# SYSTEM PROMPT - Hermes chat template (jangan diubah, ini official)
 # ============================================================================
 SYSTEM """
 <|im_start|>system

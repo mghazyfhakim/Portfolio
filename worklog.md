@@ -80,3 +80,34 @@ Stage Summary:
 - Fallback path jika OOM: tutup app → ctx 2048 → num_keep 0 → Q3_K_M (~3.5GB) → restart Windows.
 - Prinsip frugal tetap: zero cost, hardware minim tetap jalan, kualitas terukur via eval set 10 prompt.
 - Next action user: download folder hermes-setup/ yang sudah di-update, jalankan setup.ps1 (akan warning RAM 12GB + minta tutup app berat), lalu benchmark.ps1. Jika accuracy ≥80% → siap integrate. Jika OOM terjadi → ikuti 5 step troubleshooting di README.
+
+---
+Task ID: hermes-setup-tuned-12gb-concrete
+Agent: main (Z.ai, AI engineer persona)
+Task: Tuning lanjutan paket hermes-setup berdasarkan hardware konkret user (12GB DDR5 4800 SODIMM single-channel, dengan GPU GeForce tidak di-offload). User kirim screenshot Task Manager dengan Available RAM 6.6 GB setelah tutup sebagian Edge.
+
+Work Log:
+- Baca screenshot Task Manager user: Available 6.6 GB, In use 5.2 GB, Committed 7.3/26.3 GB, single-channel DDR5 4800 SODIMM, GPU GeForce (VRAM tidak disebut).
+- Baca screenshot Edge: 22 process masih jalan, total 1,393 MB — peluang free 2GB lagi kalau Edge dibersihkan total.
+- Hitung ulang budget RAM dengan Available 6.6 GB:
+  - Q4_K_M standard (ctx 4096): need 7 GB → marginal, risk OOM saat benchmark
+  - Q4_K_M tuned (ctx 2048 + num_batch 128 + num_keep 0): need 5.5 GB → aman, headroom 1.1 GB
+  - Q3_K_M: need 5 GB → aman tapi accuracy turun 5-8%
+- Keputusan: pakai Q4_K_M tuned untuk jaga akurasi 78-80%.
+- Update Modelfile v1.0.2: num_ctx 4096→2048, num_batch 256→128, tambah PARAMETER num_keep 0 (hemat 0.2GB ekstra, system prompt re-compute tiap request), tambah komentar hardware konkret + tuning guide num_thread per CPU model (i5/i7 12-13gen, AMD Ryzen 5/7).
+- Update setup.ps1: MinimumRAM_GB 12→8 (hard minimum), RequiredAvailableRAM_GB 7→6 (untuk Q4_K_M tuned). Pre-flight check sekarang kasih 5-step solusi konkret kalau RAM available kurang (tutup browser → chat app → IDE → restart → fallback Q3_K_M).
+- Update benchmark.ps1: pre-flight RAM check threshold 7→6 GB. Sampling num_ctx 4096→2048 (konsisten dengan Modelfile).
+- Update eval-set.json: sampling.num_ctx 4096→2048.
+- Update system-prompt.yaml: version 1.0.1→1.0.2, hardware_target lebih spesifik (Laptop 12GB DDR5 4800 SODIMM single-channel, CPU-only, Windows 11), parameters num_ctx/batch/num_keep update, changelog entry baru dengan delta RAM saving rinci.
+- Validasi: JSON lulus parse, YAML lulus parse (v1.0.2, 3 param kunci sesuai), Modelfile 14 PARAMETER konsisten dengan YAML.
+
+Stage Summary:
+- Deliverable: 7 file di /home/z/my-project/download/hermes-setup/ sudah di-retune untuk hardware konkret user.
+- Hardware target final: Laptop 12GB RAM DDR5 4800 SODIMM single-channel, CPU-only (GPU tidak di-offload), Windows 11.
+- Config final: Q4_K_M (akurasi prioritas) + num_ctx 2048 + num_batch 128 + num_keep 0 + low_vram true + num_thread 6.
+- RAM budget final: 4GB OS + 5GB Hermes + 0.4GB ctx + 0.5GB overhead + 1GB spike buffer = 10.9 GB (pas di 12GB, headroom 1.1 GB).
+- Required Available RAM saat runtime: ≥6 GB (sebelumnya ≥7 GB) — lebih longgar 1 GB berkat tuning num_ctx + num_batch + num_keep.
+- Target metrics: function call accuracy ≥80%, latency first-token <5000ms, throughput 4-7 tok/s.
+- Fallback jika OOM saat runtime: (1) bersihkan Edge total 2GB, (2) restart Windows, (3) turunkan num_ctx ke 1024, (4) fallback ke Q3_K_M (~3.5GB), (5) tambah stick RAM 8GB DDR5 4800 (~Rp 250-400rb) di slot kosong.
+- Total RAM saving dari v1.0.0 (16GB baseline) ke v1.0.2 (12GB concrete): ctx 8192→2048 (-0.8GB), batch 512→128 (-0.3GB), num_keep 256→0 (-0.2GB) = total -1.3 GB.
+- Next action user: (1) bersihkan Edge process via PowerShell "Get-Process msedge | Stop-Process -Force", (2) verify Available ≥ 6 GB di Task Manager, (3) jalankan setup.ps1, (4) jalankan benchmark.ps1, (5) kirim benchmark-result.json ke AI engineer untuk interpretasi.

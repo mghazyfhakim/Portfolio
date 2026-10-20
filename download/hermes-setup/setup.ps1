@@ -21,8 +21,9 @@ $ModelName = "noussphere/hermes-2-pro-llama-3-8b"
 $CustomModelName = "hermes-erp-b2b-id"
 $OllamaInstallPath = "$env:USERPROFILE\AppData\Local\Programs\Ollama"
 $ModelfileSource = ".\Modelfile"   # File Modelfile di folder yang sama dengan script ini
-$MinimumRAM_GB = 12                # Hard minimum untuk Q4_K_M + ctx 4096
-$RecommendedRAM_GB = 16            # Ideal jika ada headroom
+$MinimumRAM_GB = 8                 # Hard minimum (Q4_K_M tuned atau Q3_K_M)
+$RecommendedRAM_GB = 16             # Ideal jika ada headroom
+$RequiredAvailableRAM_GB = 6       # Saat runtime, available harus ≥6GB untuk Q4_K_M tuned
 
 # Warna output
 function Write-Step($msg) { Write-Host "[STEP] $msg" -ForegroundColor Cyan }
@@ -56,9 +57,17 @@ if ($ram -lt $MinimumRAM_GB) {
 # Cek RAM yang saat ini tersedia (available, bukan total)
 $osRam = Get-CimInstance Win32_OperatingSystem
 $availableRamGB = [math]::Round($osRam.FreePhysicalMemory / 1MB / 1024, 1)
-Write-Host "       RAM saat ini tersedia: $availableRamGB GB (idealnya ≥ 7GB untuk Hermes Q4_K_M)" -ForegroundColor Gray
-if ($availableRamGB -lt 7) {
-    Write-Warn "RAM available hanya $availableRamGB GB. Hermes butuh ~7GB. TUTUP dulu aplikasi berat (browser, IDE) lalu re-run."
+Write-Host "       RAM saat ini tersedia: $availableRamGB GB (idealnya ≥$RequiredAvailableRAM_GB GB untuk Hermes Q4_K_M tuned)" -ForegroundColor Gray
+if ($availableRamGB -lt $RequiredAvailableRAM_GB) {
+    Write-Warn "RAM available hanya $availableRamGB GB. Hermes butuh ~$RequiredAvailableRAM_GB GB."
+    Write-Host "       Solusi (urutan):" -ForegroundColor Yellow
+    Write-Host "         1. Tutup Microsoft Edge, Chrome, Firefox (browser paling boros)" -ForegroundColor Yellow
+    Write-Host "         2. Tutup WhatsApp, Discord, Telegram, Spotify (chat app boros)" -ForegroundColor Yellow
+    Write-Host "         3. Tutup VS Code, IntelliJ, Eclipse (IDE kalau ada)" -ForegroundColor Yellow
+    Write-Host "         4. Restart Windows kalau masih kurang (RAM fragment perlu clear)" -ForegroundColor Yellow
+    Write-Host "         5. Kalau Available < 5 GB setelah restart, fallback ke Q3_K_M:" -ForegroundColor Yellow
+    Write-Host "            Edit Modelfile, ganti 'FROM noussphere/hermes-2-pro-llama-3-8b'" -ForegroundColor Yellow
+    Write-Host "            jadi 'FROM noussphere/hermes-2-pro-llama-3-8b:Q3_K_M'" -ForegroundColor Yellow
     $continue = Read-Host "Lanjutkan saja? (y/N)"
     if ($continue -ne 'y') { exit 0 }
 }
@@ -218,7 +227,7 @@ $testPayload = @{
     stream   = $false
     options  = @{
         temperature = 0.3
-        num_ctx     = 4096     # tuned untuk 12GB RAM
+        num_ctx     = 2048     # tuned untuk 12GB RAM (single-channel, budget ketat)
     }
 } | ConvertTo-Json -Depth 10
 

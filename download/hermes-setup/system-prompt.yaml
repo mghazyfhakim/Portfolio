@@ -10,13 +10,13 @@
 # Format: Ollama menerima ini sebagai SYSTEM parameter di /api/chat
 # ============================================================================
 
-version: "1.0.1"
+version: "1.0.2"
 last_updated: "2026-10-20"
 author: "AI Engineering Team - Z.ai"
 target_model: "hermes-2-pro-llama-3-8b"
 use_case: "function_call_erp_b2b"
 language: "id-ID"
-hardware_target: "CPU 12GB RAM (budget ketat)"
+hardware_target: "Laptop 12GB RAM DDR5 4800 SODIMM single-channel, CPU-only, Windows 11"
 
 # ----------------------------------------------------------------------------
 # System Prompt (raw text - akan di-inject ke Modelfile & API call)
@@ -67,11 +67,12 @@ parameters:
   top_p: 0.9
   top_k: 40
   repeat_penalty: 1.1
-  num_ctx: 4096         # diturunkan dari 8192 ke 4096 untuk hemat RAM di 12GB
+  num_ctx: 2048         # diturunkan dari 4096 ke 2048 untuk 12GB RAM single-channel
   num_thread: 6
-  num_batch: 256       # diturunkan dari 512 ke 256 untuk hemat RAM di 12GB
+  num_batch: 128        # diturunkan dari 256 ke 128 untuk hemat RAM saat prompt pre-processing
   num_gpu: 0
   low_vram: true
+  num_keep: 0           # set ke 0 untuk hemat ~0.2GB (system prompt re-compute tiap request)
 
 # ----------------------------------------------------------------------------
 # Stop tokens (Hermes chat template)
@@ -92,6 +93,15 @@ ab_test:
 # Changelog
 # ----------------------------------------------------------------------------
 changelog:
+  - version: "1.0.2"
+    date: "2026-10-20"
+    changes:
+      - Tuning lanjutan berdasarkan hardware konkret user (12GB DDR5 4800 SODIMM single-channel)
+      - num_ctx diturunkan dari 4096 ke 2048 (hemat ~0.3GB, conversation single-turn tetap muat)
+      - num_batch diturunkan dari 256 ke 128 (hemat ~0.2GB saat prompt pre-processing)
+      - num_keep ditambahkan: 0 (hemat ~0.2GB, system prompt re-compute tiap request)
+      - Target throughput: 4-7 tok/s (lebih realistis untuk single-channel DDR5)
+      - Required available RAM saat runtime: ≥6 GB (sebelumnya ≥7 GB)
   - version: "1.0.1"
     date: "2026-10-20"
     changes:
