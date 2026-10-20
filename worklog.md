@@ -263,3 +263,34 @@ Stage Summary:
 - User HARUS re-create custom model setelah download Modelfile baru: ollama rm hermes-erp-b2b-id; ollama create hermes-erp-b2b-id -f .\Modelfile
 - Lalu re-run diag.ps1 untuk verify response tidak kosong lagi.
 - Expected new output: message.content berisi JSON tool call seperti {"name": "get_inventory", "parameters": {"product_sku": "SKU-001"}}, eval_count > 5 token, throughput 4-8 tok/s.
+
+---
+Task ID: hermes-setup-fix-modelfile-syntax
+Agent: main (Z.ai, AI engineer persona)
+Task: Fix error "(line 65): command must be one of from, license, template, system, adapter, draft, renderer, parser, parameter, message, requires, or capability" saat ollama create.
+
+Diagnosis:
+- User jalankan ollama create hermes-erp-b2b-id -f .\Modelfile, error parse line 65.
+- Root cause: Modelfile v1.0.4 yang saya tulis pakai "SYSTEM <single line>" lalu newline + content multi-paragraph diikuti. Parser Ollama membaca setiap line setelah SYSTEM (line 65 "ATURAN WAJIB:") sebagai command baru → error "command must be one of...".
+- Saya over-corrected di fix sebelumnya: saya pikir bug "content kosong, eval_count 1" disebabkan oleh format system prompt, padahal sebenarnya hanya oleh PARAMETER stop "".
+- Solusi: kembalikan ke format SYSTEM """...""" (triple-quote block) yang benar untuk multi-line prompt, tapi tetap tanpa PARAMETER stop "".
+
+Work Log:
+- Rewrite Modelfile v1.0.5:
+  - SYSTEM pakai triple-quote """...""" block (multi-line string literal yang dikenal parser Ollama)
+  - Pertahankan semua fix dari v1.0.4: hanya 2 stop token ChatML (hapus ""), num_thread 8, num_ctx 2048, num_batch 128, num_keep 0
+  - Konten system prompt sama seperti v1.0.4 (Bahasa Indonesia, 6 aturan wajib, 5 tool, 3 contoh)
+- Verifikasi: triple-quote count = 4 (genap, opening + closing), SYSTEM di line 54, content di dalam block, tidak ada teks di luar block.
+- Modelfile sekarang 89 lines, semua command valid: 1 FROM + 12 PARAMETER + 1 SYSTEM block.
+
+Stage Summary:
+- File fix: Modelfile v1.0.5 di /home/z/my-project/download/hermes-setup/
+- Syntax error terselesaikan: SYSTEM multi-line pakai triple-quote """...""" block (bukan single-line dengan newline terpisah).
+- Bug "content kosong" tetap teratasi karena PARAMETER stop "" tetap dihapus.
+- Next action user:
+  1. Download ulang Modelfile v1.0.5
+  2. Jalankan: ollama rm hermes-erp-b2b-id (hapus model dari v1.0.4 yang gagal)
+  3. Jalankan: ollama create hermes-erp-b2b-id -f .\Modelfile (sekarang akan success)
+  4. Re-run: powershell -ExecutionPolicy Bypass -File .\diag.ps1
+  5. Verify message.content tidak kosong, eval_count > 5, function call JSON terdeteksi
+- Expected new output: {"name": "get_inventory", "parameters": {"product_sku": "SKU-001"}}

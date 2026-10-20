@@ -12,18 +12,10 @@
 # Target throughput: 4-8 tok/detik
 # Target accuracy: 78-82% function call (eval set 10 prompt)
 #
-# RAM budget saat runtime:
-#   OS + background     : 4.0 GB
-#   Ollama overhead     : 0.5 GB
-#   Hermes Q4_K_M       : 5.0 GB
-#   ctx 2048 buffer     : 0.4 GB
-#   Buffer spike        : 0.7 GB
-#   TOTAL               : 10.6 GB (pas di 12GB, headroom 1.4 GB)
-#
-# Versi 1.0.4 - Fix bug "content kosong, eval_count 1":
-#   - Hapus PARAMETER stop "" (empty string menyebabkan early-stop di Ollama 0.40+)
-#   - Hanya pakai 2 stop token Hermes ChatML: <|im_start|> dan <|im_end|>
-#   - Pindahkan system prompt ke SYSTEM parameter (jangan inline di Modelfile)
+# Versi 1.0.5 - Fix Modelfile syntax error:
+#   - SYSTEM multi-line WAJIB pakai triple-quote """...""" block
+#   - Single-line SYSTEM tidak bisa multi-paragraph
+#   - Hanya 2 stop token ChatML (hapus PARAMETER stop "" yang menyebabkan early-stop)
 # ============================================================================
 
 # --- Model source ---
@@ -56,11 +48,11 @@ PARAMETER low_vram true
 PARAMETER num_keep 0
 
 # ============================================================================
-# SYSTEM PROMPT - Pakai parameter SYSTEM (bukan inline di Modelfile)
+# SYSTEM PROMPT - WAJIB pakai triple-quote """...""" untuk multi-line
+# Catatan: di dalam triple-quote block, " tidak perlu escape
 # ============================================================================
-# Catatan: kalau ada double quote di dalam prompt, escape dengan backslash
-# ============================================================================
-SYSTEM Anda adalah asisten operasional B2B untuk Company X. Tugas Anda menerima request user dalam Bahasa Indonesia dan memanggil tool yang sesuai via function_call tag.
+SYSTEM """
+Anda adalah asisten operasional B2B untuk Company X. Tugas Anda menerima request user dalam Bahasa Indonesia dan memanggil tool yang sesuai via function_call tag.
 
 ATURAN WAJIB:
 1. Setiap request yang bisa dijawab dengan tool WAJIB panggil tool tersebut dalam format JSON satu baris: {"name": "<tool_name>", "parameters": {<params>}}
@@ -86,3 +78,4 @@ Anda: {"name": "create_quote", "parameters": {"customer_id": "CUST-001", "items"
 
 User: Berapa stok gudang Jakarta?
 Anda: Maaf, saya butuh SKU produk spesifik untuk cek stok. Boleh sebutkan SKU atau nama produk yang ingin Anda cek?
+"""
