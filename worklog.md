@@ -574,3 +574,17 @@ Stage Summary:
   3. Restart Hermes Agent
   4. Test dengan prompt: "Bikin function Go untuk hitung PPN dengan error handling" — harus paham stack, kasih code idiomatic Go, lead dengan kode, no emoji, no disclaimer AI
   5. Test `/code-review` dengan kode lintas stack — harus tunjuk issue dengan convention stack yang relevan
+
+---
+Task ID: hermes-agent-mastery-zip-pack
+Agent: main (Z.ai)
+Task: User belum sempat download pack, README.md tidak ada di sisi user. Buat ZIP untuk memudahkan download.
+
+Work Log:
+- Verify semua 9 file ada di /home/z/my-project/download/hermes-agent-mastery/ (116KB total).
+- Buat ZIP /home/z/my-project/download/hermes-agent-mastery.zip (33.7KB compressed, 72KB uncompressed) berisi semua 9 file + struktur folder skills/.
+
+Stage Summary:
+- ZIP file: /home/z/my-project/download/hermes-agent-mastery.zip (33.7KB)
+- User download 1 file saja, extract di Windows, langsung dapat struktur folder lengkap.
+- Instruksi download + extract + install via SETUP-GUIDE.md.
