@@ -104,14 +104,19 @@ Lihat `SETUP-GUIDE.md` untuk detail troubleshooting dan `VIBE-CODING-WORKFLOW.md
 
 ## Customization
 
-SOUL.md di pack ini punya **placeholder** yang harus Anda isi sendiri. Buka file `SOUL.md` di text editor, cari bagian `[PLACEHOLDER]` dan ganti dengan preferensi Anda.
+SOUL.md di pack ini **sudah di-personalisasi** berdasarkan jawaban Anda:
 
-Atau kirim ke saya jawaban 4 pertanyaan ini, saya buatin SOUL.md yang personalized:
+1. Bahasa: Indonesia utama, bilingual untuk istilah teknis (English natural, tidak dipaksa)
+2. Stack: Polyglot — Go, Python, TypeScript, Node.js, PHP (Laravel), Elixir (Phoenix), Express.js, NestJS, Next.js, Vue.js, C#, Java, dan bahasa umum lainnya. SOUL.md punya convention table per stack.
+3. Style: Detail tapi on-point — lead with answer, no pengantar panjang, no conclusion yang merangkum
+4. Hindari (hard limits): emoji berlebihan, self-limiting sebagai AI ("sebagai model AI, saya tidak bisa..."), bertele-tele, tidak teliti, tidak empiris, tidak holistik
 
-1. **Bahasa utama**: Indonesia / English / mixed?
-2. **Stack coding utama**: TypeScript / Python / Go / lainnya?
-3. **Output preference**: concise (langsung ke inti) / detailed (penjelasan panjang)?
-4. **Hal yang Anda benci dari output model sekarang**: (emoji berlebihan, "sebagai model AI", terlalu polite, dll)
+Untuk tune lebih lanjut, edit `~/.hermes/SOUL.md` langsung di text editor. Section yang sering di-tune:
+- "Polyglot Stack Awareness" — tambah/hapus stack sesuai project aktif Anda
+- "Defaults saat ambiguous" — ganti default assumption kalau stack utama Anda berubah
+- "What to Avoid" — tambah hal spesifik yang Anda benci
+
+Atau kirim ke saya jika ada perubahan besar (misal: tambah 3 stack baru, atau ganti personality tone).
 
 ---
 

@@ -519,3 +519,58 @@ Stage Summary:
   4. Mulai vibe coding dengan workflow di VIBE-CODING-WORKFLOW.md
 - Pack ini FOCUS ke Hermes Agent (sesuai user request), TIDAK push ke Ollama atau ERP project (yang user bilang "kesampingkan dulu").
 - Ollama + hermes-erp-b2b-id (100% accuracy benchmark) tetap berguna: ada di MODEL-STRATEGY.md sebagai opsi provider untuk function call ERP.
+
+---
+Task ID: hermes-agent-mastery-soul-personalized
+Agent: main (Z.ai, AI engineer persona)
+Task: Personalisasi SOUL.md berdasarkan 4 jawaban user (Bahasa, Stack, Style, Avoid).
+
+User jawaban:
+1. Bahasa: Indonesia utama, mampu bilingual
+2. Stack: Polyglot — Go, Python, TypeScript, Node.js, PHP (Laravel), Elixir (Phoenix), Express.js, NestJS, Next.js, Vue.js, C#, Java, dan bahasa umum lainnya
+3. Style: detail tapi tidak bertele-tele, on-point, tidak melebar
+4. Avoid: emoji berlebihan, self-limiting sebagai AI, bertele-tele, tidak teliti, tidak empiris, tidak holistik
+
+Work Log:
+- Rewrite SOUL.md (4.8KB → 7.5KB) dengan personalisasi penuh:
+  - Section "Bahasa": Indonesia default, English natural untuk istilah teknis. Tidak transliterate istilah yang umum di pakai English (database, function, framework). Switch ke full English kalau user pakai English atau context codebase English.
+  - Section "Detail vs Bertele-tele": bedakan "detail" (spesifik, konkret, eksplisit, trade-off) vs "bertele-tele" (pengantar panjang, pengulangan, disclaimer, conclusion merangkum). Rule: lead with answer, context opsional setelah.
+  - Section "Polyglot Stack Awareness": convention table untuk 12 stack user pakai:
+    - Go: idiomatic, error return, no panic untuk control flow, gofmt
+    - Python: PEP 8, type hints, dataclass/Pydantic, pytest, snake_case
+    - TypeScript: strict, no any, unknown + type narrowing, named exports, async/await
+    - Node.js: CommonJS/ESM consistent, minimize deps
+    - PHP Laravel: PSR-12, Eloquent, Facades sparingly, DI preferred
+    - Elixir Phoenix: functional, no side effect di pure function, GenServer, pattern matching
+    - Express.js: middleware chain, async error handler, http-errors
+    - NestJS: DI first-class, decorator, DTO class-validator, module-based
+    - Next.js: App Router, RSC default, server actions, metadata export
+    - Vue.js: Composition API, script setup, ref/reactive, hindari Options API
+    - C# .NET: PascalCase, async/await Task<T>, LINQ, record DTO, interface abstraction
+    - Java: Java 17+, var, Streams API, Optional<T>, JUnit 5 + AssertJ
+  - Section "Empirisme dan Holistik":
+    - Empiris: klaim teknis harus ada basis (dokumentasi, benchmark, pengalaman konkret). Tidak "lebih cepat" tanpa angka. Tidak "best practice" tanpa konteks. Hindari hype (revolutionary, game-changing, modern).
+    - Holistik: lihat trade-off dari multiple angle (performance, maintainability, cost, team skill, timeline). Jangan optimasi 1 dimensi tanpa consider lain. Pertimbangkan downstream impact 6 bulan ke depan, upstream context, sudut end user.
+  - Section "What to Avoid" (hard limits):
+    - Emoji berlebihan: jangan pakai emoji kecuali user pakai duluan
+    - Self-limiting sebagai AI: JANGAN bilang "Sebagai model AI, saya tidak bisa...", "Saya tidak memiliki akses ke...", "Sehubungan dengan keterbatasan saya..."
+    - Bertele-tele: no pengantar panjang, no conclusion merangkum, no "harap diperhatikan", no "Sebelum kita masuk ke X, mari kita bahas Y"
+    - Tidak teliti: baca pertanyaan 2x, verify angka/URL/library, kalau ragu bilang "perlu saya verify"
+    - Tidak empiris: no klaim tanpa basis, no "best practice" tanpa konteks, no hype language
+    - Tidak holistik: no optimasi 1 dimensi, no refactor tanpa consider impact
+  - Section "Saat user minta review kode lintas-stack": pertimbangkan convention masing-masing stack, identifikasi pattern bagus di A tapi anti-pattern di B, pertimbangkan interface antar service
+  - Section "Saat user minta bantu debug lintas-stack": mulai dari error message, identifikasi layer, verifikasi setiap asumsi dengan evidence, jangan speculate tanpa data
+  - Section "Saat user brainstorm arsitektur lintas-stack": pertimbangkan team skill, operational cost, hire-ability, trade-off eksplisit
+- Update README.md: ganti section "Customization" untuk mention SOUL.md sudah di-personalisasi, tidak lagi placeholder.
+
+Stage Summary:
+- File update: SOUL.md (7.5KB) dan README.md di /home/z/my-project/download/hermes-agent-mastery/
+- SOUL.md sudah personalized 100% berdasarkan jawaban user. Polyglot stack convention table (12 stacks), empiris-holistik framework, hard limits untuk AI cliché.
+- User tinggal download pack ini, ikuti SETUP-GUIDE.md, install ke ~/.hermes/, restart Hermes Agent. Tidak perlu edit SOUL.md lagi (kecuali untuk tune minor di masa depan).
+- Total pack: 9 file, 112KB. Siap pakai.
+- Next action user:
+  1. Download ulang folder hermes-agent-mastery/ (khususnya SOUL.md yang baru)
+  2. Ikuti SETUP-GUIDE.md step 1-3
+  3. Restart Hermes Agent
+  4. Test dengan prompt: "Bikin function Go untuk hitung PPN dengan error handling" — harus paham stack, kasih code idiomatic Go, lead dengan kode, no emoji, no disclaimer AI
+  5. Test `/code-review` dengan kode lintas stack — harus tunjuk issue dengan convention stack yang relevan
