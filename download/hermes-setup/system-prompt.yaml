@@ -10,12 +10,13 @@
 # Format: Ollama menerima ini sebagai SYSTEM parameter di /api/chat
 # ============================================================================
 
-version: "1.0.0"
+version: "1.0.1"
 last_updated: "2026-10-20"
 author: "AI Engineering Team - Z.ai"
 target_model: "hermes-2-pro-llama-3-8b"
 use_case: "function_call_erp_b2b"
 language: "id-ID"
+hardware_target: "CPU 12GB RAM (budget ketat)"
 
 # ----------------------------------------------------------------------------
 # System Prompt (raw text - akan di-inject ke Modelfile & API call)
@@ -59,17 +60,18 @@ system_prompt: |
         SKU atau nama produk yang ingin Anda cek?
 
 # ----------------------------------------------------------------------------
-# Sampling parameters (cocokkan dengan Modelfile)
+# Sampling parameters (cocokkan dengan Modelfile - tuned untuk 12GB RAM)
 # ----------------------------------------------------------------------------
 parameters:
   temperature: 0.3
   top_p: 0.9
   top_k: 40
   repeat_penalty: 1.1
-  num_ctx: 8192
+  num_ctx: 4096         # diturunkan dari 8192 ke 4096 untuk hemat RAM di 12GB
   num_thread: 6
-  num_batch: 512
+  num_batch: 256       # diturunkan dari 512 ke 256 untuk hemat RAM di 12GB
   num_gpu: 0
+  low_vram: true
 
 # ----------------------------------------------------------------------------
 # Stop tokens (Hermes chat template)
@@ -90,6 +92,14 @@ ab_test:
 # Changelog
 # ----------------------------------------------------------------------------
 changelog:
+  - version: "1.0.1"
+    date: "2026-10-20"
+    changes:
+      - Tuning untuk hardware 12GB RAM (sebelumnya 16GB)
+      - num_ctx diturunkan dari 8192 ke 4096 (hemat ~0.8GB RAM)
+      - num_batch diturunkan dari 512 ke 256 (hemat ~0.3GB RAM)
+      - Target throughput disesuaikan: 4-8 tok/detik (sebelumnya 6-10)
+      - Fallback ke Q3_K_M ditambahkan di README jika OOM masih terjadi
   - version: "1.0.0"
     date: "2026-10-20"
     changes:

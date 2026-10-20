@@ -2,13 +2,16 @@
 # Ollama Modelfile - Hermes-2-Pro-Llama-3-8B (ERP B2B Function Calling)
 # ============================================================================
 # Disusun oleh AI Engineering Team - Z.ai
-# Optimized untuk: CPU 16GB RAM, Windows, function call ERP B2B Indonesia
-# Quantization: Q4_K_M (~5GB on disk, ~6-7GB RAM saat inference)
-# Target throughput: 6-10 tok/detik pada Intel i5/i7 12th gen
+# Optimized untuk: CPU 12GB RAM (budget ketat), Windows, function call ERP B2B
+# Quantization: Q4_K_M (~5GB on disk, ~5-6GB RAM saat inference dengan ctx 4096)
+# Target throughput: 4-8 tok/detik pada Intel i5/i7 12th gen
+# RAM budget: OS 4GB + Hermes 6-7GB + buffer 1GB = 11-12GB (pas di 12GB)
+# Jika masih OOM, fallback ke Q3_K_M (edit FROM line, lihat README FAQ)
 # ============================================================================
 
 # --- Model source ---
 # Ollama sudah punya noussphere/hermes-2-pro-llama-3-8b (Q4_K_M built-in)
+# Alternatif jika RAM kurang: noussphere/hermes-2-pro-llama-3-8b:Q3_K_M (~3.5GB)
 FROM noussphere/hermes-2-pro-llama-3-8b
 
 # --- Sampling parameters (function call optimization) ---
@@ -22,8 +25,10 @@ PARAMETER top_k 40
 PARAMETER repeat_penalty 1.1
 
 # --- Context window ---
-# num_ctx 8192 = sweet spot untuk function call. Lebih besar = RAM naik. Lebih kecil = tool schema tidak muat.
-PARAMETER num_ctx 8192
+# num_ctx 4096 = sweet spot untuk 12GB RAM. Tool schema 5 tool + system prompt ~1500 token,
+# sisa ~2500 token untuk conversation history + user input + Hermes output. Cukup untuk function call ERP.
+# Jika RAM ≥16GB, naikkan ke 8192 untuk conversation history lebih panjang.
+PARAMETER num_ctx 4096
 
 # --- Stop tokens (Hermes chat template) ---
 PARAMETER stop "<|im_start|>"
@@ -35,15 +40,21 @@ PARAMETER stop "<|endoftext|>"
 # Cek via PowerShell: (Get-CimInstance Win32_Processor).NumberOfCores
 # Default: 6 (cocok untuk i5 12th gen dengan 6 P-cores)
 # Untuk i7 12th gen (8P+4E cores), set ke 8 (gunakan P-cores saja, E-cores menurunkan throughput)
+# Penting untuk 12GB RAM: num_thread terlalu tinggi akan bikin RAM naik (thread-local buffer). Jangan overshoot.
 PARAMETER num_thread 6
 
 # --- Batch & GPU offload ---
 # num_batch: jumlah token di-process per batch. Lebih besar = throughput naik tapi RAM naik.
-PARAMETER num_batch 512
-# num_gpu 0 = CPU only (sesuai hardware target: CPU 16GB tanpa GPU)
+# Untuk 12GB RAM, 256 adalah safe. Naikkan ke 512 jika RAM ≥16GB.
+PARAMETER num_batch 256
+# num_gpu 0 = CPU only (sesuai hardware target: CPU 12GB tanpa GPU)
 PARAMETER num_gpu 0
-# low_vram true = Ollama tidak akan pre-allocate besar-besaran
+# low_vram true = Ollama tidak akan pre-allocate besar-besaran (PENTING untuk 12GB)
 PARAMETER low_vram true
+# num_keep = jumlah token system prompt yang selalu di-keep di cache. Default 256.
+# Set ke 0 untuk hemat RAM maksimal (system prompt akan re-compute setiap request - sedikit lebih lambat)
+# Hanya uncomment jika OOM masih terjadi setelah semua optimasi di atas:
+# PARAMETER num_keep 0
 
 # ============================================================================
 # SYSTEM PROMPT

@@ -1,10 +1,10 @@
 # Hermes-2-Pro-Llama-3-8B — Setup & Benchmark untuk ERP B2B Indonesia
 
-> Paket setup Hermes untuk function call ERP B2B — dirancang untuk hardware minim (CPU 16GB, Windows), zero-cost, dengan eval set dan benchmark bawaan.
+> Paket setup Hermes untuk function call ERP B2B — dirancang untuk hardware minim (CPU 12GB, Windows), zero-cost, dengan eval set dan benchmark bawaan.
 
 **Author:** AI Engineering Team — Z.ai
 **Date:** 20 October 2026
-**Target:** Windows 10/11 · CPU 16GB RAM · Ollama · Hermes-2-Pro-Llama-3-8B (Q4_K_M)
+**Target:** Windows 10/11 · CPU 12GB RAM · Ollama · Hermes-2-Pro-Llama-3-8B (Q4_K_M)
 
 ---
 
@@ -72,13 +72,13 @@ Script akan menjalankan 10 prompt dari `eval-set.json`, ukur:
 
 Hasil disimpan ke `benchmark-result.json` untuk tracking history.
 
-**Target metrik (CPU 16GB):**
+**Target metrik (CPU 12GB, Q4_K_M, ctx 4096):**
 
 | Metrik | Target | Komentar |
 |---|---|---|
 | Function call accuracy | ≥ 80% | Below = perlu tune system prompt atau LoRA fine-tune |
-| Latency first-token | < 4000 ms | 4 detik acceptable untuk B2B non-real-time |
-| Throughput | ≥ 6 tok/s | Cukup untuk skenario async; sync perlu ≥ 10 tok/s |
+| Latency first-token | < 5000 ms | 5 detik acceptable untuk B2B non-real-time (lebih longgar dari 16GB yang target < 4 dtk) |
+| Throughput | ≥ 4 tok/s | Cukup untuk skenario async; sync perlu ≥ 6 tok/s. Target lebih rendah dari 16GB (6 tok/s) karena RAM lebih ketat |
 
 ---
 
@@ -139,11 +139,11 @@ if (toolCallMatch) {
 | `top_p` | `0.9` | Moderate — tidak terlalu narrow (0.1) supaya tidak rigid, tidak terlalu lebar (0.9) supaya tidak hallucinate |
 | `top_k` | `40` | Default Hermes — batasi vocabulary sampling |
 | `repeat_penalty` | `1.1` | Cegah loop tanpa over-penalize JSON yang repetitif |
-| `num_ctx` | `8192` | Sweet spot untuk function call. Lebih besar = RAM naik. Lebih kecil = tool schema tidak muat |
+| `num_ctx` | `4096` | Sweet spot untuk 12GB RAM. Tool schema 5 tool + system prompt ~1500 token, sisa ~2500 untuk conversation. Naikkan ke 8192 jika RAM ≥16GB |
 | `num_thread` | `6` | Physical cores (BUKAN logical). Default untuk i5 12th gen 6P cores |
-| `num_batch` | `512` | Token per batch. Lebih besar = throughput naik tapi RAM naik |
+| `num_batch` | `256` | Token per batch. Untuk 12GB RAM, 256 adalah safe. Naikkan ke 512 jika RAM ≥16GB |
 | `num_gpu` | `0` | CPU only (sesuai hardware target) |
-| `low_vram` | `true` | Ollama tidak pre-allocate besar-besaran |
+| `low_vram` | `true` | Ollama tidak pre-allocate besar-besaran (PENTING untuk 12GB) |
 
 ### Tuning `num_thread` untuk CPU lain
 
@@ -250,9 +250,28 @@ ollama pull noussphere/hermes-2-pro-llama-3-8b
 
 ### 6. "RAM tidak cukup" (Ollama crash dengan error "out of memory")
 
-- Tutup aplikasi lain (browser, IDE, Docker Desktop kalau tidak dipakai).
-- Turunkan `num_ctx` ke `4096` di Modelfile.
-- Untuk ekstrem, pakai quantization lebih agresif (Q3_K_M ~3.5GB) — edit Modelfile: `FROM noussphere/hermes-2-pro-llama-3-8b:Q3_K_M`. Tapi accuracy function call akan turun ~5-8%.
+**Untuk 12GB RAM (hardware target):**
+
+1. **Tutup aplikasi berat SEBELUM start Ollama**:
+   - Browser (Chrome/Edge/Firefox) — bisa pakai 2-4GB RAM
+   - IDE (VS Code, IntelliJ) — bisa pakai 1-3GB RAM
+   - Docker Desktop jika tidak dipakai — bisa pakai 2-4GB RAM
+   - Cek Task Manager (Ctrl+Shift+Esc) → tab Processes → sort by Memory
+2. **Turunkan `num_ctx` ke 2048** di Modelfile (hemat ~0.5GB lagi, tapi conversation history lebih pendek):
+   ```dockerfile
+   PARAMETER num_ctx 2048
+   ```
+3. **Uncomment `num_keep 0`** di Modelfile (hemat ~0.2GB, trade-off: system prompt akan re-compute setiap request)
+4. **Fallback ke Q3_K_M** (quantization lebih agresif, accuracy turun ~5-8%):
+   ```dockerfile
+   FROM noussphere/hermes-2-pro-llama-3-8b:Q3_K_M
+   ```
+   Model turun dari ~5GB ke ~3.5GB. Setelah edit Modelfile, re-create:
+   ```powershell
+   ollama rm hermes-erp-b2b-id
+   ollama create hermes-erp-b2b-id -f .\Modelfile
+   ```
+5. **Restart Windows** kalau RAM fragmented (Windows hold RAM di cache yang tidak langsung di-free).
 
 ### 7. PowerShell Execution Policy error
 
@@ -323,10 +342,13 @@ Detail pipeline fine-tune ada di blueprint (`Hermes_B2B_ERP_Website_Blueprint.pd
 A: Ollama = wrapper di atas llama.cpp dengan API server dan model management yang mudah. Frugal: tidak ada overhead serius (HTTP layer ~2-5% throughput). Lebih penting: Ollama auto-pull model, auto-format Modelfile, dan support OpenAI-compatible API. Kalau butuh throughput ekstrem (40+ tok/s di CPU), bisa langsung pakai llama.cpp HTTP server.
 
 **Q: Kenapa Q4_K_M, bukan Q8 (akurasi lebih tinggi)?**
-A: Q8 butuh ~8GB RAM (vs Q4_K_M ~5GB). Di 16GB RAM, Q8 akan competing dengan OS dan aplikasi lain → memory pressure tinggi → throughput turun. Q4_K_M adalah sweet spot: accuracy function call turun hanya ~3-5% vs FP16, tapi RAM turun 75%. Untuk B2B non-real-time, trade-off ini sangat worth it.
+A: Q8 butuh ~8GB RAM (vs Q4_K_M ~5GB). Di 12GB RAM, Q8 akan competing dengan OS dan aplikasi lain → memory pressure tinggi → throughput turun drastis atau crash. Q4_K_M adalah sweet spot: accuracy function call turun hanya ~3-5% vs FP16, tapi RAM turun 75%. Untuk B2B non-real-time, trade-off ini sangat worth it.
 
 **Q: Bisakah Hermes jalan di laptop 8GB RAM?**
-A: Bisa, tapi sangat marginal. Pakai Q3_K_M (~3.5GB), num_ctx 4096, num_batch 256. Expected throughput 3-5 tok/s. Lebih baik pakai cloud GPU spot instance untuk latency-sensitive task.
+A: Sangat marginal. Wajib pakai Q3_K_M (~3.5GB), num_ctx 2048, num_batch 128, num_keep 0. Expected throughput 2-4 tok/s. Lebih baik pakai cloud GPU spot instance untuk latency-sensitive task.
+
+**Q: Saya punya 12GB RAM, apakah cukup?**
+A: Ya, dengan konfigurasi di paket ini (Q4_K_M + ctx 4096 + batch 256). Sebelum start Ollama, tutup browser/IDE/Docker untuk free up 2-4GB. Cek Task Manager → RAM available idealnya ≥7GB sebelum start. Jika masih OOM, fallback ke Q3_K_M (~3.5GB model).
 
 **Q: Berapa biaya operasional bulanan?**
 A: Rp 0 (gratis). Hanya listrik PC ~Rp 100-150rb/bulan jika 24/7. Tanpa API cost, tanpa subscription. Inilah kenapa setup ini disebut "zero-cost".
@@ -347,7 +369,8 @@ Re-run benchmark untuk pastikan tool baru di-recognize Hermes.
 
 | Version | Date | Changes |
 |---|---|---|
-| 1.0.0 | 2026-10-20 | Initial setup: 5 tool awal (get_inventory, create_quote, search_product, get_invoice, list_customers). System prompt Bahasa Indonesia. 10 prompt eval set. |
+| 1.0.1 | 2026-10-20 | Tuning untuk hardware 12GB RAM: num_ctx 4096, num_batch 256, target throughput 4-8 tok/s. Fallback Q3_K_M dijelaskan di FAQ & troubleshooting. |
+| 1.0.0 | 2026-10-20 | Initial setup: 5 tool awal, system prompt Bahasa Indonesia, 10 prompt eval set. Asumsi 16GB RAM. |
 
 ---
 

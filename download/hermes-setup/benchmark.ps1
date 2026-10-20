@@ -32,6 +32,20 @@ function Write-Err($msg)  { Write-Host "[ERROR] $msg" -ForegroundColor Red }
 # ----------------------------------------------------------------------------
 Write-Step "Pre-flight check"
 
+# Hint untuk 12GB RAM: tutup aplikasi berat
+$ram = (Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB
+if ($ram -le 12) {
+    Write-Warn "RAM $([math]::Round($ram,1))GB terdeteksi. Untuk hasil benchmark akurat:"
+    Write-Host "       TUTUP browser, IDE, Docker Desktop, dan app berat lain sebelum lanjut." -ForegroundColor Gray
+    $osRam = Get-CimInstance Win32_OperatingSystem
+    $availableRamGB = [math]::Round($osRam.FreePhysicalMemory / 1MB / 1024, 1)
+    Write-Host "       RAM available saat ini: $availableRamGB GB (idealnya ≥ 7GB)" -ForegroundColor Gray
+    if ($availableRamGB -lt 7) {
+        Write-Err "RAM available hanya $availableRamGB GB. Hermes butuh ~7GB. Tutup dulu app berat lalu re-run benchmark."
+        exit 1
+    }
+}
+
 try {
     $tagsResponse = Invoke-RestMethod -Uri "$OllamaEndpoint/api/tags" -Method Get -TimeoutSec 5
     $existingModels = $tagsResponse.models | ForEach-Object { $_.name }
@@ -86,7 +100,7 @@ foreach ($prompt in $evalSet.prompts) {
         stream   = $false
         options  = @{
             temperature = 0.3
-            num_ctx     = 8192
+            num_ctx     = 4096
         }
     } | ConvertTo-Json -Depth 10
 
@@ -220,7 +234,7 @@ $resultSummary = [PSCustomObject]@{
     }
     sampling_parameters   = @{
         temperature = 0.3
-        num_ctx     = 8192
+        num_ctx     = 4096
     }
     metrics               = @{
         function_call_accuracy_pct = $accuracy

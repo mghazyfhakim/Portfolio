@@ -55,3 +55,28 @@ Stage Summary:
 - Cost: Rp 0 (open-source Ollama + open-weights Hermes). Listrik PC ~Rp 100-150rb/bulan jika 24/7.
 - Prinsip frugal terpenuhi: zero API cost, hardware minim (CPU 16GB, tanpa GPU), kualitas tetap terukur via eval set 10 prompt B2B Indonesia.
 - Next action user: download folder hermes-setup/, jalankan setup.ps1 di Windows, lalu benchmark.ps1 untuk ukur kualitas. Jika accuracy ≥80% → siap integrate ke ERP project. Jika <80% → tune system-prompt.yaml atau pertimbangkan LoRA fine-tune (lihat blueprint Chapter 5.5).
+
+---
+Task ID: hermes-setup-12gb
+Agent: main (Z.ai, AI engineer persona)
+Task: Adjust paket hermes-setup untuk RAM 12GB (sebelumnya 16GB). User info: "ram saya cuma ada 12GB".
+
+Work Log:
+- Analisis budget RAM 12GB: OS 4GB + Hermes Q4_K_M 5-6GB + ctx 4096 0.7GB + buffer 1GB = ~10-12GB (marginal OK).
+- Keputusan: tetap Q4_K_M (akurasi penting untuk function call), turunkan num_ctx 8192→4096 dan num_batch 512→256. Fallback Q3_K_M (~3.5GB) jika OOM.
+- Update Modelfile: num_ctx 4096, num_batch 256, tambah komentar RAM budget, tambah hint fallback Q3_K_M, tambah opsi num_keep 0 untuk hemat ekstrem.
+- Update system-prompt.yaml: version 1.0.0→1.0.1, hardware_target field baru, parameters num_ctx 4096, num_batch 256, changelog entry.
+- Update setup.ps1: $ExpectedRAM_GB (16) → $MinimumRAM_GB (12) + $RecommendedRAM_GB (16). Pre-flight check 3-tier: <12GB hard fail with 3 alternatif (tutup app, Q3_K_M, cloud GPU); 12-16GB warning + hint tutup browser/IDE; ≥16GB OK. Tambah cek RAM available (Win32_OperatingSystem.FreePhysicalMemory) bukan hanya total. Tambah hint blok "TUTUP dulu" dengan Read-Host pause untuk 12GB user. Test prompt sampling num_ctx 4096.
+- Update benchmark.ps1: pre-flight check tambah hint tutup app untuk 12GB, cek RAM available ≥7GB. Sampling num_ctx 4096 di loop dan di result metadata.
+- Update eval-set.json: sampling.num_ctx 8192→4096.
+- Update README.md: header tagline 16GB→12GB, target metrik (latency <5000ms vs <4000ms, throughput ≥4 tok/s vs ≥6 tok/s, komentar "lebih longgar dari 16GB"), parameter table num_ctx/num_batch update, troubleshooting #6 expand jadi 5 step konkret (tutup app, ctx 2048, num_keep 0, Q3_K_M, restart Windows), FAQ baru "Saya punya 12GB RAM, apakah cukup?", update FAQ 8GB jadi "sangat marginal", version history 1.0.1 entry.
+- Validate: JSON lulus parse (tool-registry + eval-set), YAML lulus parse (v1.0.1, hardware_target ter-set, num_ctx/batch sesuai), Modelfile 14 PARAMETER semua benar, setup.ps1 3-tier RAM check, benchmark.ps1 num_ctx 4096 di 2 lokasi.
+
+Stage Summary:
+- Deliverable update: 7 file di /home/z/my-project/download/hermes-setup/ (ukuran naik dari ~64KB ke ~70KB karena README expand).
+- Hardware target: Windows 10/11, CPU 12GB RAM (budget ketat), Ollama localhost:11434, Hermes-2-Pro-8B Q4_K_M.
+- Adjusted target metrics: function call accuracy ≥80%, latency first-token <5000ms, throughput ≥4 tok/s (semua lebih longgar dari versi 16GB).
+- 3-tier RAM check di setup.ps1: hard fail <12GB, warning 12-16GB, OK ≥16GB. Plus real-time available RAM check (≥7GB required saat runtime).
+- Fallback path jika OOM: tutup app → ctx 2048 → num_keep 0 → Q3_K_M (~3.5GB) → restart Windows.
+- Prinsip frugal tetap: zero cost, hardware minim tetap jalan, kualitas terukur via eval set 10 prompt.
+- Next action user: download folder hermes-setup/ yang sudah di-update, jalankan setup.ps1 (akan warning RAM 12GB + minta tutup app berat), lalu benchmark.ps1. Jika accuracy ≥80% → siap integrate. Jika OOM terjadi → ikuti 5 step troubleshooting di README.

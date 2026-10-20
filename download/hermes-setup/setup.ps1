@@ -21,7 +21,8 @@ $ModelName = "noussphere/hermes-2-pro-llama-3-8b"
 $CustomModelName = "hermes-erp-b2b-id"
 $OllamaInstallPath = "$env:USERPROFILE\AppData\Local\Programs\Ollama"
 $ModelfileSource = ".\Modelfile"   # File Modelfile di folder yang sama dengan script ini
-$ExpectedRAM_GB = 16
+$MinimumRAM_GB = 12                # Hard minimum untuk Q4_K_M + ctx 4096
+$RecommendedRAM_GB = 16            # Ideal jika ada headroom
 
 # Warna output
 function Write-Step($msg) { Write-Host "[STEP] $msg" -ForegroundColor Cyan }
@@ -36,10 +37,30 @@ Write-Step "Pre-flight check: hardware & OS"
 
 # Cek RAM
 $ram = (Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB
-if ($ram -lt $ExpectedRAM_GB) {
-    Write-Warn "RAM terdeteksi $([math]::Round($ram,1))GB. Minimum recommended: $ExpectedRAM_GB GB. Hermes mungkin tidak jalan atau sangat lambat."
+if ($ram -lt $MinimumRAM_GB) {
+    Write-Err "RAM terdeteksi $([math]::Round($ram,1))GB. Minimum untuk Hermes-2-Pro-8B Q4_K_M adalah $MinimumRAM_GB GB."
+    Write-Host ""
+    Write-Host "Alternatif:" -ForegroundColor Yellow
+    Write-Host "  1. Tutup aplikasi lain (browser, IDE, Docker) sebelum jalankan Hermes" -ForegroundColor Yellow
+    Write-Host "  2. Jika RAM tetap kurang, pakai Q3_K_M (~3.5GB model): edit Modelfile line FROM menjadi 'noussphere/hermes-2-pro-llama-3-8b:Q3_K_M'" -ForegroundColor Yellow
+    Write-Host "  3. Atau gunakan cloud GPU spot instance (lihat blueprint Chapter 5)" -ForegroundColor Yellow
+    exit 1
+} elseif ($ram -lt $RecommendedRAM_GB) {
+    Write-Warn "RAM terdeteksi $([math]::Round($ram,1))GB. Memenuhi minimum $MinimumRAM_GB GB tapi di bawah rekomendasi $RecommendedRAM_GB GB."
+    Write-Host "       Hermes akan jalan tapi throughput mungkin 4-6 tok/s (vs 6-10 tok/s di 16GB RAM)." -ForegroundColor Gray
+    Write-Host "       Tips: TUTUP browser dan IDE sebelum benchmark untuk free up RAM." -ForegroundColor Gray
 } else {
-    Write-OK "RAM: $([math]::Round($ram,1)) GB (memenuhi minimum $ExpectedRAM_GB GB)"
+    Write-OK "RAM: $([math]::Round($ram,1)) GB (di atas rekomendasi $RecommendedRAM_GB GB)"
+}
+
+# Cek RAM yang saat ini tersedia (available, bukan total)
+$osRam = Get-CimInstance Win32_OperatingSystem
+$availableRamGB = [math]::Round($osRam.FreePhysicalMemory / 1MB / 1024, 1)
+Write-Host "       RAM saat ini tersedia: $availableRamGB GB (idealnya ≥ 7GB untuk Hermes Q4_K_M)" -ForegroundColor Gray
+if ($availableRamGB -lt 7) {
+    Write-Warn "RAM available hanya $availableRamGB GB. Hermes butuh ~7GB. TUTUP dulu aplikasi berat (browser, IDE) lalu re-run."
+    $continue = Read-Host "Lanjutkan saja? (y/N)"
+    if ($continue -ne 'y') { exit 0 }
 }
 
 # Cek physical cores (untuk tuning num_thread di Modelfile)
@@ -61,6 +82,18 @@ if (-not (Test-Path $ModelfileSource)) {
     exit 1
 } else {
     Write-OK "Modelfile ditemukan: $ModelfileSource"
+}
+
+# Hint untuk 12GB RAM: tutup aplikasi berat
+$ram = (Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB
+if ($ram -le 12) {
+    Write-Host ""
+    Write-Host "[HINT] Karena RAM Anda $([math]::Round($ram,1))GB, sebelum lanjut:" -ForegroundColor Cyan
+    Write-Host "       1. Tutup browser (Chrome/Edge/Firefox) — bisa pakai 2-4GB RAM" -ForegroundColor White
+    Write-Host "       2. Tutup IDE (VS Code, IntelliJ) — bisa pakai 1-3GB RAM" -ForegroundColor White
+    Write-Host "       3. Tutup Docker Desktop jika tidak dipakai — bisa pakai 2-4GB RAM" -ForegroundColor White
+    Write-Host "       4. Cek Task Manager (Ctrl+Shift+Esc) → tab Processes → sort by Memory" -ForegroundColor White
+    $ready = Read-Host "Sudah siap? Tekan Enter untuk lanjut, atau Ctrl+C untuk batal"
 }
 
 # ----------------------------------------------------------------------------
@@ -185,7 +218,7 @@ $testPayload = @{
     stream   = $false
     options  = @{
         temperature = 0.3
-        num_ctx     = 8192
+        num_ctx     = 4096     # tuned untuk 12GB RAM
     }
 } | ConvertTo-Json -Depth 10
 
