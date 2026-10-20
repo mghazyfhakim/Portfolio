@@ -28,3 +28,30 @@ Stage Summary:
 - Quality: PASS pdf_qa (page size consistent, font embedded, no overflow, fill ratio adequate, margins symmetric, table centered, TOC populated, punctuation clean).
 - Scripts persisted untuk iterasi: build_blueprint_body.py, blueprint_cover.html, merge_blueprint.py.
 - Total biaya operasional di dokumen: Rp 0 - ~170rb/bulan (cloud free-tier + on-prem Hermes listrik + domain). Selaras dengan karakter frugal user.
+
+---
+Task ID: hermes-setup
+Agent: main (Z.ai, AI engineer persona)
+Task: Setup Hermes-2-Pro-Llama-3-8B dari nol untuk function call ERP B2B di Windows + CPU 16GB + Ollama, dengan benchmark dan eval set. Fokus HERMES DULU, bukan project integration.
+
+Work Log:
+- Klarifikasi 6 dimensi via AskUserQuestion: Runtime=Ollama, Model=Hermes-2-Pro-8B, Hardware=CPU 16GB, Tujuan=Setup dari nol, Use case=Function call ERP, OS=Windows.
+- Buat direktori /home/z/my-project/download/hermes-setup/.
+- Tulis Modelfile Ollama (8.0KB) — FROM noussphere/hermes-2-pro-llama-3-8b, sampling function call optimized (temp 0.3, top_p 0.9, top_k 40, repeat_penalty 1.1, num_ctx 8192), CPU threading (num_thread 6, num_batch 512, num_gpu 0, low_vram true), Hermes chat template (stop tokens), system prompt ERP B2B Indonesia inline.
+- Tulis system-prompt.yaml (8.0KB) — source-of-truth untuk system prompt, versioning, A/B testing tracking, sampling parameters reference, changelog. Bahasa Indonesia, 5 tool inventory, 6 aturan wajib, contoh function call, trap case clarification.
+- Tulis tool-registry.json (8.0KB) — JSON Schema draft-07 untuk 5 tool awal: get_inventory (read), search_product (read), create_quote (write+destructive, _confidence wajib), get_invoice (read), list_customers (read dengan nested filter object). Setiap tool: name, description, parameters JSON Schema, category, destructive flag, example_call.
+- Tulis setup.ps1 (12KB) — PowerShell script Windows: pre-flight check (RAM ≥16GB, physical cores, disk ≥10GB), install Ollama (download OllamaSetup.exe dari ollama.com jika belum), start ollama serve, pull noussphere/hermes-2-pro-llama-3-8b (~5GB), create custom model hermes-erp-b2b-id dari Modelfile, test baseline function call dengan prompt "Cek stok produk SKU-001", print summary + next steps.
+- Tulis benchmark.ps1 (12KB) — PowerShell script: load eval-set.json, jalankan 10 prompt ke Hermes via /api/chat, ukur (a) latency first-token via prompt_eval_duration, (b) throughput via eval_count / eval_duration, (c) function call accuracy via regex match expected_tool_name + expected_params. Aggregate metrics, save benchmark-result.json.
+- Tulis eval-set.json (8.0KB) — 10 prompt B2B Indonesia dengan ground truth: E01-E02 get_inventory (easy), E03-E04 search_product (easy+medium), E05-E06 create_quote (medium+hard, multi-item), E07-E08 get_invoice (easy+medium dengan kata "faktur"), E09 list_customers dengan filter nested (medium), E10 trap case clarification (hard, expected TIDAK ada tool call).
+- Tulis README.md (16KB) — quick start 3 langkah, cara pakai Hermes di aplikasi (cURL + JS), penjelasan parameter Modelfile + tuning num_thread untuk CPU lain (Intel i5/i7 12-14gen, AMD Ryzen 5/7/9), 7 troubleshooting cases (lambat, accuracy rendah, hallucinate parameter, port conflict, network issue, RAM kurang, execution policy), 3 upgrade paths (GPU consumer, Hermes-3-8B, LoRA fine-tune), FAQ.
+
+Stage Summary:
+- Deliverable: 7 file di /home/z/my-project/download/hermes-setup/ (Modelfile, system-prompt.yaml, tool-registry.json, setup.ps1, benchmark.ps1, eval-set.json, README.md), total ~64KB.
+- Validation: JSON lulus parse (tool-registry.json + eval-set.json), YAML lulus parse (system-prompt.yaml v1.0.0, prompt 1621 chars), PowerShell script readable.
+- Target user hardware: Windows 10/11, CPU 16GB RAM, Ollama di localhost:11434, Hermes-2-Pro-Llama-3-8B Q4_K_M (~5GB disk + ~6-7GB RAM saat inference).
+- Target metrics (baseline): function call accuracy ≥80%, latency first-token <4000ms, throughput ≥6 tok/s.
+- Estimated runtime setup.ps1: 10-20 menit (tergantung internet untuk pull 5GB model).
+- Estimated runtime benchmark.ps1: 10-20 menit (10 prompt × ~60-90 detik di CPU 16GB).
+- Cost: Rp 0 (open-source Ollama + open-weights Hermes). Listrik PC ~Rp 100-150rb/bulan jika 24/7.
+- Prinsip frugal terpenuhi: zero API cost, hardware minim (CPU 16GB, tanpa GPU), kualitas tetap terukur via eval set 10 prompt B2B Indonesia.
+- Next action user: download folder hermes-setup/, jalankan setup.ps1 di Windows, lalu benchmark.ps1 untuk ukur kualitas. Jika accuracy ≥80% → siap integrate ke ERP project. Jika <80% → tune system-prompt.yaml atau pertimbangkan LoRA fine-tune (lihat blueprint Chapter 5.5).

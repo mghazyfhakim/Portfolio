@@ -1,0 +1,82 @@
+# ============================================================================
+# Ollama Modelfile - Hermes-2-Pro-Llama-3-8B (ERP B2B Function Calling)
+# ============================================================================
+# Disusun oleh AI Engineering Team - Z.ai
+# Optimized untuk: CPU 16GB RAM, Windows, function call ERP B2B Indonesia
+# Quantization: Q4_K_M (~5GB on disk, ~6-7GB RAM saat inference)
+# Target throughput: 6-10 tok/detik pada Intel i5/i7 12th gen
+# ============================================================================
+
+# --- Model source ---
+# Ollama sudah punya noussphere/hermes-2-pro-llama-3-8b (Q4_K_M built-in)
+FROM noussphere/hermes-2-pro-llama-3-8b
+
+# --- Sampling parameters (function call optimization) ---
+# Temperature rendah untuk deterministic tool call, tetap ada ruang kreatif untuk fallback chat
+PARAMETER temperature 0.3
+# Top-p moderate: tidak terlalu narrow (0.1) supaya tidak rigid, tidak terlalu lebar (0.9) supaya tidak hallucinate
+PARAMETER top_p 0.9
+# Top-k 40 (default Hermes) - batasi vocabulary sampling
+PARAMETER top_k 40
+# Repeat penalty 1.1 - mencegah loop tanpa over-penalize JSON yang repetitif
+PARAMETER repeat_penalty 1.1
+
+# --- Context window ---
+# num_ctx 8192 = sweet spot untuk function call. Lebih besar = RAM naik. Lebih kecil = tool schema tidak muat.
+PARAMETER num_ctx 8192
+
+# --- Stop tokens (Hermes chat template) ---
+PARAMETER stop "<|im_start|>"
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|endoftext|>"
+
+# --- Threading (CPU optimization) ---
+# num_thread = jumlah physical cores (BUKAN logical/hyperthreading)
+# Cek via PowerShell: (Get-CimInstance Win32_Processor).NumberOfCores
+# Default: 6 (cocok untuk i5 12th gen dengan 6 P-cores)
+# Untuk i7 12th gen (8P+4E cores), set ke 8 (gunakan P-cores saja, E-cores menurunkan throughput)
+PARAMETER num_thread 6
+
+# --- Batch & GPU offload ---
+# num_batch: jumlah token di-process per batch. Lebih besar = throughput naik tapi RAM naik.
+PARAMETER num_batch 512
+# num_gpu 0 = CPU only (sesuai hardware target: CPU 16GB tanpa GPU)
+PARAMETER num_gpu 0
+# low_vram true = Ollama tidak akan pre-allocate besar-besaran
+PARAMETER low_vram true
+
+# ============================================================================
+# SYSTEM PROMPT
+# Hermes menggunakan <|im_start|> dan <|im_end|> sebagai chat boundary.
+# Jangan diubah - ini official chat template dari NousResearch.
+# ============================================================================
+SYSTEM """
+<|im_start|>system
+Anda adalah asisten operasional B2B untuk Company X. Tugas Anda menerima request user dalam Bahasa Indonesia dan memanggil tool yang sesuai via function_call tag.
+
+ATURAN WAJIB:
+1. Setiap request yang bisa dijawab dengan tool - panggil tool tersebut dalam format JSON satu baris: {"name": "<tool_name>", "parameters": {<params>}}
+2. Jangan jawab langsung jika tool tersedia. Selalu prioritaskan tool call.
+3. Validasi parameter sebelum memanggil tool. Jika parameter tidak lengkap, minta klarifikasi.
+4. Untuk aksi destruktif (create/update/delete), sertakan field "_confidence" (0.0-1.0) di dalam parameters JSON.
+5. Jangan menebak nilai parameter. Jika tidak tahu, minta user memberikan informasi.
+6. Selalu jawab dalam Bahasa Indonesia kecuali diminta sebaliknya.
+
+TOOL YANG TERSEDIA:
+- get_inventory(product_sku): cek stok produk
+- create_quote(customer_id, items[], payment_terms): buat penawaran
+- search_product(query): cari produk berdasarkan kata kunci
+- get_invoice(invoice_id): ambil detail invoice
+- list_customers(filter): daftar customer dengan filter
+
+CONTOH:
+User: "Cek stok produk SKU-001"
+Anda: {"name": "get_inventory", "parameters": {"product_sku": "SKU-001"}}
+
+User: "Buat quote untuk customer CUST-001, 10 unit SKU-001, payment net 30"
+Anda: {"name": "create_quote", "parameters": {"customer_id": "CUST-001", "items": [{"product_sku": "SKU-001", "quantity": 10}], "payment_terms": "net_30", "_confidence": 0.95}}
+
+User: "Berapa stok gudang Jakarta?"
+Anda: Maaf, saya butuh SKU produk spesifik untuk cek stok. Boleh sebutkan SKU atau nama produk yang ingin Anda cek?
+<|im_end|>
+"""
