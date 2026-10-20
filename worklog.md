@@ -623,3 +623,29 @@ Stage Summary:
   5. Test: ketik `/code-review` langsung di input box Hermes Agent (bukan pilih dari palette)
   6. Test SOUL.md: ketik "Halo, kenalan dulu" untuk verify personality
   7. Kalau skills tetap tidak muncul: jalankan `hermes skills opt-out` lalu `hermes skills opt-in --sync` untuk force refresh
+
+---
+Task ID: hermes-agent-mastery-fix-hermes-home-custom-path
+Agent: main (Z.ai, AI engineer persona)
+Task: Skills tidak muncul di `hermes skills list` padahal sudah di-copy ke ~/.hermes/skills/. Root cause analysis.
+
+Diagnosis:
+- User run `hermes skills list` → muncul 51 builtin + 1 local (puma-web-wsl), total 52. 4 custom skills (code-review, typescript-refactor, unit-test-generator, brainstorm-3-options) TIDAK muncul.
+- File verified ada di `C:\Users\<user>\.hermes\skills\<name>\SKILL.md` (PowerShell Get-ChildItem confirm).
+- Critical clue dari output `hermes skills opt-out --remove`: "Marker: E:\Hermes\.no-bundled-skills"
+- ROOT CAUSE: HERMES_HOME user ada di `E:\Hermes\` (custom), bukan default `C:\Users\<user>\.hermes\`. Hermes Agent baca dari `E:\Hermes\`, tapi kita install ke `C:\Users\<user>\.hermes\`. File tidak terbaca.
+- Bukti tambahan: `puma-web-wsl` muncul sebagai local source = skill itu ada di `E:\Hermes\skills\puma-web-wsl\`, yang juga confirm Hermes Agent baca dari `E:\Hermes\skills\`.
+
+Work Log:
+- Update SETUP-GUIDE.md: tambah pre-flight check untuk verify HERMES_HOME sebelum install. Instruksi pakai `echo $env:HERMES_HOME` atau `hermes skills opt-out --remove --dry-run | Select-String "Marker:"` untuk detect path actual.
+- Tambah note: "Kalau HERMES_HOME custom, ganti semua $hermesDir = $env:USERPROFILE\.hermes dengan path custom Anda".
+- Re-zip pack dengan SETUP-GUIDE.md yang baru: hermes-agent-mastery.zip (33.9KB).
+
+Stage Summary:
+- Fix: user harus copy file dari `C:\Users\<user>\.hermes\` ke `E:\Hermes\` (HERMES_HOME actual).
+- Instruksi concrete PowerShell script: detect HERMES_HOME, copy SOUL.md dan 4 SKILL.md ke path yang benar, verify dengan `hermes skills list`.
+- Expected output setelah fix: 4 custom skills muncul di list dengan Source=local, Trust=local, Status=enabled.
+- SETELAH install ke path yang benar, restart Hermes Agent desktop (Quit dari tray, buka lagi), test `/code-review` langsung di input box.
+- Cleanup opsional: hapus file di `C:\Users\<user>\.hermes\` karena tidak terpakai (Hermes Agent baca dari E:\Hermes\).
+- Lesson learned: SEBELUM install file config ke Hermes Agent, WAJIB verify HERMES_HOME pakai `echo $env:HERMES_HOME` atau via marker command. Default path `~/.hermes` hanya berlaku kalau user tidak set custom HERMES_HOME.
+- SETUP-GUIDE.md di pack updated untuk future reference — tidak akan salah path lagi.

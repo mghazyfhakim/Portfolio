@@ -16,12 +16,23 @@ Cek di Windows:
 hermes --version
 # Harus muncul version 0.21.5+ atau lebih baru
 
-# Cek Hermes Agent directory
-Test-Path "$env:USERPROFILE\.hermes"
-# Harus True
+# PENTING: Cek HERMES_HOME (path custom atau default)
+echo $env:HERMES_HOME
+# Kalau kosong → HERMES_HOME default: C:\Users\<nama-anda>\.hermes\
+# Kalau ada (misal: E:\Hermes) → HERMES_HOME custom, install ke situ
 ```
 
-Kalau `~/.hermes/` belum ada, buka Hermes Agent desktop app sekali — dia akan auto-create folder ini.
+**Penting**: HERMES_HOME adalah lokasi Hermes Agent baca SOUL.md + skills. Kalau Anda install ke path yang salah, Hermes Agent tidak akan detect file-nya.
+
+Cara cepat verify path Hermes Agent pakai:
+```powershell
+# Generate marker untuk verify
+hermes skills opt-out --remove --dry-run 2>&1 | Select-String "Marker:"
+# Output: "Marker: <HERMES_HOME>\.no-bundled-skills"
+# Path di output adalah HERMES_HOME actual Anda
+```
+
+Kalau HERMES_HOME custom (bukan `C:\Users\<nama-anda>\.hermes\`), ganti semua `$hermesDir = "$env:USERPROFILE\.hermes"` di script install dengan `$hermesDir = "<path-HERMES_HOME-anda>"`.
 
 ### 2. Lokasi pack ini
 
