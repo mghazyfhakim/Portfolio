@@ -835,3 +835,40 @@ Stage Summary:
   4. Test: /token-economy (prompt: "jawab singkat, hemat token"), /first-principles (prompt: "pikir dari akar: design X untuk constraint Y"), /pre-mortem (prompt: "sebelum deploy, pre-mortem dulu")
   5. Verify via `hermes skills list` — harus muncul 7 local skills (sebelumnya 5)
 - Lesson learned: SEBELUM buat custom skill baru, cek builtin skills dulu. Banyak use case sudah covered builtin (debugging, code review, simplify, git). Buat custom hanya untuk gap yang tidak ada builtin. Hindari duplikasi antara custom dan builtin = waste token.
+
+---
+Task ID: hermes-agent-mastery-zip-rebuild-complete
+Agent: main (Z.ai, AI engineer persona)
+Task: User bilang belum menerima ZIP. Saya verify, ternyata folder skills/ tidak ada di source — kemungkinan terhapus saat zip ulang iterasi sebelumnya. Rebuild 7 SKILL.md dari awal, lalu zip ulang.
+
+Diagnosis:
+- Saat verify source /home/z/my-project/download/hermes-agent-mastery/, hanya 7 markdown files yang ada — folder skills/ HILANG.
+- Penyebab: di iterasi zip sebelumnya, kemungkinan ada operasi yang hapus folder skills/ (mungkin saat rm -f atau unzip overwrite). Tidak terdeteksi karena saya tidak verify source setiap kali zip.
+- Lesson learned: SELALU verify source folder sebelum zip, jangan asumsi masih utuh.
+
+Work Log:
+- Buat ulang 7 folder skill: code-review, typescript-refactor, unit-test-generator, brainstorm-3-options, token-economy, first-principles, pre-mortem
+- Tulis ulang 7 SKILL.md dengan content lengkap:
+  1. code-review/SKILL.md (3.1KB) — severity 🔴🟡🟢 + diff fix
+  2. typescript-refactor/SKILL.md (4.3KB) — anti-pattern → idiomatic
+  3. unit-test-generator/SKILL.md (3.8KB) — AAA pattern, critical path first
+  4. brainstorm-3-options/SKILL.md (3.3KB) — 3 opsi + trade-off + rekomendasi
+  5. token-economy/SKILL.md (3.9KB) — hemat token, output padat
+  6. first-principles/SKILL.md (6.7KB) — kerangka berpikir dari akar
+  7. pre-mortem/SKILL.md (7.4KB) — antisipasi failure sebelum eksekusi
+- Zip ulang: hermes-agent-mastery.zip (52KB, 23 entries: 7 markdown + 7 folder skills + 7 SKILL.md + 2 dir kosong)
+- Verify ZIP konten: unzip -l confirm semua 14 file ada (7 docs + 7 SKILL.md)
+
+Stage Summary:
+- ZIP baru: /home/z/my-project/download/hermes-agent-mastery.zip (52KB, naik dari 33KB)
+- 14 file total: 7 markdown docs + 7 SKILL.md (semua 7 custom skills)
+- Source folder: /home/z/my-project/download/hermes-agent-mastery/ (168KB)
+- User HARUS download ulang ZIP ini. Yang lama (33KB) hanya 8 markdown, TIDAK punya folder skills/.
+- Install step (rekap dari sesi sebelumnya):
+  1. Download hermes-agent-mastery.zip (52KB)
+  2. Extract ke E:\hermes-agent-mastery\
+  3. Verify 7 SKILL.md ada di E:\hermes-agent-mastery\skills\<name>\SKILL.md
+  4. Copy folder skills\ ke E:\Hermes\skills\ (HERMES_HOME)
+  5. Restart Hermes Agent
+  6. Verify: hermes skills list | Select-String "local" — harus muncul 7 local skills
+- Lesson learned ke-7 di sesi ini: SETIAP KALI generate/zip file, VERIFY konten ZIP sebelum kirim ke user. Jangan asumsi zip dari iterasi sebelumnya masih utuh. Saya sudah gagal verify ini 2 kali di sesi ini (SOUL.md placeholder + skills/ folder hilang). Sebagai AI engineer, verify output adalah kewajiban, bukan optional.
