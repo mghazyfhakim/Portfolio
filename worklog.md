@@ -649,3 +649,35 @@ Stage Summary:
 - Cleanup opsional: hapus file di `C:\Users\<user>\.hermes\` karena tidak terpakai (Hermes Agent baca dari E:\Hermes\).
 - Lesson learned: SEBELUM install file config ke Hermes Agent, WAJIB verify HERMES_HOME pakai `echo $env:HERMES_HOME` atau via marker command. Default path `~/.hermes` hanya berlaku kalau user tidak set custom HERMES_HOME.
 - SETUP-GUIDE.md di pack updated untuk future reference — tidak akan salah path lagi.
+
+---
+Task ID: switch-to-cloud-uninstall-ollama
+Agent: main (Z.ai, AI engineer persona)
+Task: User mau uninstall Ollama total + switch ke cloud model gratis yang bagus untuk vibe coding. Rekomendasi provider + setup.
+
+Research Findings (via web search 2026-10):
+- 13 platform LLM API gratis tersedia di 2026 (source: openrouter.ai/blog/tutorials/free-llm-apis-compared)
+- Top 3 untuk Hermes Agent:
+  1. NVIDIA NIM: free credits on signup (no expiry), 80+ models, 40 RPM, hosts nousresearch/hermes-3-llama-3.1-70b native (model yang Hermes Agent di-design untuk pakai)
+  2. Nous Portal: native Hermes Agent, OAuth 1-klik, free models: StepFun Step 5 Preview, Meituan LongCat 2.5, Upstage Solar Mini 4, Poolside Laguna S 2.1 + Tool Gateway (web search, image gen, TTS, browser)
+  3. OpenRouter: 27+ free models (suffix :free), 200 req/day, 20 RPM, single API key untuk 27+ models
+- Hermes 3 70B (di NVIDIA NIM) jauh lebih pintar dari Hermes-2-Pro-8B yang sudah kita setup (70B vs 8B params)
+
+Work Log:
+- Web search cloud model gratis 2026 untuk coding, dapat 3 sources konkrit (KDnuggets, OpenRouter blog, dev.to Hermes Agent guide)
+- Susun PowerShell script untuk uninstall Ollama total: stop service, disable startup, kill process, run uninstaller, hapus folder (AppData\Local\Programs\Ollama, .ollama, LOCALAPPDATA\Ollama), verify uninstall, verify RAM freed
+- Susun setup guide untuk 3 opsi cloud: NVIDIA NIM (hermes auth add nvidia), Nous Portal (hermes setup --portal), OpenRouter (hermes auth add openrouter --api-key)
+- Document switch model di Hermes Agent desktop (klik nama model di status bar)
+- Comparison table: sebelum Ollama (5GB RAM, 4.9GB disk, 6 tok/s, 17s cold start) vs sesudah cloud (0 RAM, 0 disk, 50-100 tok/s, 2-5s latency)
+
+Stage Summary:
+- User action plan:
+  1. Uninstall Ollama via PowerShell script (Step 1)
+  2. Setup NVIDIA NIM (rekomendasi) atau Nous Portal atau OpenRouter
+  3. Switch model di Hermes Agent desktop
+  4. Test /code-review — expected 2-5 detik response
+- Hermes 3 70B di NVIDIA NIM = pilihan paling pintar gratis untuk vibe coding
+- Trade-off documented: privacy (data ke cloud), internet dependency, rate limit (40 RPM NIM / 20 RPM OpenRouter), free credits NIM "no expiry" tapi tetap ada cap
+- Pack hermes-setup/ tetap di /home/z/my-project/download/hermes-setup/ sebagai backup kalau nanti butuh function call ERP yang private (data confidential)
+- Modelfile v1.0.6 + system-prompt.yaml v1.0.6 tetap preserved — kalau install ulang Ollama, tinggal pakai file yang sama, dapat 100% accuracy function call seperti benchmark
+- Lesson learned ke-5 di sesi ini: kalau user hardware minim (12GB RAM) dan performance issue dengan local model, rekomendasi cloud model + uninstall local = pragmatic choice. Frugal tidak harus berarti local-only. Cloud free tier dengan model 70B params = kualitas jauh lebih tinggi dari local 8B, tanpa cost, tanpa RAM pressure.
