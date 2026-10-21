@@ -11,19 +11,27 @@
 
 ```
 hermes-agent-mastery/
-├── SOUL.md                       ← Personality file → copy ke ~/.hermes/SOUL.md
+├── SOUL.md                       ← Personality file → copy ke ~/.hermes/SOUL.md (atau $HERMES_HOME/SOUL.md)
 ├── skills/                       ← Custom skills → copy ke ~/.hermes/skills/
 │   ├── code-review/
-│   │   └── SKILL.md               ← Skill: review kode dengan standar ketat
+│   │   └── SKILL.md               ← Skill: review kode dengan standar ketat (format 🔴🟡🟢)
 │   ├── typescript-refactor/
 │   │   └── SKILL.md               ← Skill: refactor TypeScript (anti-pattern → idiomatic)
 │   ├── unit-test-generator/
 │   │   └── SKILL.md               ← Skill: generate unit test dari function
-│   └── brainstorm-3-options/
-│       └── SKILL.md               ← Skill: brainstorm kasih 3 opsi + trade-off
+│   ├── brainstorm-3-options/
+│   │   └── SKILL.md               ← Skill: brainstorm kasih 3 opsi + trade-off + rekomendasi
+│   ├── token-economy/             ← BARU v1.1
+│   │   └── SKILL.md               ← Skill: hemat token, output padat untuk free tier
+│   ├── first-principles/          ← BARU v1.1
+│   │   └── SKILL.md               ← Skill: kerangka berpikir dari akar masalah
+│   └── pre-mortem/                ← BARU v1.1
+│       └── SKILL.md               ← Skill: antisipasi failure sebelum eksekusi
 ├── SETUP-GUIDE.md                 ← Step-by-step install pack ini di Hermes Agent Anda
 ├── MODEL-STRATEGY.md              ← Kapan pakai Qwen3.5 4B vs hermes-erp-b2b-id vs cloud
 ├── VIBE-CODING-WORKFLOW.md        ← Workflow konkret vibe coding di Hermes Agent
+├── NVIDIA-NIM-SETUP.md            ← Setup NVIDIA NIM (alternatif #1)
+├── NOUS-PORTAL-SETUP.md            ← Setup Nous Portal (alternatif #2 — rekomendasi setelah NIM ke-block)
 └── README.md                      ← Dokumen ini
 ```
 

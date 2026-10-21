@@ -778,3 +778,60 @@ Stage Summary:
   3. Test 3 (chat, /code-review, vibe coding dengan web search)
   4. Kirim ke AI engineer: response time, quality, kalau ada error
 - Catatan: kalau nanti NIM unblock, user bisa pakai keduanya (Hermes Agent support multi-provider). Strategi: Portal sebagai default (karena Tool Gateway), NIM sebagai backup untuk task yang butuh Hermes 3 70B.
+
+---
+Task ID: hermes-agent-mastery-3-skills-enhancement
+Agent: main (Z.ai, AI engineer persona)
+Task: User tanya "apakah sudah cukup atau masih bisa di-enhance untuk maksimal output? misal skills untuk hemat token dan kerangka berpikir". Decision + implementasi.
+
+Analysis:
+- User request enhancement: token economy + thinking framework + "lainnya"
+- Sebelum buat custom, cek dulu builtin Hermes Agent yang sudah ada:
+  - systematic-debugging (builtin) — sudah cover debugging terstruktur
+  - requesting-code-review (builtin) — sudah cover code review flow (alternatif custom kita)
+  - simplify-code (builtin) — sudah cover simplify refactor
+  - codebase-inspection (builtin) — sudah cover baca codebase efisien
+  - github (builtin) — sudah cover git workflow, PR creation, commit message
+  - test-driven-development (builtin) — sudah cover TDD
+  - hermes-agent-skill-authoring (builtin) — generate skill baru otomatis
+- Yang BELUM ada builtin dan user explicit minta:
+  - Token economy (eksplisit diminta, tidak ada builtin)
+  - First principles thinking (kerangka berpikir, tidak ada builtin, brainstorm-3-options kita mirip tapi beda phase)
+  - Pre-mortem (antisipasi failure, tidak ada builtin)
+
+Decision: Buat 3 skills custom baru (tidak 5-6, jangan over-load context):
+1. token-economy — hemat token untuk free tier
+2. first-principles — kerangka berpikir dari akar
+3. pre-mortem — antisipasi failure sebelum eksekusi
+
+Trade-off documented:
+- Setiap custom skill +200-500 token ke system prompt
+- 4 existing + 3 baru = 7 custom skills = ~1.500-3.500 token system prompt (acceptable)
+- Skill jarang dipakai = waste token, harus hati-hati
+
+Work Log:
+- Buat folder: token-economy, first-principles, pre-mortem
+- Tulis SKILL.md token-economy (5.5KB): 6 pattern token saving (lead with answer, skip recap, 1 contoh cukup, tabel > paragraf, hapus pleasantries, code tanpa obvious comment). Verification checklist. 2 contoh konkret (boros vs hemat).
+- Tulis SKILL.md first-principles (5.8KB): 5 step procedure (problem, strip assumptions, fundamentals, build from fundamentals, compare conventional). Pitfalls (jangan over-engineer, jangan ignore practical constraint). Concrete example: job queue design untuk ERP B2B 500 job/hari, conclude Postgres table + 1 goroutine (bukan Redis + BullMQ).
+- Tulis SKILL.md pre-mortem (7.9KB): 5 step procedure (assumption, time travel 6 bulan gagal, reverse engineer pencegahan, decision matrix, action items). Concrete example: microservices split monolith Next.js ke 4 Docker services di VPS 8GB Hetzner, 6 skenario failure dengan pencegahan. Comparison dengan brainstorm-3-options (beda phase: decision making vs risk check).
+- Update README.md: tambah 3 skills baru ke structure tree, label "BARU v1.1".
+- Re-zip pack: hermes-agent-mastery.zip (44KB, sekarang 7 files di skills/ + 7 docs).
+
+Stage Summary:
+- Pack update: hermes-agent-mastery.zip (44KB, naik dari 33.5KB)
+- Total custom skills: 7 (code-review, typescript-refactor, unit-test-generator, brainstorm-3-options + 3 baru: token-economy, first-principles, pre-mortem)
+- Coverage sekarang:
+  - Coding workflow: code-review, typescript-refactor, unit-test-generator (existing)
+  - Decision making: brainstorm-3-options (existing), first-principles (baru — dari akar, bukan analogy)
+  - Risk management: pre-mortem (baru — antisipasi failure sebelum eksekusi)
+  - Cost optimization: token-economy (baru — hemat token untuk free tier)
+- Builtin skills yang relevant untuk vibe coding (user harus explore sendiri):
+  - systematic-debugging, requesting-code-review, simplify-code, codebase-inspection, github, test-driven-development, hermes-agent-skill-authoring
+- Trade-off note: setiap skill custom +200-500 token. 7 skills = ~1.500-3.500 token system prompt. Acceptable untuk Portal free tier (response tetap 2-5 detik).
+- Next action user:
+  1. Download ulang ZIP pack (ada 3 SKILL.md baru)
+  2. Copy folder skills/ (3 baru) ke E:\Hermes\skills\
+  3. Restart Hermes Agent desktop
+  4. Test: /token-economy (prompt: "jawab singkat, hemat token"), /first-principles (prompt: "pikir dari akar: design X untuk constraint Y"), /pre-mortem (prompt: "sebelum deploy, pre-mortem dulu")
+  5. Verify via `hermes skills list` — harus muncul 7 local skills (sebelumnya 5)
+- Lesson learned: SEBELUM buat custom skill baru, cek builtin skills dulu. Banyak use case sudah covered builtin (debugging, code review, simplify, git). Buat custom hanya untuk gap yang tidak ada builtin. Hindari duplikasi antara custom dan builtin = waste token.
