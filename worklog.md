@@ -681,3 +681,48 @@ Stage Summary:
 - Pack hermes-setup/ tetap di /home/z/my-project/download/hermes-setup/ sebagai backup kalau nanti butuh function call ERP yang private (data confidential)
 - Modelfile v1.0.6 + system-prompt.yaml v1.0.6 tetap preserved — kalau install ulang Ollama, tinggal pakai file yang sama, dapat 100% accuracy function call seperti benchmark
 - Lesson learned ke-5 di sesi ini: kalau user hardware minim (12GB RAM) dan performance issue dengan local model, rekomendasi cloud model + uninstall local = pragmatic choice. Frugal tidak harus berarti local-only. Cloud free tier dengan model 70B params = kualitas jauh lebih tinggi dari local 8B, tanpa cost, tanpa RAM pressure.
+
+---
+Task ID: nvidia-nim-setup-guide-detail
+Agent: main (Z.ai, AI engineer persona)
+Task: Buat panduan detail setup NVIDIA NIM untuk Hermes Agent, dari daftar akun sampai test pertama.
+
+Research (via web search 2026-10):
+- Sumber resmi: build.nvidia.com (NVIDIA NIM homepage), developer.nvidia.com (Developer Program), forums.developer.nvidia.com (rate limit discussion)
+- Free tier NIM: 40 RPM (requests per minute), no per-token billing, no credit card, no expiry
+- 80+ model tersedia termasuk Hermes 3 70B, DeepSeek 3.2, Kimi 2.5, GLM 5.1, GPT-OSS-120B, MiniMax M2.7
+- Hermes Agent docs (hermes-agent.nousresearch.com/docs/integrations/providers): konfigurasi via env var NVIDIA_API_KEY di ~/.hermes/.env
+
+Work Log:
+- Tulis NVIDIA-NIM-SETUP.md (14KB, 7 step + troubleshooting + FAQ + backup plan)
+- Step 1: Daftar akun NVIDIA Developer di build.nvidia.com (gratis, no credit card)
+- Step 2: Generate API key dari dashboard (format nvapi-xxx, simpan di tempat aman)
+- Step 3: Test API key dengan cURL/Invoke-RestMethod ke integrate.api.nvidia.com/v1/chat/completions
+- Step 4: Setup di Hermes Agent — 2 cara:
+  - Cara A (rekomendasi): hermes auth add nvidia (interactive)
+  - Cara B (manual): edit ~/.hermes/.env, tambah NVIDIA_API_KEY=xxx
+- Step 5: Verify provider via hermes model
+- Step 6: Switch model di Hermes Agent desktop (klik nama model di status bar)
+- Step 7: Test 3 — chat biasa, /code-review skill, vibe coding prompt Go
+- 6 troubleshooting case: API key invalid, rate limit 429, response lambat, skill tidak ke-trigger, SOUL.md tidak ke-load, hermes command not in PATH
+- 5 verification test final
+- Cost tracking (opsional) untuk self-awareness rate limit usage
+- Backup plan: kalau NIM habis, switch ke Nous Portal / OpenRouter / HuggingFace / Ollama local
+- Re-zip pack: hermes-agent-mastery.zip (28KB, sekarang 7 files)
+
+Stage Summary:
+- File baru: /home/z/my-project/download/hermes-agent-mastery/NVIDIA-NIM-SETUP.md (14KB)
+- Pack update: hermes-agent-mastery.zip (28KB, sekarang 7 files: README, SOUL.md, SETUP-GUIDE, MODEL-STRATEGY, VIBE-CODING-WORKFLOW, NVIDIA-NIM-SETUP, skills/ folder)
+- Data konkrit dari NVIDIA resmi:
+  - URL daftar: https://build.nvidia.com (klik Create Account)
+  - API endpoint: https://integrate.api.nvidia.com/v1/chat/completions
+  - Model Hermes 3: nousresearch/hermes-3-llama-3.1-70b
+  - Free tier: 40 RPM, no token billing, no credit card, no expiry
+  - 80+ model tersedia
+- Hermes Agent config: NVIDIA_API_KEY di ~/.hermes/.env (atau E:\Hermes\.env kalau custom HERMES_HOME)
+- Test expectation: response 2-5 detik (cloud, no RAM needed di laptop user)
+- Next action user:
+  1. Download ulang ZIP pack (ada NVIDIA-NIM-SETUP.md baru)
+  2. Ikuti step 1-7 di NVIDIA-NIM-SETUP.md
+  3. Test 3 (chat, /code-review, vibe coding prompt)
+  4. Kirim ke AI engineer: response time, quality, kalau ada error
