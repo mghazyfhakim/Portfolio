@@ -726,3 +726,55 @@ Stage Summary:
   2. Ikuti step 1-7 di NVIDIA-NIM-SETUP.md
   3. Test 3 (chat, /code-review, vibe coding prompt)
   4. Kirim ke AI engineer: response time, quality, kalau ada error
+
+---
+Task ID: nous-portal-setup-guide
+Agent: main (Z.ai, AI engineer persona)
+Task: User tidak bisa pakai NVIDIA NIM (akun kena temporary block). Minta rekomendasi alternatif #2 terbaik untuk cloud model Hermes Agent.
+
+Diagnosis:
+- User NVIDIA NIM akun ke-block temporary (mungkin karena suspicious activity atau verify issue).
+- Alternatif terbaik berdasarkan research sebelumnya:
+  1. Nous Portal — OAuth 1-klik, native Hermes Agent, free models: StepFun Step 5, LongCat 2.5, Solar Mini 4, Laguna S 2.1 + Tool Gateway (web search, image gen, TTS, browser)
+  2. OpenRouter — 27+ free models, single API key, 200 RPD, 20 RPM
+  3. Hugging Face — monthly free credits
+
+Decision: **Nous Portal** sebagai alternatif #2 karena:
+- OAuth 1-klik via `hermes setup --portal` — paling smooth, no manual API key
+- Tool Gateway included free (web search berguna banget untuk vibe coding — search dokumentasi library langsung dari chat)
+- 4-5 model free yang cukup bagus untuk coding (Laguna S 2.1 = code specialist)
+- Native integration Hermes Agent
+
+Trade-off vs NIM:
+- Model free lebih sedikit (4-5 vs 80+ di NIM)
+- Tidak ada Hermes 3 70B di free tier (kalau mau 70B, harus subscribe berbayar)
+
+Work Log:
+- Tulis NOUS-PORTAL-SETUP.md (10KB, 6 step + troubleshooting + comparison + backup plan + FAQ)
+- Step 1: Setup via `hermes setup --portal` (OAuth 1-klik, browser auto-open)
+- Step 2: Daftar akun portal.nousresearch.com kalau belum punya (Sign Up, verify email)
+- Step 3: Pilih model free untuk coding (rekomendasi: Poolside Laguna S 2.1 untuk default, StepFun Step 5 untuk reasoning, LongCat 2.5 untuk long context, Solar Mini 4 untuk quick chat)
+- Step 4: Set default model via `hermes model` (interactive) atau via config file atau via desktop UI
+- Step 5: Verify via `hermes model`, `hermes portal info`, test web_search tool
+- Step 6: Test 3 — chat biasa, `/code-review`, vibe coding dengan Tool Gateway (web search dokumentasi)
+- 6 troubleshooting case: setup error/stuck, OAuth callback error, rate limit hit, web search tool tidak jalan, model tidak muncul di dropdown, login expired/token invalid
+- Comparison table: Nous Portal vs NIM (kalau NIM unblock nanti) — strategi dual-provider
+- Backup plan: kalau Portal juga kena block, switch ke OpenRouter (Opsi A), Hugging Face (Opsi B), atau re-install Ollama (Opsi C, last resort)
+- FAQ: free tanpa credit card, rate limit, Tool Gateway, multi-provider, privacy
+
+Stage Summary:
+- File baru: /home/z/my-project/download/hermes-agent-mastery/NOUS-PORTAL-SETUP.md (10KB)
+- Pack update: hermes-agent-mastery.zip (33.5KB, sekarang 7 files + skills/ folder)
+- Rekomendasi konkret model:
+  - Default: poolside/laguna-s-2.1 (code specialist, paling cocok untuk vibe coding)
+  - Backup reasoning: stepfun/step-5-preview (untuk brainstorm arsitektur kompleks)
+  - Backup long context: meituan/longcat-2.5-preview (untuk codebase besar, 1M context)
+  - Backup quick: upstage/solar-mini-4 (untuk chat cepat, draft email)
+- Tool Gateway bonus: web search (50-100/hari free), image gen, TTS, browser automation
+- Setup time: 2-5 menit (vs NIM 5-10 menit) — OAuth 1-klik lebih smooth dari manual API key
+- Next action user:
+  1. Download ulang ZIP pack (ada NOUS-PORTAL-SETUP.md baru)
+  2. Buka file NOUS-PORTAL-SETUP.md, ikuti step 1-6
+  3. Test 3 (chat, /code-review, vibe coding dengan web search)
+  4. Kirim ke AI engineer: response time, quality, kalau ada error
+- Catatan: kalau nanti NIM unblock, user bisa pakai keduanya (Hermes Agent support multi-provider). Strategi: Portal sebagai default (karena Tool Gateway), NIM sebagai backup untuk task yang butuh Hermes 3 70B.
