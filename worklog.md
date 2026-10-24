@@ -872,3 +872,24 @@ Stage Summary:
   5. Restart Hermes Agent
   6. Verify: hermes skills list | Select-String "local" — harus muncul 7 local skills
 - Lesson learned ke-7 di sesi ini: SETIAP KALI generate/zip file, VERIFY konten ZIP sebelum kirim ke user. Jangan asumsi zip dari iterasi sebelumnya masih utuh. Saya sudah gagal verify ini 2 kali di sesi ini (SOUL.md placeholder + skills/ folder hilang). Sebagai AI engineer, verify output adalah kewajiban, bukan optional.
+
+---
+Task ID: 1
+Agent: main (Z.ai)
+Task: Bangun portfolio website "overkill frontend, zero cost" untuk user + siapkan kit 5 plugin desain untuk Hermes Agent (A/B test).
+
+Work Log:
+- Load skill fullstack-dev, init environment, baca worklog sebelumnya.
+- Riset 5 plugin: fetch SKILL.md mentah Anthropic frontend-design (claude-code repo), Leonxlnx/taste-skill v2 (38KB ruleset), vercel-labs/agent-skills web-design-guidelines + command.md (100+ aturan), konfirmasi microsoft/playwright-cli (npm -g @playwright/cli), unduh VoltAgent/awesome-design-md repo (84 brand, ambil contoh Vercel+Linear).
+- Temuan kritis: skill Anthropic melarang estetika dark+acid-green sebagai AI tell -> arah desain digeser ke "DATASHEET" (kertas teknikal + safety orange RAL), vernakular dunia kerja user (industrial sealing).
+- Tulis DESIGN.md (kontrak visual bersama Z.ai & Hermes): palet 6 token, Barlow Condensed/Barlow/IBM Plex Mono, dial DESIGN_VARIANCE/MOTION/VISUAL_DENSITY, signature move = exploded seal SVG, live thing = crosshair CAD + readout mm, quality floor Vercel.
+- Build Next.js: data/portfolio.ts (single source, placeholder [EDIT]), globals.css (token @theme inline, plotter load sequence, reveal aman no-JS, reduced-motion penuh), layout.tsx (next/font), 8 komponen: sheet-frame (frame ISO-5457 + crosshair + indikator sheet), hero (title block grid + seal SVG exploded scroll-driven), materials-belt (marquee), catalog (baris expandable + floating preview), envelope (tabel + plot SVG), service-log, contact (magnetic button), revision-block (jam live WIB). Zero UI library.
+- Bug ditemukan & diperbaiki: (1) @theme Tailwind v4 menolak var() next/font -> wajib @theme inline; (2) grid title block bocor -> row-span-3 sel seal; (3) label SVG tertimpa lapisan -> label masuk grup layer + drift dikalibrasi ±28px dengan zona aman; (4) garis dobel 4px -> border-b-0 md; (5) kontras teks kecil signal 3.6:1 gagal AA -> token signal-ink #B93A06; (6) indikator sheet pakai state map IO; (7) lint: setState dalam effect -> mutasi DOM data-state.
+- Audit agent-browser: desktop 1440 (hero, catalog+hover card, envelope, log, contact, footer) + mobile 390 (top, catalog, footer), keyboard toggle aria-expanded, tab fokus, console 0 error, lint 0 error. Bukti: download/portfolio-audit-screenshots/ (5 PNG).
+- Susun hermes-design-arsenal: INSTALL.md, CHALLENGE-BRIEF.md (brief identik utk Hermes), EVALUATION-RUBRIC.md (buta, maks 42), README.md provenance/lisensi, 2 SKILL.md wrapper (design-md, playwright-visual-check). Zip 26 file 68KB diverifikasi isi.
+
+Stage Summary:
+- Website live di preview (port 3000), lint bersih, browser-verified.
+- Deliverables: download/hermes-design-arsenal.zip (kit 5 skill + brief + rubric + DESIGN.md), download/portfolio-audit-screenshots/.
+- Data.ts menandai [EDIT]: email, handle GitHub, detail pekerjaan 2025 — wajib swap user sebelum deploy.
+- Deploy zero-cost yang disarankan: Cloudflare Pages (static export) atau GitHub Pages.

@@ -1,0 +1,223 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ============================================================
+   DATASHEET design tokens — see DESIGN.md at project root.
+   Paper / ink / steel / signal / form / caution. No gradients,
+   no glass, no glows, no shadows at rest.
+   ============================================================ */
+
+@theme inline {
+  --color-paper: #e9eae6;
+  --color-ink: #17191c;
+  --color-steel: #5f6468;
+  --color-signal: #e4470b;
+  --color-signal-ink: #b93a06;
+  --color-form: #f4f4f1;
+  --color-caution: #f2c300;
+
+  --font-display: var(--font-barlow-cond), "Arial Narrow", sans-serif;
+  --font-body: var(--font-barlow), system-ui, sans-serif;
+  --font-data: var(--font-plex-mono), ui-monospace, monospace;
+
+  --animate-marquee: marquee 42s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- base ---------- */
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: var(--color-paper);
+}
+
+/* thin industrial scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-steel) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-steel);
+  border: 3px solid var(--color-paper);
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* visible focus everywhere — Vercel guidelines floor */
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
+
+/* ---------- paper grain (SVG noise, 3% — texture, not gradient) ---------- */
+
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- plotter load sequence (one orchestrated moment) ---------- */
+
+@keyframes plot-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes plot-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.6) rotate(-8deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.94) rotate(-4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-6deg);
+  }
+}
+
+.plot-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: plot-draw 0.7s cubic-bezier(0.6, 0, 0.2, 1) forwards;
+}
+.plot-fade {
+  opacity: 0;
+  animation: plot-fade 0.5s ease-out forwards;
+}
+.stamp {
+  opacity: 0;
+  animation: stamp-in 0.45s cubic-bezier(0.2, 0.8, 0.3, 1) 0.9s forwards;
+}
+
+/* ---------- reveal on scroll (safe without JS: idle = visible) ---------- */
+
+.reveal[data-state="pre"] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.reveal[data-state="in"] {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- exploded seal layers (scroll-driven via --explode 0..1) ---------- */
+
+.seal-layer {
+  transform: translateY(calc(var(--explode, 0) * var(--drift, 0px)));
+  transition: transform 0.08s linear;
+}
+
+/* ---------- catalog expand rows ---------- */
+
+.row-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.row-detail[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.row-detail > div {
+  overflow: hidden;
+}
+
+/* ---------- status stamp ---------- */
+
+.status-stamp {
+  font-family: var(--font-data);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  border: 1.5px solid currentColor;
+  padding: 2px 7px;
+  border-radius: 2px;
+  transform: rotate(-2deg);
+  white-space: nowrap;
+}
+
+/* ---------- reduced motion: keep content, drop travel ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .plot-line {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .plot-fade {
+    opacity: 1;
+    animation: none;
+  }
+  .stamp {
+    opacity: 1;
+    animation: none;
+  }
+  .reveal[data-state="pre"] {
+    opacity: 1;
+    transform: none;
+  }
+  .seal-layer {
+    transform: none;
+    transition: none;
+  }
+  .marquee-track {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* marquee wrapper pauses on hover */
+.marquee-track:hover {
+  animation-play-state: paused;
+}
