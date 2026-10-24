@@ -1,21 +1,21 @@
 import { footerMenu, identity, photoCredits } from "@/data/portfolio";
 
-// FOOTER — split satu viewport: screenshot karya sendiri di kiri
-// (crop rapat), menu besar di kanan, blok kontak + kredit foto
+// FOOTER — split satu viewport: monumen 3D "Ghazy" (ekstrusi
+// text-shadow berlapis, hard-edge — tanpa gambar, tanpa blur)
+// di kiri, menu besar di kanan, blok kontak + kredit foto
 // pihak ketiga yang masih tampil di halaman.
 export function Footer() {
   return (
     <footer className="grid grid-cols-1 lg:grid-cols-2 min-h-[100svh]">
-      <div className="tinted relative h-[50svh] lg:h-auto overflow-hidden">
-        <img
-          src="/media/puma-portrait.jpg"
-          alt="Halaman beranda pumamakmurseal.com, platform B2B yang dibangun dan dijaga Ghazy"
-          width={1200}
-          height={1800}
-          loading="lazy"
-          decoding="async"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
+      <div
+        className="footer-scene relative h-[50svh] lg:h-auto overflow-hidden flex items-center justify-center px-(--margin-page)"
+        aria-label="Monumen 3D Ghazy"
+      >
+        <div className="footer-monument" data-reveal>
+          <p className="footer-3d font-display text-ink text-[clamp(4rem,16vw,16rem)] leading-[0.82] tracking-[-0.02em] whitespace-nowrap">
+            Ghazy
+          </p>
+        </div>
       </div>
 
       <div className="bg-surface flex flex-col px-(--margin-page) py-8">

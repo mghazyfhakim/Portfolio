@@ -107,7 +107,6 @@ export const portraits: Portrait[] = [
     width: 800,
     height: 1000,
     side: "left",
-    zoom: 1.45,
   },
   {
     src: "/media/logo-sirekas.png",

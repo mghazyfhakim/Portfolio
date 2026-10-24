@@ -194,6 +194,50 @@ html.js [data-reveal="in"] {
   }
 }
 
+/* ---------- footer 3D "Ghazy" (v2.2, arah user) ----------
+   Monumen penutup dengan ekstrusi yang sama dengan stat-3d
+   namun tilt berlawanan (mirror) supaya tidak terbaca sekadar
+   duplikat angka produksi. Hard-edge tanpa blur. */
+
+.footer-scene {
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+}
+
+.footer-monument {
+  transform: rotateX(-12deg) rotateY(11deg);
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+  will-change: transform;
+}
+
+.footer-3d {
+  transform: translateZ(46px);
+  text-shadow:
+    0.012em -0.012em 0 #6b5c22,
+    0.024em -0.024em 0 #655721,
+    0.036em -0.036em 0 #5f521f,
+    0.048em -0.048em 0 #594d1d,
+    0.06em -0.06em 0 #53481b,
+    0.072em -0.072em 0 #4d4319,
+    0.084em -0.084em 0 #473e17,
+    0.096em -0.096em 0 #413916,
+    0.108em -0.108em 0 #3b3414,
+    0.12em -0.12em 0 #352f12,
+    0.132em -0.132em 0 #2f2a10,
+    0.144em -0.144em 0 #29250e,
+    0.156em -0.156em 0 #23200c,
+    0.168em -0.168em 0 #1d1b0a,
+    0.18em -0.18em 0 #171508,
+    0.192em -0.192em 0 #110f06;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-monument:hover {
+    transform: rotateX(-7deg) rotateY(6deg);
+  }
+}
+
 /* ---------- reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -222,5 +266,10 @@ html.js [data-reveal="in"] {
 
   .stat-monument {
     transform: rotateX(14deg) rotateY(-9deg);
+  }
+
+  .footer-monument {
+    transition: none;
+    transform: rotateX(-12deg) rotateY(11deg);
   }
 }

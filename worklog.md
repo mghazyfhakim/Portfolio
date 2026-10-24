@@ -939,3 +939,26 @@ Stage Summary:
 - Bukti visual: /home/z/my-project/download/portfolio-v21-evidence/ (40 screenshot + audit + console-errors.json).
 - Catatan lisensi: foto TULT dari situs kampus (atribusi di footer); user bisa timpa public/media/tult-portrait.jpg dengan foto pribadinya (4:5) tanpa ubah kode.
 - Versi Hermes Agent (porting 5 plugin ke E:\Hermes\skills) belum dimulai — menunggu arah user setelah melihat hasil v2.1.
+
+---
+Task ID: v2.2-revision
+Agent: main (Z.ai)
+Task: Revisi portfolio v2.2 — 3 poin feedback user: (1) samakan treatment gambar AI Engineer dengan Software Engineer card yang "rapih", (2) status produksi harus terus diperiksa (polling + tombol refresh), (3) ganti gambar footer dengan 3D Design "Ghazy" tanpa gambar.
+
+Work Log:
+- portfolio.ts: hapus field `zoom: 1.45` pada portrait AI Engineer (baris 100–110) → identik dengan portrait Software Engineer yang tidak punya zoom → "yg rapih" jadi treatment bersama.
+- status-board.tsx ditulis ulang: poll 60 dtk (POLL_MS=60_000 setara TTL cache server), tombol "Periksa ulang" dengan aria-label + min-h-11 + disabled saat loading, badge "SEMUA DOMAIN LIVE · fresh/cache", countdown "cek berikutnya dalam N dtk" dengan tabular-nums, visibility API pause/resume saat tab hidden, cleanup timer di unmount (aliveRef + abortRef).
+- footer.tsx ditulis ulang: hapus <img src="/media/puma-portrait.jpg"> → ganti dengan monumen 3D "Ghazy" (font-display, text-[clamp(4rem,16vw,16rem)], whitespace-nowrap) dengan aria-label container.
+- globals.css: tambah .footer-scene (perspective 1200px), .footer-monument (transform rotateX(-12deg) rotateY(11deg) — mirror dari stat-monument), .footer-3d (16 langkah text-shadow em-based tanpa blur, hard-edge), hover pada (hover:hover)+(pointer:fine), prefers-reduced-motion block.
+- Verifikasi: tsc bersih untuk src/, eslint 0 error 0 warning (hapus unused eslint-disable), npm run build sukses 7.7s, 4 route ter-prerender.
+- Playwright (scripts/verify-v22.js): 44 screenshot (22 desktop + 22 mobile), 0 console error, 0 pageerror, 0 requestfailed. Test tambahan: klik tombol "Periksa ulang" → countdown reset ke 59 dtk (polling manual jalan), hover footer 3D → transform smooth.
+- VLM cross-check: desktop-20-footer-3d-ghazy.png → 3D "Ghazy" ter-render dengan depth, no clipping; desktop-17-status-board-fresh.png → SEMUA DOMAIN LIVE · fresh, Periksa ulang button, countdown "cek berikutnya dalam 41 dtk", "cache server 60 dtk" terlihat; desktop-21-status-after-refresh.png → countdown reset ke 59 dtk; mobile-17 + mobile-20 → layout responsif stack proper.
+- Audit Web Design Guidelines Vercel per file/baris → download/portfolio-v22-evidence/audit-v22.md (touch target 44px, prefers-reduced-motion, aria-live polite, tabular-nums, rel noreferrer, focus-visible, transition property eksplisit).
+
+Stage Summary:
+- Semua 3 poin feedback v2.2 terpenuhi; build produksi hijau; self-check Playwright 0 error; VLM konfirmasi visual.
+- Bukti visual: /home/z/my-project/download/portfolio-v22-evidence/ (44 screenshot + audit-v22.md + console-errors.json).
+- AI Engineer card sekarang identik bersih dengan Software Engineer card (logo Puma tanpa zoom).
+- StatusBoard: polling 60 dtk + tombol refresh manual + countdown + cache indicator + visibility pause/resume + fallback unreachable.
+- Footer: monumen 3D "Ghazy" (mirror tilt dari stat-3d, hard-edge ekstrusi) menggantikan screenshot puma-portrait.jpg.
+- Versi Hermes Agent (porting 5 plugin ke E:\Hermes\skills) belum dimulai — menunggu arah user setelah melihat hasil v2.2.
