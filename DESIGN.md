@@ -3,6 +3,7 @@
 > Kontrak visual binding (format Google Stitch / VoltAgent awesome-design-md).
 > Diturunkan dari direction sheet taste-skill "pinned-poster" (seed 1593697766, tone bold, sector personal-portfolio).
 > Sumber isu: design lama (datasheet krem+oranye) ditolak user karena terbaca AI-template. Kontrak ini menggantikannya penuh.
+> **Revisi v2.1 (feedback user)**: foto arsip perkakas/terminal/mesin ditarik dari hero, potret, dan seksi angka; diganti plate logo brand (Puma Makmur, SIREKAS), foto TULT, foto Gedung Sate, dan monumen statistik 3D murni CSS. Pin "SATU ORANG." diganti "DEVELOPER.". Band teknologi diberi penjabaran kategori di bawahnya.
 > File ini analisis tim sendiri, BUKAN dokumen resmi brand mana pun. Semua fakta konten dari CV user.
 
 ## 1. Visual Theme & Atmosphere
@@ -54,39 +55,42 @@ Larangan tipe: TANPA monospace (kecuali di dalam blok kode nyata — halaman ini
 
 - **Tombol**: solid `--accent` emas, teks `--accent-ink`, sudut siku (radius 0 di seluruh halaman — diputuskan sekali), padding 14×22px, Work Sans 600. Hover: latar `--ink`, teks tetap hijau, translateY(-1px). Fokus: `focus-visible` outline 2px `--ink` offset 3px. Tekan: translateY(0).
 - **Link nav / footer**: Work Sans 600, warna `--ink`; hover turun ke `--muted` + underline; fokus visible.
+- **Brand plates (potret peran)**: logo brand full-bleed di atas warna dasar resminya (Puma Makmur: hexagon putih di hitam murni; SIREKAS: wordmark krem di navy `#0a3464`), rasio 4:5 sama dengan foto, overlay `tinted` yang sama. Logo yang dipakai dua kali (Puma Makmur) diberi variasi skala img 1.45x agar tidak terbaca duplikat. Foto TULT memakai perlakuan foto biasa.
 - **Baris status (live thing)**: `--surface` tanpa border, radius 0; nama domain Work Sans 600; status = titik bulat 10px emas (live) / muted (tak terjangkau) + teks; latensi `tabular-nums`; waktu cek `Intl.DateTimeFormat('id-ID')`.
 - **Baris judul pelat karya**: tahun kiri · nama kapital tengah (Anton 22–30px) · fakta kanan, semua 15px kecuali nama; di atas scrim 90px; posisi vertikal identik 50% di setiap pelat.
 - **Caption potret**: nama 18px Work Sans 600, peran 14px `--muted`, satu kalimat ≤30 kata dalam ukuran 280px.
 - **Foto**: satu perlakuan untuk semua — sudut siku, tanpa filter kecuali `?grayscale` untuk set arsip hitam-putih; crop rasio identik dalam satu run (2:3 hero, 4:5 about).
+- **Monumen statistik 3D (v2.1)**: figur raksasa Anton di dalam `.stat-scene` (perspective 1100px, origin 50% 34%); `.stat-monument` rotateX(14deg) rotateY(-9deg) + `preserve-3d`; `.stat-3d` translateZ(40px) + ekstrusi 14 langkah `text-shadow` em-based (0.012em → 0.168em, warna perunggu gelap `#6b5c22` → `#1d1b0a`, tanpa blur). Hover (hover+pointer:fine saja): tilt melunak ke rotateX(8deg) rotateY(-4deg). Tile angka pendukung: `bg-surface`, hover translateZ(26px). `prefers-reduced-motion`: tilt tetap (statis), hover & transisi dimatikan.
+- **Penjabaran teknologi (v2.1)**: di bawah band marquee, grid 1/2/3 kolom berisi 6 baris kategori (Back-end, Front-end, Data & antrean, AI, Infrastruktur, Workflow) — label 14px `--muted` 600, item 17px dipisah `·`. Tanpa kalimat tagline.
 
 ## 5. Layout Principles
 
 - Satu grid 12 kolom, margin luar sama kiri-kanan (24px mobile, 40px desktop) di seluruh halaman. Asimetri hidup DI DALAM grid, tidak pernah di bingkai.
-- Run pinned: hero 1 pin (judul satu baris ~9.5vw, 5 panel 2:3 lebar ~37% lewat di bawah, ~100svh per panel); about 1 pin ("SATU ORANG." 12vw, 4 potret 4:5 bergantian kolom 2↔11). Maksimal dua tahap pinned per halaman, ≤5 viewport per pin.
-- Karya: 5 pelat full-bleed 100vw×100svh menempel tanpa celah. Baris judul (tahun · nama · fakta) hidup di lapisan overlay `position: sticky` di 50% viewport, DI ATAS semua pelat (z-30) sehingga tidak pernah tertutup; isinya bertukar mengikuti pelat aktif (IntersectionObserver). Blueprint: "the row never moves — scrolling reads like turning plates in a book".
+- Run pinned: hero 1 pin (judul satu baris ~9.5vw, 3 panel 2:3 lebar ~37% lewat di bawah, ~100svh per panel); about 1 pin ("DEVELOPER." 12vw, 4 pelat peran 4:5 bergantian kolom 2↔11). Maksimal dua tahap pinned per halaman, ≤5 viewport per pin.
+- Karya: 5 pelat full-bleed 100vw×100svh menempel tanpa celah (Puma B2B screenshot, Asisten Pajak fragmen kode, Weavory screenshot, SIREKAS plate logo, SI RAMPAK SEKAR foto Gedung Sate — asosiasi Bandung/Jawa Barat untuk platform pemerintah, arah user). Baris judul (tahun · nama · fakta) hidup di lapisan overlay `position: sticky` di 50% viewport, DI ATAS semua pelat (z-30) sehingga tidak pernah tertutup; isinya bertukar mengikuti pelat aktif (IntersectionObserver). Blueprint: "the row never moves — scrolling reads like turning plates in a book".
 - Jarak antar-seksi mengalir setelah run pinned: 120–240px desktop. Tidak ada kehampaan >½ layar tanpa penutup di sisi jauhnya.
 - Setiap seksi dibuka heading yang menamainya; layar pertama membawa satu `h1` (nama).
 - Footer: split 1 viewport — foto kiri kolom 1–6, menu kanan besar di atas field `--surface`.
 
 ## 6. Depth & Elevation
 
-Nol bayangan, nol glow, nol kaca. Kedalaman dibuat oleh: (1) tumpukan `position: sticky` — pelat saling menimpa secara fisik saat scroll; (2) scrim legibility di atas foto; (3) langkah tone `--bg` → `--surface`. Judul pinned DI ATAS foto pada stacking order (z-index), bukan blend-mode difference (larangan dari direction sheet: blend di atas non-abu menghasilkan hue acak).
+Nol bayangan, nol glow, nol kaca. Kedalaman dibuat oleh: (1) tumpukan `position: sticky` — pelat saling menimpa secara fisik saat scroll; (2) scrim legibility di atas foto; (3) langkah tone `--bg` → `--surface`; (4) monumen statistik 3D (ekstrusi text-shadow keras — SATU-satunya pengecualian, diminta eksplisit user, hard-edge bukan glow). Judul pinned DI ATAS foto pada stacking order (z-index), bukan blend-mode difference (larangan dari direction sheet: blend di atas non-abu menghasilkan hue acak).
 
 ## 7. Do's and Don'ts
 
 **Do**
-- Satu ide per layar; biarkan foto nyata dan data nyata menjadi kekayaan halaman.
+- Satu ide per layar; biarkan data nyata, screenshot karya sendiri, dan logo brand menjadi kekayaan halaman.
 - Pin ≤5 viewport; setiap layar di bawah pin membawa konten penuhnya sendiri.
 - Scrim band untuk teks di atas foto; uji legibility tiap pelat.
-- Kredit setiap foto arsip di footer (pemilik · lisensi · sumber).
+- Kredit setiap foto pihak ketiga di footer (pemilik · lisensi · sumber): Gedung Sate (CC BY-SA 3.0) dan TULT (atribusi Telkom University).
 - `prefers-reduced-motion`: marquee berhenti, entrance memudar tanpa jarak tempuh; konten tetap utuh tanpa JS.
 
 **Don't**
 - Jangan gradasi, jangan blend-mode difference, jangan monospace, jangan nomor indeks, jangan eyebrow, jangan kartu identik berjejer, jangan violet/indigo/biru, jangan krem+terracotta, jangan hijau asam di atas hitam.
-- Jangan mengarang bukti (testimoni, logo klien, statistik di luar CV).
+- Jangan mengarang bukti (testimoni, logo klien, statistik di luar CV + pernyataan user: rilis produksi tercatat di GitHub sejak v2.0.1).
 - Jangan hijack scroll; semua gerak berasal dari scroll asli halaman.
 - Jangan menaruh apa pun menutupi judul pinned.
-- Jangan pakai foto arsip SEBAGAI produk/karya miliknya — screenshot situsnya sendiri untuk itu.
+- Jangan pakai foto pihak ketiga SEBAGAI produk/karya miliknya — screenshot situsnya sendiri untuk itu; logo brand hanya di pelat identitas perannya.
 
 ## 8. Responsive Behavior
 
@@ -100,4 +104,4 @@ Nol bayangan, nol glow, nol kaca. Kedalaman dibuat oleh: (1) tumpukan `position:
 
 ## 9. Agent Prompt Guide
 
-> Bangun satu halaman Next.js (route `/`) yang tampil persis seperti kontrak ini. Ground `#133621`, tinta `#f4d96c`, aksen emas hanya untuk aksi. Anton untuk display uppercase, Work Sans untuk teks. Struktur: hero pinned-poster (judul monumen 1 baris, 5 panel 2:3 lewat di bawah) → pin "SATU ORANG." dengan 4 potret 4:5 bergantian → 5 pelat proyek full-bleed sticky dengan baris tahun·nama·fakta di scrim → band teknologi marquee 8vw → foto full-bleed dengan figur 1.331+ 17vw + papan status live → seksi kontak inversi emas dengan email display → footer split foto/menu. Sudut siku di mana-mana, tanpa gradasi/bayangan/monospace/nomor indeks. Semua angka dan fakta dari data/portfolio.ts (sumber tunggal). Foto arsip wajib berkredit di footer.
+> Bangun satu halaman Next.js (route `/`) yang tampil persis seperti kontrak ini. Ground `#133621`, tinta `#f4d96c`, aksen emas hanya untuk aksi. Anton untuk display uppercase, Work Sans untuk teks. Struktur: hero pinned-poster (judul monumen 1 baris, 3 panel 2:3 lewat di bawah) → pin "DEVELOPER." dengan 4 pelat peran 4:5 bergantian (logo Puma Makmur, foto TULT, logo Puma Makmur zoom 1.45x, logo SIREKAS) → 5 pelat proyek full-bleed sticky dengan baris tahun·nama·fakta di scrim → band teknologi marquee 8vw + penjabaran 6 kategori → seksi angka tanpa foto: monumen "1.331+" 3D (perspective + ekstrusi text-shadow) + 4 tile angka + papan status live → seksi kontak inversi emas dengan email display → footer split screenshot/menu. Sudut siku di mana-mana, tanpa gradasi/bayangan lembut/monospace/nomor indeks. Semua angka dan fakta dari data/portfolio.ts (sumber tunggal). Foto pihak ketiga wajib berkredit di footer.

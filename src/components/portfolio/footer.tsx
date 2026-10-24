@@ -1,16 +1,17 @@
 import { footerMenu, identity, photoCredits } from "@/data/portfolio";
 
-// FOOTER — split satu viewport: foto kiri (crop rapat), menu
-// besar di kanan, blok kontak + kredit lisensi foto arsip.
+// FOOTER — split satu viewport: screenshot karya sendiri di kiri
+// (crop rapat), menu besar di kanan, blok kontak + kredit foto
+// pihak ketiga yang masih tampil di halaman.
 export function Footer() {
   return (
     <footer className="grid grid-cols-1 lg:grid-cols-2 min-h-[100svh]">
       <div className="tinted relative h-[50svh] lg:h-auto overflow-hidden">
         <img
-          src="/media/asian-sealing-product-industrial-gasket.jpg"
-          alt="Aneka gasket dan oil seal industri, crop rapat"
-          width={1920}
-          height={1080}
+          src="/media/puma-portrait.jpg"
+          alt="Halaman beranda pumamakmurseal.com, platform B2B yang dibangun dan dijaga Ghazy"
+          width={1200}
+          height={1800}
           loading="lazy"
           decoding="async"
           className="absolute inset-0 h-full w-full object-cover"

@@ -61,20 +61,6 @@ export const heroPanels: HeroPanel[] = [
     width: 0,
     height: 0,
   },
-  {
-    src: "/media/asian-sealing-product-industrial-gasket.jpg",
-    alt: "Aneka gasket dan oil seal industri",
-    caption: "Sealing element, bahan kerja harian yang dilayani sistemnya.",
-    width: 1920,
-    height: 1080,
-  },
-  {
-    src: "/media/gedung-sate-bandung.jpg",
-    alt: "Gedung Sate, Bandung",
-    caption: "Bandung, tempat semuanya dirancang, diuji, dan dirilis.",
-    width: 1920,
-    height: 1135,
-  },
 ];
 
 export type Portrait = {
@@ -86,50 +72,52 @@ export type Portrait = {
   width: number;
   height: number;
   side: "left" | "right";
+  zoom?: number; // untuk logo yang dipakai lebih dari sekali — variasi skala
 };
 
 export const portraits: Portrait[] = [
   {
-    src: "/media/asian-sealing-product-industrial-gasket.jpg",
-    alt: "Aneka gasket dan oil seal",
+    src: "/media/logo-puma.png",
+    alt: "Logo PT Puma Makmur Aneka Engineering",
     name: "Software Engineer",
     role: "Full-Stack & DevOps di PT Puma Makmur Aneka Engineering",
     sentence:
-      "Satu-satunya developer: platform B2B, ERP internal, CI/CD, dan rilis produksi v2.4.0 sampai v2.5.0.",
-    width: 1920,
-    height: 1080,
+      "Satu-satunya developer: platform B2B, ERP internal, CI/CD, dan rilis produksi yang tercatat di GitHub sejak v2.0.1.",
+    width: 800,
+    height: 1000,
     side: "left",
   },
   {
-    src: "/media/gedung-sate-bandung.jpg",
-    alt: "Gedung Sate, Bandung",
+    src: "/media/tult-portrait.jpg",
+    alt: "Gedung TULT, Telkom University, Bandung",
     name: "Lulusan Rekayasa Perangkat Lunak",
     role: "Telkom University, 2025, IPK 3,30",
     sentence: "Markasnya Bandung: tempat sistem dirancang, diuji, dan dikirim.",
-    width: 1920,
-    height: 1135,
+    width: 800,
+    height: 1000,
     side: "right",
   },
   {
-    src: "/media/zenith-z-19-terminal.jpg",
-    alt: "Terminal komputer Zenith Z-19 dengan layar hijau",
+    src: "/media/logo-puma.png",
+    alt: "Logo PT Puma Makmur Aneka Engineering",
     name: "AI Engineer",
     role: "Asisten Pajak Puma, Gemini 3.8 Flash + Open WebUI",
     sentence:
       "Konsultan pajak berbahasa Indonesia, live untuk panduan regulasi, kalkulasi, dan kepatuhan.",
-    width: 1023,
-    height: 682,
+    width: 800,
+    height: 1000,
     side: "left",
+    zoom: 1.45,
   },
   {
-    src: "/media/yosowilangun-sta-130807-2521-lmj.jpg",
-    alt: "Menara air stasiun kereta api Yosowilangun",
+    src: "/media/logo-sirekas.png",
+    alt: "Logo SIREKAS",
     name: "Back-end Developer",
     role: "Jabar Digital Service, Weavory.Studio, SIREKAS",
     sentence:
       "API produksi, tuning query, database relasional, dan deployment, dari platform pemerintah sampai startup.",
-    width: 1200,
-    height: 1600,
+    width: 800,
+    height: 1000,
     side: "right",
   },
 ];
@@ -182,21 +170,20 @@ export const workPlates: WorkPlate[] = [
     year: "2025",
     title: "SIREKAS",
     fact: "Laravel, PostgreSQL, Sertifikat HKI",
-    bg: "/media/interior-of-the-machine-shop-at-the.jpg",
-    alt: "Interior bengkel mesin, foto arsip 1924",
+    bg: "/media/logo-sirekas-wide.png",
+    alt: "Logo SIREKAS di atas latar biru navy",
     width: 1920,
-    height: 1387,
-    grayscale: true,
+    height: 1080,
   },
   {
     id: "si-rampak-sekar",
     year: "2024",
     title: "SI RAMPAK SEKAR",
     fact: "Jabar Digital Service, 10+ endpoint produksi",
-    bg: "/media/yosowilangun-sta-130807-2521-lmj.jpg",
-    alt: "Menara air stasiun kereta api Yosowilangun",
-    width: 1200,
-    height: 1600,
+    bg: "/media/gedung-sate-bandung.jpg",
+    alt: "Gedung Sate, Bandung, Jawa Barat",
+    width: 1920,
+    height: 1135,
   },
 ];
 
@@ -215,20 +202,24 @@ export const stackBand = [
   "GITHUB ACTIONS",
 ];
 
-export const stackSentence = "Teknologi yang dia pakai di produksi, bukan sekadar di tutorial.";
+// Penjabaran sederhana di bawah band marquee — semua dari CV (Keahlian Teknis).
+export const stackBreakdown: { label: string; items: string[] }[] = [
+  { label: "Back-end", items: ["Elixir", "Phoenix LiveView", "Go", "Python", "Laravel"] },
+  { label: "Front-end", items: ["Next.js", "TypeScript", "Phoenix LiveView"] },
+  { label: "Data & antrean", items: ["PostgreSQL", "MySQL", "Oban"] },
+  { label: "AI", items: ["Gemini 3.8 Flash", "Open WebUI", "Prompt engineering"] },
+  { label: "Infrastruktur", items: ["Docker", "Coolify", "GitHub Actions", "GHCR"] },
+  { label: "Workflow", items: ["Git/GitHub", "Postman", "code review", "semantic versioning"] },
+];
 
 export const stats = {
   heading: "ANGKA PRODUKSI",
   figure: "1.331+",
   figureSentence: "automated test lulus, tanpa satu pun bug produksi pada audit akhir.",
-  photo: "/media/interior-of-the-machine-shop-at-the.jpg",
-  photoAlt: "Interior bengkel mesin dengan deretan mesin bubut, foto arsip 1924",
-  width: 1920,
-  height: 1387,
   supporting: [
     { value: "35+", caption: "pull request dengan verifikasi CI pra-merge" },
     { value: "0", caption: "bug produksi pada audit akhir" },
-    { value: "2", caption: "rilis produksi (v2.4.0 → v2.5.0)" },
+    { value: "81", caption: "commit dipromosikan dari develop ke main" },
     { value: "1", caption: "sertifikat HKI untuk proyek SIREKAS" },
   ],
 };
@@ -245,7 +236,7 @@ export const footerMenu = [
   { label: "Kontak", href: "#kontak" },
 ];
 
-// Kredit foto arsip (wajib — lisensi CC meminta atribusi).
+// Kredit foto pihak ketiga yang masih tampil (wajib — lisensi meminta atribusi).
 export const photoCredits = [
   {
     title: "Gedung Sate Bandung",
@@ -255,31 +246,10 @@ export const photoCredits = [
     source: "https://commons.wikimedia.org/w/index.php?curid=10352109",
   },
   {
-    title: "Asian Sealing Product - Industrial Gasket",
-    author: "Asian sealing product",
-    licence: "CC BY-SA 4.0",
-    licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-    source: "https://commons.wikimedia.org/w/index.php?curid=133647909",
-  },
-  {
-    title: "Zenith Z-19 Terminal",
-    author: "ajmexico",
-    licence: "CC BY 2.0",
-    licenceUrl: "https://creativecommons.org/licenses/by/2.0/",
-    source: "https://www.flickr.com/photos/15587432@N02/3281139507",
-  },
-  {
-    title: "Interior of the machine shop at the Petone Railway Workshops, 1924",
-    author: "Godber, Albert Percy, 1875–1949",
-    licence: "Public domain",
-    licenceUrl: null,
-    source: "https://commons.wikimedia.org/wiki/File:Interior_of_the_machine_shop_at_the_Petone_Railway_Workshops,_1924_ATLIB_299540.png",
-  },
-  {
-    title: "Yosowilangun sta 130807-2521 lmj",
-    author: "Wibowo Djatmiko (Wie146)",
-    licence: "CC BY-SA 3.0",
-    licenceUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
-    source: "https://commons.wikimedia.org/w/index.php?curid=27811975",
+    title: "Gedung TULT, Telkom University",
+    author: "Telkom University (Campus Life)",
+    licence: "foto kampus, digunakan dengan atribusi",
+    licenceUrl: "https://www.telkomuniversity.ac.id",
+    source: "https://www.telkomuniversity.ac.id",
   },
 ];

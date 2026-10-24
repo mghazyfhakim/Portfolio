@@ -1,13 +1,14 @@
 import { portraits } from "@/data/portfolio";
 
-// TENTANG — pin kedua: "SATU ORANG." menahan bingkai sementara
-// empat potret peran lewat bergantian kiri/kanan (4:5).
+// TENTANG — pin kedua: "DEVELOPER." menahan bingkai sementara
+// empat pelat peran lewat bergantian kiri/kanan (4:5): logo brand
+// dan foto kampus menggantikan foto arsip (arah user, v2.1).
 export function AboutRun() {
   return (
     <section id="tentang" aria-label="Tentang" className="relative scroll-mt-4 pb-[100svh]">
       <div className="sticky top-0 z-20 h-[100svh] pointer-events-none flex items-center justify-center">
         <h2 className="font-display uppercase text-ink whitespace-nowrap leading-[0.86] tracking-[-0.01em] text-[clamp(2.6rem,17vw,11.25rem)]">
-          SATU ORANG.
+          DEVELOPER.
         </h2>
       </div>
 
@@ -27,6 +28,7 @@ export function AboutRun() {
                   height={p.height}
                   loading="lazy"
                   decoding="async"
+                  style={p.zoom ? { transform: `scale(${p.zoom})` } : undefined}
                   className="h-full w-full object-cover"
                 />
               </div>

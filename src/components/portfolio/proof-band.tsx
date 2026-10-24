@@ -1,8 +1,10 @@
-import { stackBand, stackSentence } from "@/data/portfolio";
+import { stackBand, stackBreakdown } from "@/data/portfolio";
 
 // TEKNOLOGI — band penuh satu warna dengan satu baris nama
 // yang terpotong kedua tepi viewport, bergerak pelan ke kiri.
-// Berhenti total di prefers-reduced-motion.
+// Berhenti total di prefers-reduced-motion. Di bawahnya:
+// penjabaran sederhana per kategori (arah user v2.1 — tanpa
+// kalimat tagline).
 export function ProofBand() {
   const track = [...stackBand, ...stackBand];
 
@@ -34,7 +36,17 @@ export function ProofBand() {
         </div>
       </div>
 
-      <p data-reveal className="px-(--margin-page) pt-6 text-lg leading-snug max-w-[46ch]">{stackSentence}</p>
+      <div
+        data-reveal
+        className="px-(--margin-page) pt-8 sm:pt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-6"
+      >
+        {stackBreakdown.map((row) => (
+          <div key={row.label}>
+            <p className="text-sm font-semibold text-muted">{row.label}</p>
+            <p className="mt-1 text-base leading-snug">{row.items.join(" · ")}</p>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

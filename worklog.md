@@ -917,3 +917,25 @@ Stage Summary:
 - Design benar-benar baru: pinned-poster hijau botol+emas, monumen Anton, film panel sistem live, pelat buku, marquee, figur 1.331+, papan status live, kontak inversi emas, footer split berkredit.
 - Semua fakta dari CV user; tanpa bukti karangan; kredit lisensi foto arsip tampil di footer.
 - Siap A/B vs Hermes: arsenkit 5 skill + brief + rubric sudah ada di download/hermes-design-arsenal.zip (sesi lalu).
+
+---
+Task ID: v2.1-revision
+Agent: main (Z.ai)
+Task: Revisi portfolio v2.1 sesuai 10 poin feedback user (hapus foto perkakas & gedung sate dari posisi salah, plate logo brand, foto TULT, monumen statistik 3D, label DEVELOPER., penjabaran stack, koreksi versi ke v2.0.1).
+
+Work Log:
+- Verifikasi fakta: GitHub API repo ERP (mghazyfhakim) tanpa releases/tags publik → pakai pernyataan user "tercatat di GitHub sejak v2.0.1"; CV memberi stat pengganti "81 commit dipromosikan dari develop ke main".
+- Cari foto TULT: Wikimedia Commons kandidat salah konten (Mount Malabar dari tol) → image-search skill → 2 foto menara TULT dari "Campus Life – Telkom University" → pilih low-angle portrait (700x1159).
+- scripts/build_media_v21.py: crop hexagon Puma Makmur via deteksi kluster kolom putih (source 9674x1618 → plate 800x1000 hitam); wordmark SIREKAS diekstrak sebagai RGBA soft-alpha (seam + jagged edge fixed, unsharp mask 2 tahap) → logo-sirekas.png 800x1000 + logo-sirekas-wide.png 1920x1080 (wordmark di 40% tinggi, di atas scrim 50%); tult-portrait.jpg crop 4:5; hapus 7 media tak terpakai (gasket, zenith, machine shop, yosowilangun, pajak-*, tult raw).
+- portfolio.ts: heroPanels 5→3 (gasket + gedung sate keluar), portraits → logo Puma / TULT / logo Puma (zoom 1.45) / logo SIREKAS, plate sirekas → logo wide, plate si-rampak-sekar → gedung sate, stackSentence → stackBreakdown 6 kategori (dari CV Keahlian Teknis), stats tanpa foto + stat "81 commit", photoCredits tinggal 2 (Gedung Sate + TULT).
+- Komponen: about-run "SATU ORANG."→"DEVELOPER." + dukungan zoom img; stats-live ditulis ulang (stat-scene perspective 1100px, stat-monument rotateX(14deg) rotateY(-9deg) preserve-3d, stat-3d ekstrusi 14 langkah text-shadow em-based tanpa blur, stat-tile hover translateZ); proof-band tambah grid penjabaran; footer ganti foto gasket → screenshot puma-portrait.jpg.
+- DESIGN.md direvisi (v2.1): brand plates spec, monumen 3D spec, karya 5 pelat baru, pengecualian no-shadow untuk 3D, credits. credits.json ditulis ulang (9 entri: 2 pihak ketiga + 7 aset user).
+- tsc + eslint bersih (src), npm run build sukses 2x.
+- Playwright (scripts/verify-v21.js + verify-v21-extra.js): 36 + 4 screenshot desktop/mobile, 0 console error, 0 pageerror, 0 requestfailed.
+- Audit Web Design Guidelines per file/baris → download/portfolio-v21-evidence/audit-v21.md.
+
+Stage Summary:
+- Semua 10 poin feedback user terakomodasi; build produksi hijau; self-check Playwright 0 error.
+- Bukti visual: /home/z/my-project/download/portfolio-v21-evidence/ (40 screenshot + audit + console-errors.json).
+- Catatan lisensi: foto TULT dari situs kampus (atribusi di footer); user bisa timpa public/media/tult-portrait.jpg dengan foto pribadinya (4:5) tanpa ubah kode.
+- Versi Hermes Agent (porting 5 plugin ke E:\Hermes\skills) belum dimulai — menunggu arah user setelah melihat hasil v2.1.
