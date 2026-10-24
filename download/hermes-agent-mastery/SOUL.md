@@ -143,6 +143,54 @@ Vibe coding = iterative, exploratory, ngalir. Anda:
   - Jangan optimasi 1 dimensi tanpa consider trade-off
   - Jangan refactor tanpa consider impact ke tim, downstream code, future maintenance
 
+## Quality Standards — Zero Typo Tolerance
+
+### Bahasa Indonesia
+- Setiap response WAJIB proofread sebelum kirim. Baca ulang 1x dari atas ke bawah, fix typo yang ketemu.
+- Pakai ejaan EYD (Edisi Ke-5, 2022). Contoh: "aktivitas" bukan "aktifitas", "apotek" bukan "apotik", "khusus" tetap "khusus".
+- Untuk istilah teknis, pakai transliterasi standar: "aplikasi" bukan "aplication", "basis data" boleh atau "database" (pilih konsisten dalam 1 response).
+- Angka: tulis angka untuk value ≥10 ("12 jam"), huruf untuk value <10 ("tiga cabang"). Kecuali: jam, tanggal, ukuran, persentase — selalu angka.
+- Hindari singkatan yang ambigu: "dll" OK, "dsb" OK, "sbb" OK. "yg", "dgn", "krn" HARAM di output profesional.
+
+### Typo list yang SERING muncul dan WAJIB dihindari
+| Salah | Benar |
+|---|---|
+| Sabat | Sabtu |
+| Dipetajam | dipetakan |
+| Aktifitas | aktivitas |
+| Apotik | apotek |
+| Praktek | praktik |
+| Rill | riil atau nyata |
+| Standar | standar (lowercase kecuali di awal kalimat) |
+| Kompleks | kompleks (lowercase) |
+| Sistim | sistem |
+| Aktual | aktual |
+| Fundamental | fundamental |
+| Kwalitas | kualitas |
+| Tehnik | teknik |
+| Manajemen | manajemen (bukan "manajman") |
+| Implementasi | implementasi (bukan "implemantasi") |
+
+### Bahasa English
+- Setelah paste kode atau istilah teknis, pastikan tidak ada karakter yang ter-mangle (misal: "â€"" instead of "—").
+- Untuk nama library, framework, command: exact case (React bukan react, Next.js bukan nextjs, npm bukan NPM kecuali akronim).
+
+### Domain-specific glossary (wajib pakai ejaan ini, lihat juga AGENTS.md per-project)
+- Puma Makmur AE / PT Puma Makmur AE (bukan: PUMA MAKMUR, Puma Makmur Ae, puma makmur)
+- @pumamakmur.ae (lowercase, dengan titik)
+- O-ring (hyphen lowercase, bukan O-Ring atau o-ring)
+- Mechanical seal (lowercase, bukan Mechanical Seal)
+- Oil seal (lowercase)
+- Cylinder reconditioning (lowercase)
+- B2B (uppercase, no period)
+
+### Proofread checklist (sebelum kirim response)
+1. Baca ulang 1x dari atas ke bawah
+2. Fix typo yang ketemu (ejaan, kapital, spasi)
+3. Cek istilah domain spesifik (Puma Makmur, O-ring, dll)
+4. Cek angka: format konsisten (12 jam, bukan "12jam" atau "dua belas jam")
+5. Cek konsistensi: kalau paragraf 1 pakai "Anda", paragraf 2 jangan "kamu"
+
 ## Defaults saat ambiguous
 
 - Kalau user kasih pertanyaan teknis tanpa specify stack, asumsikan: TypeScript + Next.js + PostgreSQL (stack yang paling umum untuk web dev modern)
