@@ -1,140 +1,103 @@
-# DESIGN.md — Portfolio "DATASHEET" — Muhammad Ghazy Fhakim
+# DESIGN.md — Portfolio Muhammad Ghazy Fawaz Hakim
 
-> Dokumen arah desain (design system document) format getdesign.md / Google Stitch.
-> Dipakai bersama oleh: AI engineer (Z.ai) DAN Hermes Agent — agar perbandingan hasil adil.
-> Sumber metode: Frontend Design (Anthropic) + Taste Skill v2 (Leonxlnx) + Web Design Guidelines (Vercel).
+> Kontrak visual binding (format Google Stitch / VoltAgent awesome-design-md).
+> Diturunkan dari direction sheet taste-skill "pinned-poster" (seed 1593697766, tone bold, sector personal-portfolio).
+> Sumber isu: design lama (datasheet krem+oranye) ditolak user karena terbaca AI-template. Kontrak ini menggantikannya penuh.
+> File ini analisis tim sendiri, BUKAN dokumen resmi brand mana pun. Semua fakta konten dari CV user.
 
----
+## 1. Visual Theme & Atmosphere
 
-## 1. Baca Brief-nya (Frontend Design: "ground in the subject matter")
+**"The Pinned Poster"** — nama sebagai bingkai yang menahan diri, sementara sistem produksi yang dijaganya lewat di bawah. Satu ide: *something stays put while everything else changes*.
 
-- **Subjek**: Muhammad Ghazy Fhakim — AI engineer & web developer. Pekerjaan harian: B2B industrial
-  sealing (gasket, mechanical seal, O-ring, packing) di PT Puma Makmur AE. Obsesi: AI agent systems
-  (Hermes Agent, function calling, benchmark lokal), web engineering (Next.js, Go, TypeScript).
-- **Audiens**: recruiter teknis, kolaborator, klien potensial.
-- **Satu pekerjaan utama halaman ini**: membuktikan kompetensi lewat artefak nyata + memicu kontak.
-- **Vernakular dunia subjek** (inventory 8–12 butir, sumber ide WAJIB dari sini):
-  1. Gambar teknik & title block (ISO 5457) — kotak identitas di pojok drawing sheet
-  2. Datasheet komponen: part number, material, rating tekanan/suhu, dimensi, toleransi
-  3. Exploded view — potongan komponen yang dipecah per lapisan berlabel
-  4. RAL color standard (warna cat industri) & safety orange untuk marking mesin
-  5. Crosshair + koordinat mm — kursor CAD
-  6. Log servis / maintenance record — riwayat tanggal + tindakan
-  7. Tabel spec padat dengan stripe tonal dan band header terisi
-  8. Materi seal: EPDM, Viton, PTFE, graphite — sebagai metafora "material skill"
-  9. "Operating envelope" — batas tekanan & suhu tempat komponen bekerja
-  10. Stamp APPROVED / QC PASSED — stempel lingkaran hasil inspeksi
-  11. Plotter — mesin gambar yang menggambar garis per garis
-  12. Revision block — tabel revisi dokumen di footer drawing
+- Suasana: poster malam pabrik — hijau botol pekat dengan tinta emas hangat; foto arsip dan screenshot produksi sebagai pembawa warna dunia nyata.
+- Kepadatan: sinematik. Satu dominan per layar (judul monumen, satu foto penuh, satu figur raksasa); teks pendukung kecil dan tenang.
+- Filosofi: kepercayaan diri tenang — engineer yang sistemnya live tidak perlu berteriak. Overkill ada pada skala tipe, panjang perjalanan scroll, dan data nyata; bukan pada ornamen.
+- Bahasa konten: Bahasa Indonesia, kalimat pendek, fakta terukur dari CV. Tidak ada bukti karangan.
 
-## 2. Kalimat Ide (Taste Skill: idea sentence)
+## 2. Color Palette & Roles
 
-> On this page, **the engineering datasheet & drawing sheet dari industri sealing tempat
-> subjek bekerja** menjadi **sistem layout portofolio itu sendiri**: setiap section adalah
-> satu "sheet" dari drawing set, setiap proyek adalah satu "komponen" dengan spec table.
-
-Competitor test: portfolio developer lain TIDAK bisa mengklaim vernakular datasheet gasket —
-itu milik subjek ini saja. "Clean and modern" bukan ide; ini yang bukan.
-
-## 3. Palet Warna (6 token, hex bernama)
-
-| Token | Hex | Peran |
+| Token | Hex | Peran fungsional |
 |---|---|---|
-| `--paper` | `#E9EAE6` | Kertas teknikal dingin (bukan cream hangat #F4F1EA — itu AI tell) |
-| `--ink` | `#17191C` | Tinta karbon — teks utama & garis struktur tebal |
-| `--steel` | `#5F6468` | Baja mesin — teks sekunder, meta |
-| `--signal` | `#E4470B` | Safety orange (RAL 2009) — SATU aksen: stamp, penanda, garis aktif. Jangan untuk body text |
-| `--form` | `#F4F4F1` | Bidang form/table stripe — sedikit lebih terang dari paper |
-| `--caution` | `#F2C300` | Kuning industri — hanya untuk status "available", hemat |
+| `--bg` | `#133621` | Ground seluruh halaman (hijau botol). Tidak pernah berubah kecuali seksi inversi. |
+| `--surface` | `#1a4429` | Panel satu tingkat lebih terang dari ground (baris status, blok pendukung). |
+| `--ink` | `#f4d96c` | SEMUA teks di atas ground/foto (emas hangat). Teks berjalan selalu full ink, bukan abu. |
+| `--muted` | `#b3a55e` | Teks sekunder: peran di bawah nama, caption pendukung, legal. Tetap ≥ 4.5:1 di atas `--bg`. |
+| `--accent` | `#f4d96c` | Aksen = tombol solid & satu indikator "live". Dipakai pada aksi utama dan satu hal lain, tidak lebih. |
+| `--accent-ink` | `#133621` | Teks DI ATAS aksen emas (tombol, seksi inversi). |
+| `--inverse-bg` | `#f4d96c` | Seksi kontak: seluruh layar dibalik (latar emas, tinta hijau). Tidak ada gradasi apa pun. |
+| `--scrim` | `rgba(10,20,13,0.55→0.78)` | Scrim netral gelap HANYA di band teks di atas foto (legibility). Bukan dekorasi. |
 
-- Kontras minimal: ink/paper ≈ 14:1 (AAA), steel/paper ≈ 5.6:1 (AA), signal/paper ≈ 3.6:1
-  (hanya untuk elemen grafis & teks besar ≥24px, bukan body).
-- DILARANG: gradient sebagai dekorasi, glass/blur panel, glow, shadow pada elemen diam.
-- Kematian warna: tidak ada biru/indigo default, tidak ada ungu.
+Aturan warna: satu ground, satu tinta, satu aksen. Tidak ada gradasi, tidak ada glow, tidak ada bayangan pada elemen diam. Setiap panel/pelat boleh punya latar foto nyata; teks di atasnya selalu lewat scrim atau`--ink` solid yang terbaca. Pemisah permukaan = langkah tone, bukan garis.
 
-## 4. Tipografi
+## 3. Typography Rules
 
-| Peran | Family | Weight | Catatan |
-|---|---|---|---|
-| Display / judul | **Barlow Condensed** | 600–700 | Rasa DIN — huruf signage & gambar teknik industri |
-| Body | **Barlow** | 400–500 | Satu keluarga dengan display: konsisten, frugal |
-| Data spec / part code / koordinat | **IBM Plex Mono** | 400–500 | HANYA di dalam spec table, part number, readout — terjustifikasi subjek |
+Dua wajah, tidak lebih. Semua ukuran memetakan ke 5 langkah berikut.
 
-- Skala type (fluid, clamp): display hero clamp(3.5rem, 9vw, 7.5rem); heading section
-  clamp(2rem, 4.5vw, 3.5rem); body 1rem/1.6; spec value 0.8125rem.
-- Line length body < 80 karakter.
-- DILARANG (AI tells dari skill Frontend Design): satu kata di headline diberi warna beda,
-  ALL-CAPS eyebrow label di atas tiap heading, meta string disambung middle dot "·",
-  label "WORD — fragment" dengan em dash berjarak, panah "→" menempel di link/button.
-- Pengecualian terkontrol: ALL-CAPS diperbolehkan HANYA untuk nilai kolom judul tabel spec
-  (part no, qty, rating) karena itu format asli datasheet — bukan dekorasi di atas heading.
-
-## 5. Konsep Layout
-
-Halaman = satu **drawing set** ISO 5457:
-
-1. **Sheet frame** — border tebal 2px ink melingkar viewport (fixed), tick marks di tengah
-   tiap sisi, label sheet di tepi kanan atas. Seluruh konten hidup DI DALAM frame.
-2. **SHEET 01 — TITLE BLOCK (hero)**: grid kotak-kotak bergaya title block drawing asli —
-   PART NAME (nama, raksasa, Barlow Condensed), DESIGNATION, MATERIAL, SCALE 1:1, REV,
-   DATE, DRAWN BY. Sel kanan: **exploded view SVG** potongan seal 3 lapis berlabel.
-3. **MATERIAL BELT**: marquee horizontal isi material (skill) — EPDM / VITON / PTFE
-   diganti TypeScript / Next.js / Go / dsb. Satu pita, kecepatan lambat, pause on hover.
-4. **SHEET 02 — COMPONENT CATALOG**: daftar proyek sebagai baris spec padat — part code,
-   nama, kategori, tahun, status. Hover/klik → baris mengembang menampilkan description +
-   stack + hasil terukur. Komposisi list penuh-lebar, BUKAN kartu.
-5. **SHEET 03 — OPERATING ENVELOPE**: kemampuan teknis sebagai tabel envelope (domain,
-   material, rating) + diagram sumbu tekanan-suhu SVG sederhana dengan titik-titik domain.
-   Komposisi dua kolom asimetris 7/5.
-6. **SHEET 04 — SERVICE LOG**: pengalaman sebagai log maintenance: tanggal, unit, tindakan,
-   hasil. Satu kolom sempit kiri (tanggal) — mono, kanan narasi.
-7. **SHEET 05 — REQUEST FOR QUOTATION (contact)**: email raksasa sebagai judul, tombol
-   magnetik "Send inquiry", meta lokasi/jam kerja.
-8. **REVISION BLOCK (footer)**: tabel revisi asli: REV / DATE / DESCRIPTION / BY + jam
-   lokal live (WIB) + koordinat kota. Sticky footer rule dipatuhi.
-
-- Nomor sheet (01/02/…) terjustifikasi konten: drawing set memang urutan bernomor.
-- Grid asimetris di dalam; margin luar frame selalu simetris.
-- Section berjarak 120–180px; tidak ada stretch kosong > ½ layar.
-- Setiap section punya heading yang menamai isinya (h1 tunggal di hero).
-
-## 6. Dial (Taste Skill v2)
-
-| Dial | Nilai | Makna |
+| Role | Face | Spec |
 |---|---|---|
-| DESIGN_VARIANCE | TINGGI | Title-block grid, list katalog, diagram, log — tetangga tak pernah senada |
-| MOTION_INTENSITY | SEDANG–TINGGI | Satu signature move + entrance + feedback; tanpa hujan efek |
-| VISUAL_DENSITY | BIMODAL | Hero lapang; catalog/envelope/log padat seperti dokumen aslinya |
+| Display / monumen | **Anton** 400 | Uppercase, tracking -0.01em, leading 0.86. Monumen hero ~9.5vw satu baris; pin seksi 12vw; figur statistik 17vw; band teknologi 8vw. |
+| Text | **Work Sans** 400 | Body 17–19px, leading 1.5. Caption 15–16px. |
+| Text emphasis / link | **Work Sans** 600 | Label aksi, nama di bawah potret (18px), link footer. |
 
-## 7. Signature Move & The Live Thing
+Langkah tipe (clamp):
+```css
+--step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);   /* 13–14px */
+--step-body:  clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);    /* 17–19px */
+--step-lead:  clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);      /* 20–26px */
+--step-head:  clamp(2.5rem, 1.2rem + 5vw, 5.5rem);           /* 40–88px */
+--step-fig:   clamp(7.5rem, 17vw, 17.5rem);                  /* figur raksasa */
+```
 
-- **Signature move**: exploded view SVG seal di hero — tiga lapisan (CARBON / ELASTOMER /
-  BACKING) memisah seiring scroll (desktop: + hover parallax), tiap lapisan diberi label
-  domain subjek: AGENT SYSTEMS / WEB ENGINEERING / INDUSTRIAL B2B.
-- **The live thing**: crosshair cursor dengan readout koordinat mm live di tepi frame
-  (desktop, pointer:fine saja; touch & reduced-motion → nonaktif, fallback: kursor normal).
-- **Plotter load sequence**: saat load, title block tergambar berurutan (garis → teks →
-  stamp), seperti plotter — sekali, orkestrasi tunggal, < 1.2s, lalu diam.
-- Motion layer transform/opacity saja; SEMUA punya fallback `prefers-reduced-motion`
-  (konten tampil, travel dihilangkan). Marquee berhenti. Exploded view jadi diagram statis.
+Larangan tipe: TANPA monospace (kecuali di dalam blok kode nyata — halaman ini tidak punya), TANPA label kapital kecil ber-tracking lebar, TANPA nomor indeks 01/02/03, TANPA eyebrow di atas judul. Angka yang berdampingan: `font-variant-numeric: tabular-nums`. Judul dua baris maksimal di semua lebar. `text-wrap: balance` pada display.
 
-## 8. Copy deck ringkas (EN — bahasa fungsional portofolio publik)
+## 4. Component Stylings
 
-- H1: "MUHAMMAD GHAZY FHAKIM" — supporting: "AI engineer & web developer. I build agent
-  systems and industrial-grade web tools — measured, benchmarked, shipped."
-- Katalog: 5 komponen (lihat data.ts). Setiap baris: code, name, category, year, status,
-  description 2 kalimat, stack, 1 hasil terukur.
-- Envelope: 4 domain × material × rating.
-- Contact CTA: "Send inquiry" — bukan "Submit".
-- Placeholder data ditandai `[EDIT]` di data.ts — swap sebelum launch.
+- **Tombol**: solid `--accent` emas, teks `--accent-ink`, sudut siku (radius 0 di seluruh halaman — diputuskan sekali), padding 14×22px, Work Sans 600. Hover: latar `--ink`, teks tetap hijau, translateY(-1px). Fokus: `focus-visible` outline 2px `--ink` offset 3px. Tekan: translateY(0).
+- **Link nav / footer**: Work Sans 600, warna `--ink`; hover turun ke `--muted` + underline; fokus visible.
+- **Baris status (live thing)**: `--surface` tanpa border, radius 0; nama domain Work Sans 600; status = titik bulat 10px emas (live) / muted (tak terjangkau) + teks; latensi `tabular-nums`; waktu cek `Intl.DateTimeFormat('id-ID')`.
+- **Baris judul pelat karya**: tahun kiri · nama kapital tengah (Anton 22–30px) · fakta kanan, semua 15px kecuali nama; di atas scrim 90px; posisi vertikal identik 50% di setiap pelat.
+- **Caption potret**: nama 18px Work Sans 600, peran 14px `--muted`, satu kalimat ≤30 kata dalam ukuran 280px.
+- **Foto**: satu perlakuan untuk semua — sudut siku, tanpa filter kecuali `?grayscale` untuk set arsip hitam-putih; crop rasio identik dalam satu run (2:3 hero, 4:5 about).
 
-## 9. Quality floor (Web Design Guidelines — wajib lolos)
+## 5. Layout Principles
 
-- Semantik: header/nav/main/section/footer; satu h1; label setiap section.
-- Keyboard: semua interaktif reachable; focus-visible ring 2px signal orange offset 2px.
-- Kontras AA untuk teks; aria-label untuk icon-only; alt text; lang="en".
-- Tap target ≥ 44px; touch-action aman; `-webkit-tap-highlight-color` transparan.
-- `prefers-reduced-motion` dihormati penuh; `prefers-color-scheme` TIDAK dipakai —
-  sheet kertas adalah satu identitas (dark mode diharamkan oleh arah desain ini).
-- Meta: title, description, theme-color #E9EAE6, favicon part-drawing.
-- Tanpa layout thrash: animasi transform/opacity; scroll listener di-rAF-throttle.
+- Satu grid 12 kolom, margin luar sama kiri-kanan (24px mobile, 40px desktop) di seluruh halaman. Asimetri hidup DI DALAM grid, tidak pernah di bingkai.
+- Run pinned: hero 1 pin (judul satu baris ~9.5vw, 5 panel 2:3 lebar ~37% lewat di bawah, ~100svh per panel); about 1 pin ("SATU ORANG." 12vw, 4 potret 4:5 bergantian kolom 2↔11). Maksimal dua tahap pinned per halaman, ≤5 viewport per pin.
+- Karya: 5 pelat full-bleed 100vw×100svh menempel tanpa celah. Baris judul (tahun · nama · fakta) hidup di lapisan overlay `position: sticky` di 50% viewport, DI ATAS semua pelat (z-30) sehingga tidak pernah tertutup; isinya bertukar mengikuti pelat aktif (IntersectionObserver). Blueprint: "the row never moves — scrolling reads like turning plates in a book".
+- Jarak antar-seksi mengalir setelah run pinned: 120–240px desktop. Tidak ada kehampaan >½ layar tanpa penutup di sisi jauhnya.
+- Setiap seksi dibuka heading yang menamainya; layar pertama membawa satu `h1` (nama).
+- Footer: split 1 viewport — foto kiri kolom 1–6, menu kanan besar di atas field `--surface`.
+
+## 6. Depth & Elevation
+
+Nol bayangan, nol glow, nol kaca. Kedalaman dibuat oleh: (1) tumpukan `position: sticky` — pelat saling menimpa secara fisik saat scroll; (2) scrim legibility di atas foto; (3) langkah tone `--bg` → `--surface`. Judul pinned DI ATAS foto pada stacking order (z-index), bukan blend-mode difference (larangan dari direction sheet: blend di atas non-abu menghasilkan hue acak).
+
+## 7. Do's and Don'ts
+
+**Do**
+- Satu ide per layar; biarkan foto nyata dan data nyata menjadi kekayaan halaman.
+- Pin ≤5 viewport; setiap layar di bawah pin membawa konten penuhnya sendiri.
+- Scrim band untuk teks di atas foto; uji legibility tiap pelat.
+- Kredit setiap foto arsip di footer (pemilik · lisensi · sumber).
+- `prefers-reduced-motion`: marquee berhenti, entrance memudar tanpa jarak tempuh; konten tetap utuh tanpa JS.
+
+**Don't**
+- Jangan gradasi, jangan blend-mode difference, jangan monospace, jangan nomor indeks, jangan eyebrow, jangan kartu identik berjejer, jangan violet/indigo/biru, jangan krem+terracotta, jangan hijau asam di atas hitam.
+- Jangan mengarang bukti (testimoni, logo klien, statistik di luar CV).
+- Jangan hijack scroll; semua gerak berasal dari scroll asli halaman.
+- Jangan menaruh apa pun menutupi judul pinned.
+- Jangan pakai foto arsip SEBAGAI produk/karya miliknya — screenshot situsnya sendiri untuk itu.
+
+## 8. Responsive Behavior
+
+- Breakpoint tunggal praktis: mobile ≤ 768px menyusun ulang komposisi, bukan sekadar mengecil.
+- Monumen: satu baris ~9.5vw desktop; mobile tetap satu baris 15–17vw bila ≤10 karakter, dua baris bila lebih — never wraps (clamp + `white-space: nowrap` + ukuran teruji).
+- Panel hero: mobile full-width minus margin 16px, 2:3, mulai di belakang paruh bawah judul. Potret about: 72% lebar, bergantian kiri/kanan.
+- Pelat karya: mobile 100vw×82svh; baris judul turun ke bawah pelat (nama 22px, tahun+fakta 13px baris kedua).
+- Figur statistik: 30vw mobile; kalimat penjelas pindah ke atas figur.
+- Kontak: email patah setelah `@` dua baris 11.5vw.
+- Target sentuh ≥44px; `touch-action: manipulation`; status board & marquee punya fallback non-JS/non-motion.
+
+## 9. Agent Prompt Guide
+
+> Bangun satu halaman Next.js (route `/`) yang tampil persis seperti kontrak ini. Ground `#133621`, tinta `#f4d96c`, aksen emas hanya untuk aksi. Anton untuk display uppercase, Work Sans untuk teks. Struktur: hero pinned-poster (judul monumen 1 baris, 5 panel 2:3 lewat di bawah) → pin "SATU ORANG." dengan 4 potret 4:5 bergantian → 5 pelat proyek full-bleed sticky dengan baris tahun·nama·fakta di scrim → band teknologi marquee 8vw → foto full-bleed dengan figur 1.331+ 17vw + papan status live → seksi kontak inversi emas dengan email display → footer split foto/menu. Sudut siku di mana-mana, tanpa gradasi/bayangan/monospace/nomor indeks. Semua angka dan fakta dari data/portfolio.ts (sumber tunggal). Foto arsip wajib berkredit di footer.

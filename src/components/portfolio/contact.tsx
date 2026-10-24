@@ -1,109 +1,73 @@
-"use client";
+import { contactSentence, identity } from "@/data/portfolio";
 
-import { useEffect, useRef } from "react";
-import { identity } from "@/data/portfolio";
-import { SectionHead } from "./section-head";
-import { Reveal } from "./reveal";
-
-/**
- * SHEET 05 — REQUEST FOR QUOTATION.
- * Giant mailto headline, magnetic inquiry button (fine pointers,
- * motion allowed only), GitHub as secondary channel.
- */
+// KONTAK — 100svh dengan inversi penuh (latar emas, tinta
+// hijau). Email sebagai display type; tanpa heading besar dan
+// tanpa form (brief: email langsung).
 export function Contact() {
+  const [user, domain] = identity.email.split("@");
+
   return (
-    <section id="sheet-5" aria-labelledby="rfq-title" className="my-16 sm:my-24">
-      <span id="rfq-title" className="sr-only">
-        Request for quotation: contact
-      </span>
-      <SectionHead
-        sheet="05"
-        total={5}
-        title="Request for Quotation"
-        sub="One component in stock: my time. Lead time on replies is under 24 hours during WIB business days. Field inquiries welcome."
-      />
+    <section
+      id="kontak"
+      aria-labelledby="kontak-title"
+      className="on-inverse relative min-h-[100svh] bg-inverse text-inverse-ink flex flex-col justify-between px-(--margin-page) py-8 scroll-mt-0"
+    >
+      <div className="flex flex-col sm:flex-row justify-between gap-6">
+        <h2
+          id="kontak-title"
+          data-reveal className="max-w-[24ch] text-[clamp(1.25rem,2vw,1.625rem)] font-semibold leading-snug"
+        >
+          {contactSentence}
+        </h2>
+        <p data-reveal className="max-w-[26ch] sm:text-right text-[clamp(1.05rem,1.4vw,1.25rem)] leading-snug text-inverse-ink/85">
+          Terbuka untuk peran full-stack, back-end, dan AI engineering.
+        </p>
+      </div>
 
-      <Reveal className="mt-8">
-        <div className="border-2 border-ink bg-form p-5 sm:p-8">
-          <a
-            href={`mailto:${identity.email}`}
-            className="block font-display font-bold uppercase leading-[0.95] tracking-tight text-[clamp(1.9rem,6.5vw,5.2rem)] break-all hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper transition-colors px-1 -mx-1"
-          >
-            {identity.email}
-          </a>
+      <a
+        href={`mailto:${identity.email}`}
+        data-reveal className="group self-start"
+        aria-label={`Kirim email ke ${identity.email}`}
+      >
+        <span className="block font-display uppercase leading-[0.95] tracking-[-0.01em] text-[clamp(2.6rem,9vw,9.5rem)] text-balance">
+          <span className="sm:hidden">
+            {user}
+            <br />
+            @{domain}
+          </span>
+          <span className="hidden sm:inline">
+            {user}@{domain}
+          </span>
+        </span>
+        <span className="mt-2 inline-block text-lg font-semibold underline-offset-8 group-hover:underline">
+          {identity.email}
+        </span>
+      </a>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <MagneticButton href={`mailto:${identity.email}`}>
-              SEND INQUIRY
-            </MagneticButton>
-            <MagneticButton href={identity.github} variant="ghost">
-              GITHUB REPOSITORY
-            </MagneticButton>
-            <span className="ml-auto font-data text-[11px] tracking-wider text-steel">
-              RESPONSE {"<"} 24H / {identity.location}
-            </span>
-          </div>
+      <div className="flex flex-col sm:flex-row justify-between gap-6 text-base">
+        <div>
+          <p className="font-semibold">{identity.phone}</p>
+          <p className="text-inverse-ink/80">{identity.city}</p>
         </div>
-      </Reveal>
+        <div className="flex flex-col sm:items-end gap-1">
+          <a
+            href={identity.github.url}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-11 items-center font-semibold underline-offset-4 hover:underline focus-visible:underline"
+          >
+            {identity.github.handle}
+          </a>
+          <a
+            href={identity.linkedin.url}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-11 items-center font-semibold underline-offset-4 hover:underline focus-visible:underline"
+          >
+            {identity.linkedin.handle}
+          </a>
+        </div>
+      </div>
     </section>
-  );
-}
-
-/**
- * Magnetic button: leans toward the cursor within its bounds.
- * Fine pointers only, disabled under reduced motion — the link
- * itself never changes, so the fallback is the plain link.
- */
-function MagneticButton({
-  href,
-  children,
-  variant = "solid",
-}: {
-  href: string;
-  children: React.ReactNode;
-  variant?: "solid" | "ghost";
-}) {
-  const ref = useRef<HTMLAnchorElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const fine = window.matchMedia("(pointer: fine)").matches;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!fine || reduced) return;
-
-    const onMove = (e: MouseEvent) => {
-      const r = el.getBoundingClientRect();
-      const dx = e.clientX - (r.left + r.width / 2);
-      const dy = e.clientY - (r.top + r.height / 2);
-      const dist = Math.hypot(dx, dy);
-      if (dist < r.width) {
-        el.style.transform = `translate(${dx * 0.12}px, ${dy * 0.18}px)`;
-      } else {
-        el.style.transform = "";
-      }
-    };
-    const onLeave = () => {
-      el.style.transform = "";
-    };
-    window.addEventListener("mousemove", onMove, { passive: true });
-    el.addEventListener("mouseleave", onLeave);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      el.removeEventListener("mouseleave", onLeave);
-    };
-  }, []);
-
-  const base =
-    "inline-block font-data text-xs sm:text-sm tracking-[0.14em] px-6 py-3.5 border-2 border-ink transition-transform duration-150 will-change-transform min-h-[44px]";
-  const skin =
-    variant === "solid"
-      ? "bg-signal text-paper hover:bg-ink"
-      : "bg-paper text-ink hover:bg-ink hover:text-paper";
-
-  return (
-    <a ref={ref} href={href} className={`${base} ${skin}`}>
-      {children}
-    </a>
   );
 }

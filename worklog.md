@@ -893,3 +893,27 @@ Stage Summary:
 - Deliverables: download/hermes-design-arsenal.zip (kit 5 skill + brief + rubric + DESIGN.md), download/portfolio-audit-screenshots/.
 - Data.ts menandai [EDIT]: email, handle GitHub, detail pekerjaan 2025 — wajib swap user sebelum deploy.
 - Deploy zero-cost yang disarankan: Cloudflare Pages (static export) atau GitHub Pages.
+
+---
+Task ID: 2
+Agent: main (Z.ai)
+Task: REDESIGN portfolio "overkill frontend, zero cost" — design lama (datasheet krem+oranye) ditolak user karena terbaca AI-template. Jalankan ulang pipeline 5 skill secara NYATA dan bangun ulang seluruh halaman.
+
+Work Log:
+- Baca ulang 5 SKILL.md arsenal + klon repo taste-skill utuh (Leonxlnx/taste-skill) supaya script-nya benar-benar dijalankan, bukan dikutip.
+- SKILL 1 Frontend Design: arah dari vernakular subjek (solo engineer pemilik estate produksi live); 5 AI-tell didokumenkan; design lama terbukti kena tell #1/#3/#5.
+- SKILL 2 Taste: draw.mjs --options 3 (seed 1593697766) → deal 3 arah → pilih "pinned-poster" (paling mampu membawa inventaris subjek: sistem live miliknya); full sheet: Anton/Work Sans, hijau botol #133621 + emas #f4d96c; notes.md = inventaris 12 butir + kalimat ide + live thing + copy deck Indonesia; lint.mjs → 0 FAIL.
+- SKILL 3 DESIGN.md: kontrak visual format Stitch/VoltAgent 9 seksi ditulis di project root sebagai binding contract (bukan file brand; user tidak menamai brand).
+- SKILL 4 Web Design Guidelines (Vercel): audit per file:line; perbaikan: touch target 44px (nav/footer/contact), aria-live polite (status board), tabular-nums, rel noreferrer, transition property eksplisit, sr-only list utk marquee, lang="id", theme-color, dst.
+- SKILL 5 Playwright: verifikasi via agent-browser — screenshot 1440/768/390 multi-posisi, console 0 error, errors 0, fokus keyboard (outline 2px), klik nav; /api/status LIVE nyata (338/174/317ms → 690/488/681ms HTTP 200 ketiganya).
+- Asset nyata: 6 screenshot situs live user (agent-browser ke pumamakmurseal/weavory/pajak, 2 rasio) + 5 foto arsip open-collection berkredit via assets.mjs --get (credits.json) + optimasi sharp (3.8MB→344KB). Login pajak = kosong → digambar ChatFragment data-ui (fakta CV saja, tanpa percakapan fiktif).
+- Build: hapus 10 komponen lama; 9 komponen baru (pinned-hero, about-run, work-plates, plate-row-overlay, proof-band, stats-live, status-board, contact, footer, chat-fragment, motion-root) + api/status; data/portfolio.ts single source (fakta CV; koreksi fakta design lama: Jakarta→Bandung, email fiktif→mghazyfh28@gmail.com, "Hermes Agent System"→dihapus).
+- Gate inspect.mjs (CHROME_PATH dari agent-browser): iterasi 4 ronde → dari 3-4 FAIL menjadi 0 FAIL @1440/768/390. Akar yang ditemukan & diperbaiki: (1) judul pelat tertutup → baris judul jadi overlay sticky z-30 + IO swap (lebih setia ke "the row never moves"); (2) overflow 108px dari scale-[1.15]; (3) blank-gap 1204px = kolom kanan kontak kosong → baris ketersediaan jujur; (4) overlay tint bg-bg menutup hit-test filled → filter brightness pada img; (5) ekor pin about → 28svh; (6) reveal floor opacity 0.35.
+- Critique tertulis (critique.md): total ±8.0; WARN tersisa dipertahankan dengan justifikasi (pinned-over-picture & long-pin = ide hero blueprint itu sendiri; no-footage = tak ada klip jujur milik subjek; empty-middle = artefak track marquee; size-count = clamp fluid 5 peran).
+- Bukti & artek: download/portfolio-v2-evidence/ (13 file: critique, direction-sheet, 11 screenshot final).
+
+Stage Summary:
+- Website live di preview (port 3000), lint bersih, inspect.mjs 0 FAIL di 3 lebar, browser-verified end-to-end.
+- Design benar-benar baru: pinned-poster hijau botol+emas, monumen Anton, film panel sistem live, pelat buku, marquee, figur 1.331+, papan status live, kontak inversi emas, footer split berkredit.
+- Semua fakta dari CV user; tanpa bukti karangan; kredit lisensi foto arsip tampil di footer.
+- Siap A/B vs Hermes: arsenkit 5 skill + brief + rubric sudah ada di download/hermes-design-arsenal.zip (sesi lalu).

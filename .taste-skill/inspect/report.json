@@ -1,0 +1,2795 @@
+{
+ "url": "http://localhost:3000",
+ "at": "2026-10-24T04:08:03.652Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.42,
+    0.42,
+    0.42,
+    0.42,
+    0.42,
+    0.31,
+    0.36,
+    0.34,
+    0.33,
+    0,
+    0.93,
+    1
+   ],
+   "motion": {
+    "elements": 17,
+    "css": 1,
+    "transitions": 15,
+    "scripted": 1,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 16903,
+     "screens": 18.8,
+     "words": 419,
+     "img": 14,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 2,
+     "uiAbuse": false,
+     "realPictures": 14,
+     "videoCount": 0,
+     "uiPictures": 2,
+     "pictureSamples": [
+      "puma-portrait.jpg",
+      "weavory-portrait.jpg",
+      "asian-sealing-product-industrial-gasket.jpg",
+      "gedung-sate-bandung.jpg",
+      "asian-sealing-product-industrial-gasket.jpg",
+      "gedung-sate-bandung.jpg",
+      "zenith-z-19-terminal.jpg",
+      "yosowilangun-sta-130807-2521-lmj.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+     "words": 7,
+     "chars": 46,
+     "lines": 1,
+     "size": 136.8,
+     "vw": 9.5,
+     "font": "Anton",
+     "weight": 400,
+     "tracking": -0.01,
+     "leading": 0.86,
+     "upper": true,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.71,
+     "top": 391,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+     "words": 7,
+     "lines": 1,
+     "size": 136.8,
+     "font": "Anton"
+    },
+    "headings": [
+     {
+      "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+      "words": 7,
+      "chars": 46,
+      "lines": 1,
+      "size": 136.8,
+      "vw": 9.5,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.86,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.71,
+      "top": 391,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "SATU ORANG.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 180,
+      "vw": 12.5,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.86,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.57,
+      "top": 4873,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "ASISTEN PAJAK PUMA",
+      "words": 3,
+      "chars": 18,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 2,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.16,
+      "top": 9074,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "ELIXIR PHOENIX LIVEVIEW POSTGRESQL OBAN GO PYTHON LARAVEL NEXT.JS TYPESCRIPT DOCKER COOLIFY GITHUB ACTIONS ELIXIR PHOENIX LIVEVIEW POSTGRESQL OBAN GO PYTHON LARAVEL NEXT.JS TYPESCRIPT DOCKER COOLIFY G",
+      "words": 28,
+      "chars": 213,
+      "lines": 1,
+      "size": 112,
+      "vw": 7.8,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 1,
+      "top": 13554,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "1.331+",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 244.8,
+      "vw": 17,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.37,
+      "top": 14392,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "35+",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.04,
+      "top": 14684,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.01,
+      "top": 14684,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "2",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.01,
+      "top": 14759,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "1",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 40,
+      "vw": 2.8,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.01,
+      "top": 14759,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "MGHAZYFH28@GMAIL.COM",
+      "words": 1,
+      "chars": 20,
+      "lines": 1,
+      "size": 129.6,
+      "vw": 9,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.95,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 15505,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "TENTANG",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 37.4,
+      "vw": 2.6,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 16123,
+      "tag": "li",
+      "kind": "statement"
+     },
+     {
+      "text": "KARYA",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 37.4,
+      "vw": 2.6,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 16181,
+      "tag": "li",
+      "kind": "statement"
+     },
+     {
+      "text": "TEKNOLOGI",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 37.4,
+      "vw": 2.6,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 16238,
+      "tag": "li",
+      "kind": "statement"
+     },
+     {
+      "text": "ANGKA",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 37.4,
+      "vw": 2.6,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 16296,
+      "tag": "li",
+      "kind": "statement"
+     },
+     {
+      "text": "KONTAK",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 37.4,
+      "vw": 2.6,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 16353,
+      "tag": "li",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 15,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 11,
+     "centered": 1,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "ui-sans-serif",
+       "share": 0.89,
+       "mono": false
+      },
+      {
+       "family": "Anton",
+       "share": 0.11,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      18,
+      19,
+      20,
+      23,
+      26,
+      29,
+      37,
+      40,
+      112,
+      130,
+      137,
+      180,
+      245
+     ],
+     "sizeCount": 15,
+     "notLoaded": [],
+     "body": {
+      "font": "ui-sans-serif",
+      "size": 16,
+      "leading": 1.38,
+      "weight": 600,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 36,
+     "max": {
+      "size": 244.8,
+      "vw": 17,
+      "font": "Anton",
+      "text": "1.331+"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.14,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#133621",
+     "bodyBgHsl": {
+      "h": 144,
+      "s": 0.48,
+      "l": 0.14
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#133621",
+       "top": 9054,
+       "hsl": {
+        "h": 144,
+        "s": 0.48,
+        "l": 0.14
+       }
+      },
+      {
+       "color": "#0f2417",
+       "top": 9954,
+       "hsl": {
+        "h": 143,
+        "s": 0.41,
+        "l": 0.1
+       }
+      },
+      {
+       "color": "#f4d96c",
+       "top": 15103,
+       "hsl": {
+        "h": 48,
+        "s": 0.86,
+        "l": 0.69
+       }
+      },
+      {
+       "color": "#1a4429",
+       "top": 16003,
+       "hsl": {
+        "h": 141,
+        "s": 0.45,
+        "l": 0.18
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#f4d96c",
+       "share": 0.46
+      },
+      {
+       "color": "#c2b26b",
+       "share": 0.37
+      },
+      {
+       "color": "#133621",
+       "share": 0.16
+      },
+      {
+       "color": "#133620",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#f4d96c",
+      "hsl": {
+       "h": 48,
+       "s": 0.86,
+       "l": 0.69
+      },
+      "fg": "#133621"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Email Ghazy"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 14,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.27
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 900,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "anton"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 16903,
+    "margins": {
+     "left": 33,
+     "right": 33
+    },
+    "sections": [
+     {
+      "sel": "div.sticky.top-0",
+      "tag": "div",
+      "top": 0,
+      "height": 900,
+      "words": 28,
+      "media": 0,
+      "middle": 34,
+      "heading": {
+       "text": "GHAZY FAWAZ",
+       "size": 137,
+       "tag": "h1"
+      },
+      "left": 33,
+      "right": 33,
+      "textLeft": 33,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": true
+     },
+     {
+      "sel": "div.relative.-mt-[100svh]",
+      "tag": "div",
+      "top": 0,
+      "height": 4500,
+      "words": 21,
+      "media": 4,
+      "middle": 0,
+      "heading": null,
+      "left": 480,
+      "right": 480,
+      "textLeft": 500,
+      "textRight": 500,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.sticky.top-0",
+      "tag": "div",
+      "top": 4500,
+      "height": 900,
+      "words": 2,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "SATU ORANG.",
+       "size": 180,
+       "tag": "h2"
+      },
+      "left": 307,
+      "right": 307,
+      "textLeft": 307,
+      "textRight": 307,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": true
+     },
+     {
+      "sel": "div.relative.-mt-[100svh]",
+      "tag": "div",
+      "top": 4500,
+      "height": 3654,
+      "words": 91,
+      "media": 4,
+      "middle": 568,
+      "heading": null,
+      "left": 33,
+      "right": 33,
+      "textLeft": 33,
+      "textRight": 172,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 9054,
+      "height": 900,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 9954,
+      "height": 900,
+      "words": 15,
+      "media": 0,
+      "middle": 800,
+      "heading": null,
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 10854,
+      "height": 900,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 11754,
+      "height": 900,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 12654,
+      "height": 900,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#teknologi.scroll-mt-4",
+      "tag": "section",
+      "top": 13554,
+      "height": 266,
+      "words": 28,
+      "media": 0,
+      "middle": 7257,
+      "heading": {
+       "text": "ELIXIR",
+       "size": 112,
+       "tag": "span"
+      },
+      "left": 0,
+      "right": 0,
+      "textLeft": -1580,
+      "textRight": -7893,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#angka.scroll-mt-4",
+      "tag": "section",
+      "top": 13820,
+      "height": 1284,
+      "words": 71,
+      "media": 1,
+      "middle": 213,
+      "heading": {
+       "text": "1.331+",
+       "size": 245,
+       "tag": "p"
+      },
+      "left": 33,
+      "right": 33,
+      "textLeft": 33,
+      "textRight": 33,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#kontak.on-inverse.relative",
+      "tag": "section",
+      "top": 15103,
+      "height": 900,
+      "words": 30,
+      "media": 0,
+      "middle": 111,
+      "heading": {
+       "text": "mghazyfh28",
+       "size": 130,
+       "tag": "span"
+      },
+      "left": 33,
+      "right": 33,
+      "textLeft": 33,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.grid.grid-cols-1",
+      "tag": "footer",
+      "top": 16003,
+      "height": 900,
+      "words": 102,
+      "media": 1,
+      "middle": 33,
+      "heading": {
+       "text": "Tentang",
+       "size": 37,
+       "tag": "a"
+      },
+      "left": 0,
+      "right": 33,
+      "textLeft": 753,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+      "size": 137,
+      "top": 391,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 33,
+      "n": 4
+     },
+     {
+      "x": 307,
+      "n": 1
+     },
+     {
+      "x": 1184,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 6,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.1,
+    "voidBox": {
+     "x": 1260,
+     "y": 120,
+     "w": 180,
+     "h": 720
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.27,
+    0.27,
+    0.27,
+    0.27,
+    0.27,
+    0.25,
+    0.25,
+    0.24,
+    0.23,
+    0,
+    0.93,
+    1
+   ],
+   "motion": {
+    "elements": 17,
+    "css": 1,
+    "transitions": 15,
+    "scripted": 1,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 19297,
+     "screens": 18.8,
+     "words": 419,
+     "img": 14,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 2,
+     "uiAbuse": false,
+     "realPictures": 14,
+     "videoCount": 0,
+     "uiPictures": 1,
+     "pictureSamples": [
+      "puma-portrait.jpg",
+      "weavory-portrait.jpg",
+      "asian-sealing-product-industrial-gasket.jpg",
+      "gedung-sate-bandung.jpg",
+      "asian-sealing-product-industrial-gasket.jpg",
+      "gedung-sate-bandung.jpg",
+      "zenith-z-19-terminal.jpg",
+      "yosowilangun-sta-130807-2521-lmj.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+     "words": 7,
+     "chars": 46,
+     "lines": 1,
+     "size": 73,
+     "vw": 9.5,
+     "font": "Anton",
+     "weight": 400,
+     "tracking": -0.01,
+     "leading": 0.86,
+     "upper": true,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.71,
+     "top": 481,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+     "words": 7,
+     "lines": 1,
+     "size": 73,
+     "font": "Anton"
+    },
+    "headings": [
+     {
+      "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+      "words": 7,
+      "chars": 46,
+      "lines": 1,
+      "size": 73,
+      "vw": 9.5,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.86,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.71,
+      "top": 481,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "SATU ORANG.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 130.6,
+      "vw": 17,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.86,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.78,
+      "top": 5576,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "ELIXIR PHOENIX LIVEVIEW POSTGRESQL OBAN GO PYTHON LARAVEL NEXT.JS TYPESCRIPT DOCKER COOLIFY GITHUB ACTIONS ELIXIR PHOENIX LIVEVIEW POSTGRESQL OBAN GO PYTHON LARAVEL NEXT.JS TYPESCRIPT DOCKER COOLIFY G",
+      "words": 28,
+      "chars": 213,
+      "lines": 1,
+      "size": 61.4,
+      "vw": 8,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 1,
+      "top": 15421,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "1.331+",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 130.6,
+      "vw": 17,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.37,
+      "top": 16409,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "35+",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.07,
+      "top": 16609,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.03,
+      "top": 16609,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "2",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.03,
+      "top": 16706,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "1",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.02,
+      "top": 16706,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "MGHAZYFH28@GMAIL.COM",
+      "words": 1,
+      "chars": 20,
+      "lines": 1,
+      "size": 69.1,
+      "vw": 9,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.95,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 17526,
+      "tag": "span",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 9,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 6,
+     "centered": 1,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "ui-sans-serif",
+       "share": 0.89,
+       "mono": false
+      },
+      {
+       "family": "Anton",
+       "share": 0.11,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      17,
+      18,
+      20,
+      22,
+      26,
+      40,
+      61,
+      69,
+      73,
+      131
+     ],
+     "sizeCount": 12,
+     "notLoaded": [],
+     "body": {
+      "font": "ui-sans-serif",
+      "size": 16,
+      "leading": 1.38,
+      "weight": 600,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 36,
+     "max": {
+      "size": 130.6,
+      "vw": 17,
+      "font": "Anton",
+      "text": "SATU ORANG."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.14,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#133621",
+     "bodyBgHsl": {
+      "h": 144,
+      "s": 0.48,
+      "l": 0.14
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#133621",
+       "top": 10301,
+       "hsl": {
+        "h": 144,
+        "s": 0.48,
+        "l": 0.14
+       }
+      },
+      {
+       "color": "#0f2417",
+       "top": 11325,
+       "hsl": {
+        "h": 143,
+        "s": 0.41,
+        "l": 0.1
+       }
+      },
+      {
+       "color": "#f4d96c",
+       "top": 17046,
+       "hsl": {
+        "h": 48,
+        "s": 0.86,
+        "l": 0.69
+       }
+      },
+      {
+       "color": "#1a4429",
+       "top": 18582,
+       "hsl": {
+        "h": 141,
+        "s": 0.45,
+        "l": 0.18
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#f4d96c",
+       "share": 0.46
+      },
+      {
+       "color": "#c2b26b",
+       "share": 0.37
+      },
+      {
+       "color": "#133621",
+       "share": 0.16
+      },
+      {
+       "color": "#133620",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#f4d96c",
+      "hsl": {
+       "h": 48,
+       "s": 0.86,
+       "l": 0.69
+      },
+      "fg": "#133621"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Email Ghazy"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 14,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.15
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 1024,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "anton"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 19297,
+    "margins": {
+     "left": 22,
+     "right": 22
+    },
+    "sections": [
+     {
+      "sel": "div.sticky.top-0",
+      "tag": "div",
+      "top": 0,
+      "height": 1024,
+      "words": 28,
+      "media": 0,
+      "middle": 16,
+      "heading": {
+       "text": "GHAZY FAWAZ",
+       "size": 73,
+       "tag": "h1"
+      },
+      "left": 22,
+      "right": 22,
+      "textLeft": 22,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": true
+     },
+     {
+      "sel": "div.relative.-mt-[100svh]",
+      "tag": "div",
+      "top": 0,
+      "height": 5120,
+      "words": 21,
+      "media": 4,
+      "middle": 0,
+      "heading": null,
+      "left": 242,
+      "right": 242,
+      "textLeft": 262,
+      "textRight": 292,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.sticky.top-0",
+      "tag": "div",
+      "top": 5120,
+      "height": 1024,
+      "words": 2,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "SATU ORANG.",
+       "size": 131,
+       "tag": "h2"
+      },
+      "left": 85,
+      "right": 85,
+      "textLeft": 85,
+      "textRight": 85,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": true
+     },
+     {
+      "sel": "div.relative.-mt-[100svh]",
+      "tag": "div",
+      "top": 5120,
+      "height": 4157,
+      "words": 91,
+      "media": 4,
+      "middle": 294,
+      "heading": null,
+      "left": 22,
+      "right": 22,
+      "textLeft": 22,
+      "textRight": 27,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 10301,
+      "height": 1024,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 11325,
+      "height": 1024,
+      "words": 15,
+      "media": 0,
+      "middle": 139,
+      "heading": null,
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 12349,
+      "height": 1024,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 13373,
+      "height": 1024,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 14397,
+      "height": 1024,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#teknologi.scroll-mt-4",
+      "tag": "section",
+      "top": 15421,
+      "height": 215,
+      "words": 28,
+      "media": 0,
+      "middle": 4454,
+      "heading": {
+       "text": "ELIXIR",
+       "size": 61,
+       "tag": "span"
+      },
+      "left": 0,
+      "right": 0,
+      "textLeft": -914,
+      "textRight": -4803,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#angka.scroll-mt-4",
+      "tag": "section",
+      "top": 15636,
+      "height": 1410,
+      "words": 71,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 22,
+      "right": 22,
+      "textLeft": 22,
+      "textRight": 22,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#kontak.on-inverse.relative",
+      "tag": "section",
+      "top": 17046,
+      "height": 1024,
+      "words": 30,
+      "media": 0,
+      "middle": 59,
+      "heading": {
+       "text": "mghazyfh28",
+       "size": 69,
+       "tag": "span"
+      },
+      "left": 22,
+      "right": 22,
+      "textLeft": 22,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.grid.grid-cols-1",
+      "tag": "footer",
+      "top": 18070,
+      "height": 1227,
+      "words": 102,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 22,
+      "right": 22,
+      "textLeft": 22,
+      "textRight": 22,
+      "fullBleed": true,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [
+     {
+      "top": 17184,
+      "height": 320
+     },
+     {
+      "top": 17628,
+      "height": 320
+     }
+    ],
+    "h1s": [
+     {
+      "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+      "size": 73,
+      "top": 481,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 22,
+      "n": 4
+     },
+     {
+      "x": 85,
+      "n": 1
+     },
+     {
+      "x": 575,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 6,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.34,
+    0.34,
+    0.36,
+    0.34,
+    0.34,
+    0.38,
+    0.46,
+    0.35,
+    0.42,
+    0,
+    0.93,
+    0.99
+   ],
+   "motion": {
+    "elements": 17,
+    "css": 1,
+    "transitions": 15,
+    "scripted": 1,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 16618,
+     "screens": 19.7,
+     "words": 414,
+     "img": 14,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 2,
+     "uiAbuse": false,
+     "realPictures": 14,
+     "videoCount": 0,
+     "uiPictures": 1,
+     "pictureSamples": [
+      "puma-portrait.jpg",
+      "weavory-portrait.jpg",
+      "asian-sealing-product-industrial-gasket.jpg",
+      "gedung-sate-bandung.jpg",
+      "asian-sealing-product-industrial-gasket.jpg",
+      "gedung-sate-bandung.jpg",
+      "zenith-z-19-terminal.jpg",
+      "yosowilangun-sta-130807-2521-lmj.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+     "words": 7,
+     "chars": 46,
+     "lines": 2,
+     "size": 58.5,
+     "vw": 15,
+     "font": "Anton",
+     "weight": 400,
+     "tracking": -0.01,
+     "leading": 0.86,
+     "upper": true,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.74,
+     "top": 72,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+     "words": 7,
+     "lines": 2,
+     "size": 58.5,
+     "font": "Anton"
+    },
+    "headings": [
+     {
+      "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+      "words": 7,
+      "chars": 46,
+      "lines": 2,
+      "size": 58.5,
+      "vw": 15,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.86,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 72,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "SATU ORANG.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 66.3,
+      "vw": 17,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.86,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.78,
+      "top": 4614,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "ASISTEN PAJAK PUMA",
+      "words": 3,
+      "chars": 18,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 8507,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "ELIXIR PHOENIX LIVEVIEW POSTGRESQL OBAN GO PYTHON LARAVEL NEXT.JS TYPESCRIPT DOCKER COOLIFY GITHUB ACTIONS ELIXIR PHOENIX LIVEVIEW POSTGRESQL OBAN GO PYTHON LARAVEL NEXT.JS TYPESCRIPT DOCKER COOLIFY G",
+      "words": 28,
+      "chars": 213,
+      "lines": 1,
+      "size": 41.6,
+      "vw": 10.7,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 1,
+      "top": 12711,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "1.331+",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 72,
+      "vw": 18.5,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.8,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 13461,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "35+",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.14,
+      "top": 13704,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.05,
+      "top": 13801,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "2",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.05,
+      "top": 13876,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "1",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.03,
+      "top": 13951,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "MGHAZYFH28 @GMAIL.COM",
+      "words": 2,
+      "chars": 21,
+      "lines": 2,
+      "size": 41.6,
+      "vw": 10.7,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 0.95,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.63,
+      "top": 14742,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "TENTANG",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 15745,
+      "tag": "li",
+      "kind": "statement"
+     },
+     {
+      "text": "KARYA",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 15791,
+      "tag": "li",
+      "kind": "statement"
+     },
+     {
+      "text": "TEKNOLOGI",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 15838,
+      "tag": "li",
+      "kind": "statement"
+     },
+     {
+      "text": "ANGKA",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 15884,
+      "tag": "li",
+      "kind": "statement"
+     },
+     {
+      "text": "KONTAK",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 25.6,
+      "vw": 6.6,
+      "font": "Anton",
+      "weight": 400,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 15931,
+      "tag": "li",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 15,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 11,
+     "centered": 1,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "ui-sans-serif",
+       "share": 0.89,
+       "mono": false
+      },
+      {
+       "family": "Anton",
+       "share": 0.11,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      17,
+      18,
+      20,
+      22,
+      26,
+      40,
+      42,
+      59,
+      66,
+      72
+     ],
+     "sizeCount": 12,
+     "notLoaded": [],
+     "body": {
+      "font": "ui-sans-serif",
+      "size": 16,
+      "leading": 1.38,
+      "weight": 600,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 24,
+     "max": {
+      "size": 72,
+      "vw": 18.5,
+      "font": "Anton",
+      "text": "1.331+"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.13,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#133621",
+     "bodyBgHsl": {
+      "h": 144,
+      "s": 0.48,
+      "l": 0.14
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#133621",
+       "top": 8491,
+       "hsl": {
+        "h": 144,
+        "s": 0.48,
+        "l": 0.14
+       }
+      },
+      {
+       "color": "#0f2417",
+       "top": 9335,
+       "hsl": {
+        "h": 143,
+        "s": 0.41,
+        "l": 0.1
+       }
+      },
+      {
+       "color": "#f4d96c",
+       "top": 14359,
+       "hsl": {
+        "h": 48,
+        "s": 0.86,
+        "l": 0.69
+       }
+      },
+      {
+       "color": "#1a4429",
+       "top": 15625,
+       "hsl": {
+        "h": 141,
+        "s": 0.45,
+        "l": 0.18
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#f4d96c",
+       "share": 0.46
+      },
+      {
+       "color": "#c2b26b",
+       "share": 0.37
+      },
+      {
+       "color": "#133621",
+       "share": 0.16
+      },
+      {
+       "color": "#133620",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#f4d96c",
+      "hsl": {
+       "h": 48,
+       "s": 0.86,
+       "l": 0.69
+      },
+      "fg": "#133621"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 0,
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Email Ghazy"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 10,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.09
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 844,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "anton"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 16618,
+    "margins": {
+     "left": 16,
+     "right": 16
+    },
+    "sections": [
+     {
+      "sel": "div.sticky.top-0",
+      "tag": "div",
+      "top": 0,
+      "height": 844,
+      "words": 28,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "GHAZY FAWAZ",
+       "size": 59,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 16,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": true
+     },
+     {
+      "sel": "div.relative.-mt-[100svh]",
+      "tag": "div",
+      "top": 0,
+      "height": 4220,
+      "words": 21,
+      "media": 4,
+      "middle": 0,
+      "heading": null,
+      "left": 123,
+      "right": 123,
+      "textLeft": 143,
+      "textRight": 143,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.sticky.top-0",
+      "tag": "div",
+      "top": 4220,
+      "height": 844,
+      "words": 2,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "SATU ORANG.",
+       "size": 66,
+       "tag": "h2"
+      },
+      "left": 43,
+      "right": 43,
+      "textLeft": 43,
+      "textRight": 43,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": true
+     },
+     {
+      "sel": "div.relative.-mt-[100svh]",
+      "tag": "div",
+      "top": 4220,
+      "height": 3427,
+      "words": 91,
+      "media": 4,
+      "middle": 0,
+      "heading": null,
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 8491,
+      "height": 844,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 9335,
+      "height": 844,
+      "words": 15,
+      "media": 0,
+      "middle": 13,
+      "heading": null,
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 10179,
+      "height": 844,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 11023,
+      "height": 844,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "article.h-[100svh].w-full",
+      "tag": "article",
+      "top": 11867,
+      "height": 844,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#teknologi.scroll-mt-4",
+      "tag": "section",
+      "top": 12711,
+      "height": 179,
+      "words": 28,
+      "media": 0,
+      "middle": 3464,
+      "heading": {
+       "text": "ELIXIR",
+       "size": 42,
+       "tag": "span"
+      },
+      "left": 0,
+      "right": 0,
+      "textLeft": -656,
+      "textRight": -3701,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "figure.relative.h-[88svh]",
+      "tag": "figure",
+      "top": 12890,
+      "height": 743,
+      "words": 15,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": 16,
+      "right": 79,
+      "textLeft": 16,
+      "textRight": 79,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.px-(--margin-page).mt-12",
+      "tag": "div",
+      "top": 13680,
+      "height": 290,
+      "words": 17,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "35+",
+       "size": 40,
+       "tag": "p"
+      },
+      "left": 16,
+      "right": 42,
+      "textLeft": 16,
+      "textRight": 42,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.px-(--margin-page)",
+      "tag": "div",
+      "top": 14026,
+      "height": 333,
+      "words": 28,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Status produksi saat ini",
+       "size": 18,
+       "tag": "h3"
+      },
+      "left": 16,
+      "right": 32,
+      "textLeft": 16,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#kontak.on-inverse.relative",
+      "tag": "section",
+      "top": 14359,
+      "height": 844,
+      "words": 30,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "mghazyfh28",
+       "size": 42,
+       "tag": "span"
+      },
+      "left": 16,
+      "right": 90,
+      "textLeft": 16,
+      "textRight": 90,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.tinted.relative",
+      "tag": "div",
+      "top": 15203,
+      "height": 422,
+      "words": 0,
+      "media": 1,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": true,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.bg-surface.flex",
+      "tag": "div",
+      "top": 15625,
+      "height": 994,
+      "words": 102,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Tentang",
+       "size": 26,
+       "tag": "a"
+      },
+      "left": 16,
+      "right": 18,
+      "textLeft": 16,
+      "textRight": 18,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG",
+      "size": 59,
+      "top": 72,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 16,
+      "n": 6
+     },
+     {
+      "x": 43,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 7,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "size-count",
+   "width": 1440,
+   "message": "15 different font sizes (14, 16, 18, 19, 20, 23, 26, 29, 37, 40, 112, 130, 137, 180, 245).",
+   "fix": "A page needs about five: display, heading, lead, body, small.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "font-not-dealt",
+   "width": 1440,
+   "message": "The sheet dealt Panchang and Switzer, but the page renders ui-sans-serif, Anton.",
+   "fix": "Load the dealt face (the link on the sheet) and put it first in font-family. A build that falls back to a default face lands on the default look."
+  },
+  {
+   "level": "WARN",
+   "id": "empty-middle",
+   "width": 1440,
+   "message": "2 section(s) have content at both edges and 7257px of nothing between: article.h-[100svh].w-full; \"ELIXIR\"",
+   "fix": "Bring the two parts together on the grid, or put the picture or figure of the section in the middle. An empty middle third reads as a hole, the same as an empty half.",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "pinned-over-picture",
+   "width": 1440,
+   "message": "Pinned large text slides across pictures while the page scrolls: \"GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG\" (screen 5, 45% over a picture); \"SATU ORANG.\" (screen 8, 16% over a picture)",
+   "fix": "Jurors read a pinned title crossing drawings or photographs as a collision. Keep the pictures in the column the title does not occupy, or unpin it.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "long-pin",
+   "width": 1440,
+   "message": "The same large text stays on screen for 5 screens in a row: \"GHAZY FAWAZ HAKIM — SOFTWARE ENGINEER, BANDUNG\"; \"SATU ORANG.\"",
+   "fix": "A pinned element earns two screens, and something must change at each. Shorten the run or give every screen its own content."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "/home/z/my-project/.taste-skill/inspect/desktop-fold.jpg",
+   "pages": [
+    "/home/z/my-project/.taste-skill/inspect/desktop-page-01.jpg",
+    "/home/z/my-project/.taste-skill/inspect/desktop-page-02.jpg",
+    "/home/z/my-project/.taste-skill/inspect/desktop-page-03.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "/home/z/my-project/.taste-skill/inspect/tablet-fold.jpg",
+   "pages": [
+    "/home/z/my-project/.taste-skill/inspect/tablet-page-01.jpg",
+    "/home/z/my-project/.taste-skill/inspect/tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "/home/z/my-project/.taste-skill/inspect/mobile-fold.jpg",
+   "pages": [
+    "/home/z/my-project/.taste-skill/inspect/mobile-page-01.jpg",
+    "/home/z/my-project/.taste-skill/inspect/mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

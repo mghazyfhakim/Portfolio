@@ -1,51 +1,46 @@
 import type { Metadata, Viewport } from "next";
-import { Barlow, Barlow_Condensed, IBM_Plex_Mono } from "next/font/google";
+import { Anton, Work_Sans } from "next/font/google";
 import "./globals.css";
 
-const barlowCond = Barlow_Condensed({
-  variable: "--font-barlow-cond",
+const anton = Anton({
+  variable: "--font-anton",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "400",
   display: "swap",
 });
 
-const barlow = Barlow({
-  variable: "--font-barlow",
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
-
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "600"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Muhammad Ghazy Fhakim — AI Engineer / Web Developer",
+  title: "Muhammad Ghazy Fawaz Hakim — Software Engineer, Bandung",
   description:
-    "Drawing-set portfolio of an AI engineer and web developer working in industrial sealing B2B. Agent systems, benchmarks, and zero-dependency web tools — measured, benchmarked, shipped.",
+    "Portofolio software engineer full-stack, DevOps, dan AI dari Bandung. Satu orang di balik sistem produksi PT Puma Makmur: platform B2B, ERP internal, dan chatbot AI pajak — semuanya live.",
   keywords: [
+    "software engineer",
+    "full-stack developer",
+    "Elixir",
+    "Phoenix LiveView",
     "AI engineer",
-    "web developer",
-    "Hermes Agent",
-    "Next.js",
+    "Bandung",
     "portfolio",
   ],
-  authors: [{ name: "Muhammad Ghazy Fhakim" }],
+  authors: [{ name: "Muhammad Ghazy Fawaz Hakim" }],
   icons: { icon: "/favicon.svg" },
   openGraph: {
-    title: "Muhammad Ghazy Fhakim — AI Engineer / Web Developer",
+    title: "Muhammad Ghazy Fawaz Hakim — Software Engineer, Bandung",
     description:
-      "A portfolio rendered as an engineering drawing set. Measured, benchmarked, shipped.",
+      "Satu orang di balik sistem produksi PT Puma Makmur: platform B2B, ERP internal, dan chatbot AI pajak — semuanya live hari ini.",
     type: "website",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#e9eae6",
+  themeColor: "#133621",
   width: "device-width",
   initialScale: 1,
 };
@@ -56,10 +51,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${barlowCond.variable} ${barlow.variable} ${plexMono.variable} antialiased bg-paper text-ink grain`}
-      >
+    <html lang="id" suppressHydrationWarning>
+      <body className={`${anton.variable} ${workSans.variable} antialiased bg-bg text-ink`}>
         {children}
       </body>
     </html>

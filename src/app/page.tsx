@@ -1,34 +1,34 @@
-import { SheetFrame } from "@/components/portfolio/sheet-frame";
-import { Hero } from "@/components/portfolio/hero";
-import { MaterialsBelt } from "@/components/portfolio/materials-belt";
-import { Catalog } from "@/components/portfolio/catalog";
-import { Envelope } from "@/components/portfolio/envelope";
-import { ServiceLog } from "@/components/portfolio/service-log";
+import { PinnedHero } from "@/components/portfolio/pinned-hero";
+import { AboutRun } from "@/components/portfolio/about-run";
+import { WorkPlates } from "@/components/portfolio/work-plates";
+import { ProofBand } from "@/components/portfolio/proof-band";
+import { StatsLive } from "@/components/portfolio/stats-live";
 import { Contact } from "@/components/portfolio/contact";
-import { RevisionBlock } from "@/components/portfolio/revision-block";
+import { Footer } from "@/components/portfolio/footer";
+import { MotionRoot } from "@/components/portfolio/motion-root";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col px-4 sm:px-8 pt-5 sm:pt-8 pb-4">
+    <>
       <a
-        href="#sheet-1"
-        className="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:top-3 focus:left-3 focus:bg-ink focus:text-paper focus:px-3 focus:py-2 focus:font-data focus:text-xs"
+        href="#konten"
+        className="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:top-3 focus:left-3 focus:bg-accent focus:text-accent-ink focus:px-4 focus:py-3 focus:font-semibold"
       >
-        Skip to content
+        Lewati ke konten
       </a>
 
-      <SheetFrame />
+      <MotionRoot />
 
-      <main className="w-full">
-        <Hero />
-        <MaterialsBelt />
-        <Catalog />
-        <Envelope />
-        <ServiceLog />
+      <main id="konten">
+        <PinnedHero />
+        <AboutRun />
+        <WorkPlates />
+        <ProofBand />
+        <StatsLive />
         <Contact />
       </main>
 
-      <RevisionBlock />
-    </div>
+      <Footer />
+    </>
   );
 }
